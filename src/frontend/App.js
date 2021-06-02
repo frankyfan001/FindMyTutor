@@ -1,3 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/jsx-one-expression-per-line */
 import logo from './logo.svg';
 import './App.css';
 
