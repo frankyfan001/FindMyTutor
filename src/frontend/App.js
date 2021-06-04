@@ -1,25 +1,19 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/jsx-one-expression-per-line */
-import logo from './logo.svg';
 import './App.css';
+import {
+  IconBase, LoginButton, OutlinedButton, RegisterButton,
+} from './components/Buttons';
+import { FilledTextField, FormBase } from './components/Forms';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FilledTextField label="password" />
+      <FormBase />
+      <OutlinedButton text="buttonbase" type="button" icon={<IconBase iconType="bookmark" />} />
+      <LoginButton />
+      <RegisterButton />
     </div>
   );
 }
