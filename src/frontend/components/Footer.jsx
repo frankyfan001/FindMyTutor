@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box, Link, makeStyles, Typography,
+} from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -9,11 +11,9 @@ const useStyles = makeStyles(() => ({
     paddingLeft: 60,
   },
   about: {
-    display: 'block',
     color: 'white',
   },
   contact: {
-    display: 'block',
     color: 'white',
   },
   copyright: {
@@ -29,12 +29,16 @@ export default function Header() {
       <br />
       <footer className={classes.root}>
         <br />
-        <Link href="/about" variant="subtitle1" align="left" aria-label="about" className={classes.about}>
-          About
-        </Link>
-        <Link href="/contact" variant="subtitle1" align="left" aria-label="contact" className={classes.contact}>
-          Contact
-        </Link>
+        <Box display="flex" flexDirection="row">
+          <Link href="/about" variant="subtitle1" aria-label="about" className={classes.about}>
+            About
+          </Link>
+        </Box>
+        <Box display="flex" flexDirection="row">
+          <Link href="/contact" variant="subtitle1" aria-label="contact" className={classes.contact}>
+            Contact
+          </Link>
+        </Box>
         <br />
         <Typography variant="subtitle1" align="left" aria-label="copyright" className={classes.copyright}>
           Find My Tutor © 2021
