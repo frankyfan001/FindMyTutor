@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-// import CardMedia from '@material-ui/core/CardMedia';
+import Chip from '@material-ui/core/Chip';
+import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -15,15 +18,25 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DoneIcon from '@material-ui/icons/Done';
+import { Grid } from '@material-ui/core';
+import TutorRating from './Ratings';
 
-const useStyles = makeStyles((theme) => ({
+const useCardStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '80%',
+    maxWidth: '100%',
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    maxHeight: '160px',
+  },
+  light: {
+    maxHeight: '160px',
+    background: 'linear-gradient(45deg, #f3e5f5 50%, #8e24aa 30%)',
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+    float: 'left',
+    position: 'relative',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -35,90 +48,142 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
 }));
 
-export const BaseCard = ({ title, description }) => {
-  const classes = useStyles();
+export const BaseCard = ({ user, description, idx }) => {
+  const classes = useCardStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const userAvatar = user.name[0];
+
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={(
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        )}
-        action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        )}
-        title={title}
-        subheader={new Date().toLocaleDateString()}
-      />
-      {/* <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      /> */}
+    <Card className={idx % 2 === 0 ? classes.light : classes.root}>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
+        <Grid container>
+          <Grid item>
+            <Grid container>
+              <Grid item>
+                <ProfileArea
+                  profile={{ name: 'Franky Fan', img: './static/abc.jpg' }}
+                  course="CPSC 110"
+                  school="UBC"
+                />
+              </Grid>
+
+            </Grid>
+
+          </Grid>
+          <Grid item>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {description}
+            </Typography>
+          </Grid>
+
+        </Grid>
+
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {/* <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography> */}
-        </CardContent>
-      </Collapse>
+      {/* <CardActions disableSpacing>
+        <TutorRating rating={3} />
+      </CardActions> */}
     </Card>
+  );
+};
+
+const useChipStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '20px',
+    display: 'flex',
+    padding: '10px',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
+}));
+
+const CourseChip = ({ course }) => {
+  const classes = useChipStyles();
+
+  return (
+    <Chip label={course} color="primary" deleteIcon={<DoneIcon />} />
+  );
+};
+
+const SchoolChip = ({ school }) => {
+  const classes = useChipStyles();
+  return (
+    <Chip label={school} color="secondary" deleteIcon={<DoneIcon />} />
+  );
+};
+
+const Chips = ({ course, school }) => (
+  <Grid container spacing={3} direction="column">
+    <Grid item>
+      <SchoolChip school={school} />
+    </Grid>
+    <Grid item>
+      <CourseChip course={course} />
+    </Grid>
+  </Grid>
+);
+
+const useProfileStyles = makeStyles((theme) => ({
+  media: {
+    // height: '0',
+    paddingTop: '56.25%', // 16:9
+    float: 'left',
+    position: 'relative',
+    maxWidth: '100px',
+    maxHeight: '100px',
+  },
+  left: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
+
+const ProfileArea = ({ profile, course, school }) => {
+  const classes = useProfileStyles();
+
+  const { img, name } = profile;
+
+  return (
+    <div>
+      <div className="profile-data">
+        <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0}>
+          <Grid item xs="auto">
+            <Grid item align="center">
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                F
+              </Avatar>
+            </Grid>
+            <Grid item align="center">
+              <Typography paragraph>
+                Franky Fan
+              </Typography>
+            </Grid>
+            <Grid item align="center">
+              <TutorRating rating={3} />
+            </Grid>
+          </Grid>
+          <Grid item xs="auto" sm={3}>
+            <Chips course={course} school={school} className={classes.left} />
+          </Grid>
+          <Grid item xs="auto" sm={6}>
+            <Typography paragraph>
+              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
+              minutes.
+            </Typography>
+          </Grid>
+        </Grid>
+      </div>
+    </div>
   );
 };
