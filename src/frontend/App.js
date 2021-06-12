@@ -10,6 +10,13 @@ import {
   IconBase, LoginButton, OutlinedButton, RegisterButton,
 } from './components/Buttons';
 import { FilledTextField, FormBase } from './components/Forms';
+import { TutorBanner } from './components/Banner';
+import { BaseCard } from './components/Cards';
+import { SearchBar, SearchInput } from './components/Search';
+import { CardsApp } from './components/CardsApp';
+import { Grid } from '@material-ui/core';
+import { LoginForm } from './components/Login';
+import SignUp from './components/Signup';
 
 function App() {
   return (
@@ -20,19 +27,20 @@ function App() {
         <Switch>
           // TODO: this sprint - main page.
           <Route exact path="/">
-            <FilledTextField label="password" />
-            <FormBase />
-            <OutlinedButton text="buttonbase" type="button" icon={<IconBase iconType="bookmark" />} />
-            <LoginButton />
-            <RegisterButton />
+           <TutorBanner />
+           <Grid container alignItems="center">
+             <Grid item align="center">
+              <CardsApp />
+             </Grid>
+           </Grid>
           </Route>
 
           // TODO: next sprint - other pages.
           <Route path="/login">
-            LoginPage
+            <LoginForm />
           </Route>
           <Route path="/register">
-            RegisterPage
+            <SignUp />
           </Route>
           <Route path="/account">
             AccountPage
