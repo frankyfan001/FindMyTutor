@@ -25,7 +25,6 @@ function App() {
         <Header title="Find My Tutor" />
 
         <Switch>
-          // TODO: this sprint - main page.
           <Route exact path="/">
            <TutorBanner />
            <Grid container alignItems="center">
@@ -34,14 +33,14 @@ function App() {
              </Grid>
            </Grid>
           </Route>
-
-          // TODO: next sprint - other pages.
           <Route path="/login">
             <LoginForm />
           </Route>
           <Route path="/register">
             <SignUp />
           </Route>
+
+          // TODO: next sprint - other pages.
           <Route path="/account">
             AccountPage
           </Route>

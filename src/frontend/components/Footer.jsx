@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Box, Link, makeStyles, Typography,
+  Box, makeStyles, Typography,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -12,9 +13,11 @@ const useStyles = makeStyles(() => ({
   },
   about: {
     color: 'white',
+    textDecoration: 'none',
   },
   contact: {
     color: 'white',
+    textDecoration: 'none',
   },
   copyright: {
     color: 'black',
@@ -30,12 +33,13 @@ export default function Header() {
       <footer className={classes.root}>
         <br />
         <Box display="flex" flexDirection="row">
-          <Link href="/about" variant="subtitle1" aria-label="about" className={classes.about}>
+          <Link to="/about" aria-label="about" className={classes.about}>
             About
           </Link>
         </Box>
+        <br />
         <Box display="flex" flexDirection="row">
-          <Link href="/contact" variant="subtitle1" aria-label="contact" className={classes.contact}>
+          <Link to="/contact" aria-label="contact" className={classes.contact}>
             Contact
           </Link>
         </Box>
