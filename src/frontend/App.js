@@ -28,11 +28,12 @@ function App() {
           // TODO: this sprint - main page.
           <Route exact path="/">
            <TutorBanner />
-           <Grid container alignItems="center">
+           <Grid container alignItems="center" justify="center">
              <Grid item align="center">
               <CardsApp />
              </Grid>
            </Grid>
+           {/* <CardsApp /> */}
           </Route>
 
           // TODO: next sprint - other pages.

@@ -78,6 +78,7 @@ export const LoginForm = () => {
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
+            style={{ float: 'left' }}
           />
           <Button
             type="submit"
