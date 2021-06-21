@@ -27,11 +27,12 @@ function App() {
         <Switch>
           <Route exact path="/">
            <TutorBanner />
-           <Grid container alignItems="center">
+           <Grid container alignItems="center" justify="center">
              <Grid item align="center">
               <CardsApp />
              </Grid>
            </Grid>
+           {/* <CardsApp /> */}
           </Route>
           <Route path="/login">
             <LoginForm />

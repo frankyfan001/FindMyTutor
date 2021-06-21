@@ -1,8 +1,15 @@
 import Banners from 'react-banners';
 import React from 'react';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    maxHeight: '400px',
+  },
+}));
 
 export const TutorBanner = () => (
-  <div style={{ overflow: 'hidden' }}>
+  <div style={{ overflow: 'hidden' }} className={useStyles().root}>
     <Banners py={80} style={{ overflow: 'hidden' }}>
       <Banners.Blocks textWidth="40%">
         <Banners.Block imageAlign="right">
@@ -13,11 +20,11 @@ export const TutorBanner = () => (
           </Banners.SubTitle>
           <Banners.Description my={30}>
             <Banners.Button color="rgb(128, 111, 193)">
-              Login as student
+              Login
             </Banners.Button>
-            <Banners.Button color="rgb(128, 111, 193)" ghost>
+            {/* <Banners.Button color="rgb(128, 111, 193)" ghost>
               Login as tutor
-            </Banners.Button>
+            </Banners.Button> */}
           </Banners.Description>
           <Banners.Image
             width="33.5%"
