@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Header from './components/Header';
+import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
@@ -17,12 +17,15 @@ import { CardsApp } from './components/CardsApp';
 import { Grid } from '@material-ui/core';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
+import TeamPage from "./components/TeamPage";
+import AboutPage from "./components/AboutPage";
+import ContactPage from "./components/ContactPage";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Header title="Find My Tutor" />
+        <NavBar title="Find My Tutor" />
 
         <Switch>
           <Route exact path="/">
@@ -41,15 +44,18 @@ function App() {
             <SignUp />
           </Route>
 
-          // TODO: next sprint - other pages.
+          // TODO: AccountPage.
           <Route path="/account">
             AccountPage
           </Route>
+          <Route path="/team">
+            <TeamPage />
+          </Route>
           <Route path="/about">
-            AboutPage
+            <AboutPage />
           </Route>
           <Route path="/contact">
-            ContactPage
+            <ContactPage />
           </Route>
         </Switch>
 

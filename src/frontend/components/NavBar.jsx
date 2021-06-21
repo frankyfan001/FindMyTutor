@@ -2,8 +2,9 @@ import React from 'react';
 import {
   AppBar, Button, IconButton, makeStyles, Toolbar, Typography,
 } from '@material-ui/core';
-import { AccountCircle, Menu } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { AccountCircle } from '@material-ui/icons';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -45,36 +46,36 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Header() {
+export default function NavBar() {
   const classes = useStyles();
 
   return (
     <div>
       <AppBar position="fixed" className={classes.root}>
         <Toolbar>
-          <IconButton color="inherit" edge="start" aria-label="menu">
-            <Menu />
+          <IconButton component={RouterLink} to="/" color="inherit" edge="start" aria-label="menu">
+            <HomeIcon />
           </IconButton>
-          <Link to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
+          <RouterLink to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
             <Typography variant="h5" aria-label="title" className={classes.title}>
               Find My Tutor
             </Typography>
-          </Link>
-          <Link to="/login" style={{ textDecoration: 'none' }}>
+          </RouterLink>
+          <RouterLink to="/login" style={{ textDecoration: 'none' }}>
             <Button size="small" aria-label="title" className={classes.loginButton}>
               Sign in
             </Button>
-          </Link>
-          <Link to="/register" style={{ textDecoration: 'none' }}>
+          </RouterLink>
+          <RouterLink to="/register" style={{ textDecoration: 'none' }}>
             <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
               Sign up
             </Button>
-          </Link>
-          <Link to="/account">
+          </RouterLink>
+          <RouterLink to="/account">
             <IconButton aria-label="account" className={classes.accountButton}>
               <AccountCircle />
             </IconButton>
-          </Link>
+          </RouterLink>
         </Toolbar>
       </AppBar>
       <br />
