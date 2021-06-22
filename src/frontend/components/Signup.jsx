@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 // Thanks to material-ui example:
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
@@ -46,12 +49,25 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 2),
+    background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({accountHook}) {
+  const history = useHistory();
+
   const classes = useStyles();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const fname = e.target.fname.value;
+    const lname = e.target.lname.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    accountHook.register(fname, lname, email, password);
+    history.push("/");
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,12 +79,12 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="fname"
                 variant="outlined"
                 required
                 fullWidth
@@ -84,7 +100,7 @@ export default function SignUp() {
                 fullWidth
                 id="lastName"
                 label="Last Name"
-                name="lastName"
+                name="lname"
                 autoComplete="lname"
               />
             </Grid>
@@ -113,8 +129,9 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                control={<Checkbox required value="allowExtraEmails" color="primary" />}
+                label="I agree to the terms of use and privacy policy."
+                style={{ float: 'left' }}
               />
             </Grid>
           </Grid>
@@ -129,9 +146,9 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <RouterLink to="/login">
                 Already have an account? Sign in
-              </Link>
+              </RouterLink>
             </Grid>
           </Grid>
         </form>

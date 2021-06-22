@@ -1,0 +1,22 @@
+{
+  "accounts": [
+    {
+      "email": "frankyf@gmail.com",
+      "password": "123456",
+      "type": "tutor",
+      "fname": "Chengzhi",
+      "lname": "Fan",
+      "avatar": "https://lh3.googleusercontent.com/proxy/_zorKxEX9v3uFB2sL8264ehA7dTEcd9kHVpSBVt3Aw57XVOdKY3VzzyNOkJbjutlkXbk6pbWzgUkmtrE6VmAf-GSWfCq5q7X6diZ_731HzgkLRmVIc_rbT3daZjrUrKA7gDWIatSszCcT2zhdQ",
+      "id": 1
+    },
+    {
+      "email": "lisaw@gmail.com",
+      "password": "123456",
+      "type": "tutor",
+      "fname": "Risa",
+      "lname": "Watanabe",
+      "avatar": "https://www.zhifure.com/upload/images/2018/7/16143327546.jpg",
+      "id": 2
+    }
+  ]
+}

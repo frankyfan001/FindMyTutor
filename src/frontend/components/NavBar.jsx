@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {
   AppBar, Button, IconButton, makeStyles, Toolbar, Typography,
@@ -5,6 +6,7 @@ import {
 import { AccountCircle } from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link as RouterLink } from 'react-router-dom';
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,9 +46,17 @@ const useStyles = makeStyles(() => ({
   accountButton: {
     color: 'white',
   },
+  logoutButton: {
+    borderRadius: 20,
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    color: 'white',
+  },
 }));
 
-export default function NavBar() {
+export default function NavBar({title, accountHook}) {
   const classes = useStyles();
 
   return (
@@ -58,24 +68,45 @@ export default function NavBar() {
           </IconButton>
           <RouterLink to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
             <Typography variant="h5" aria-label="title" className={classes.title}>
-              Find My Tutor
+              {title}
             </Typography>
           </RouterLink>
-          <RouterLink to="/login" style={{ textDecoration: 'none' }}>
-            <Button size="small" aria-label="title" className={classes.loginButton}>
-              Sign in
-            </Button>
-          </RouterLink>
-          <RouterLink to="/register" style={{ textDecoration: 'none' }}>
-            <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
-              Sign up
-            </Button>
-          </RouterLink>
-          <RouterLink to="/account">
-            <IconButton aria-label="account" className={classes.accountButton}>
-              <AccountCircle />
-            </IconButton>
-          </RouterLink>
+
+          {
+            accountHook.isLogin() ?
+              <>
+                <RouterLink to="/account">
+                  <IconButton aria-label="account" className={classes.accountButton}>
+                    {
+                      accountHook.account.avatar ?
+                        <Avatar alt="" src={accountHook.account.avatar} />
+                      :
+                        <AccountCircle />
+                    }
+                  </IconButton>
+                </RouterLink>
+                <RouterLink to="/" style={{ textDecoration: 'none' }}>
+                  <Button size="small" aria-label="logout" className={classes.logoutButton}
+                          onClick={() => {accountHook.logout()}}>
+                    Logout
+                  </Button>
+                </RouterLink>
+              </>
+            :
+              <>
+                <RouterLink to="/login" style={{ textDecoration: 'none' }}>
+                  <Button size="small" aria-label="login" className={classes.loginButton}>
+                    Sign in
+                  </Button>
+                </RouterLink>
+                <RouterLink to="/register" style={{ textDecoration: 'none' }}>
+                  <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
+                    Sign up
+                  </Button>
+                </RouterLink>
+              </>
+          }
+
         </Toolbar>
       </AppBar>
       <br />

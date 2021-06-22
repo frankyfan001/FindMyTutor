@@ -20,12 +20,15 @@ import SignUp from './components/Signup';
 import TeamPage from "./components/TeamPage";
 import AboutPage from "./components/AboutPage";
 import ContactPage from "./components/ContactPage";
+import useAccount from "./hooks/useAccount";
 
 function App() {
+  const accountHook = useAccount();
+
   return (
     <Router>
       <div className="App">
-        <NavBar title="Find My Tutor" />
+        <NavBar title="Find My Tutor" accountHook={accountHook} />
 
         <Switch>
           <Route exact path="/">
@@ -38,10 +41,10 @@ function App() {
            {/* <CardsApp /> */}
           </Route>
           <Route path="/login">
-            <LoginForm />
+            <LoginForm accountHook={accountHook} />
           </Route>
           <Route path="/register">
-            <SignUp />
+            <SignUp accountHook={accountHook} />
           </Route>
 
           // TODO: AccountPage.

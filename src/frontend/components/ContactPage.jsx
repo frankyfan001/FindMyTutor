@@ -99,7 +99,7 @@ export default function ContactPage(props) {
               <form onSubmit={onSubmit}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <TextField variant="outlined" required fullWidth autoComplete="fname" name="firstName" id="firstName" label="First Name" />
+                    <TextField variant="outlined" required fullWidth autoComplete="fname" name="firstName" id="firstName" label="First Name" autoFocus/>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField variant="outlined" required fullWidth autoComplete="lname" name="lastName" id="lastName" label="Last Name" />
@@ -126,10 +126,11 @@ export default function ContactPage(props) {
               <br />
               {
                 contactHook.isSuccess() ?
-                  <Alert severity="success" onClose={() => {contactHook.switchToIdle()}}>Email sent successfully.</Alert> :
-                  contactHook.isFailure() ?
-                    <Alert severity="warning" onClose={() => {contactHook.switchToIdle()}}>Please select "I agree to the terms of use and privacy policy".</Alert> :
-                    <></>
+                  <Alert severity="success" onClose={() => {contactHook.switchToIdle()}}>Email sent successfully.</Alert>
+                : contactHook.isFailure() ?
+                  <Alert severity="warning" onClose={() => {contactHook.switchToIdle()}}>Please select "I agree to the terms of use and privacy policy".</Alert>
+                :
+                  <></>
               }
             </Container>
           </Box>
