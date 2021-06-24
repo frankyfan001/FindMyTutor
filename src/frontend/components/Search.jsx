@@ -13,10 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SearchInput = () => {
+export const SearchInput = ({ handleSearch }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('');
+
+  console.log(value);
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -25,7 +27,12 @@ export const SearchInput = () => {
         label="Search"
         variant="outlined"
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(e) => {
+          e.preventDefault();
+          setValue(e.target.value);
+          handleSearch(e.target.value);
+        }}
+        // onChange={handleSearch}
         InputProps={{
           endAdornment: (
             <InputAdornment>
