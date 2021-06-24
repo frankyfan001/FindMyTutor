@@ -17,6 +17,7 @@ import { CardsApp } from './components/CardsApp';
 import { Grid } from '@material-ui/core';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
+import { Post } from './components/ViewPost';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
            <TutorBanner />
            <Grid container alignItems="center" justify="center">
              <Grid item align="center">
-              <CardsApp />
+              {/* <CardsApp /> */}
+              <Post />
              </Grid>
            </Grid>
            {/* <CardsApp /> */}

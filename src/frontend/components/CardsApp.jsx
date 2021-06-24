@@ -1,6 +1,6 @@
 import { Grid, makeStyles, Paper } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
-import { mockPosts } from './mockPosts';
+import { mockPosts } from './mocks/mockCards';
 
 // import { BaseCard as CardDemo } from './Cards';
 import FilterTreeView from './FilterTree';
