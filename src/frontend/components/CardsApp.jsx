@@ -1,6 +1,6 @@
 import { Grid, makeStyles, Paper } from '@material-ui/core';
-import React, { Fragment } from 'react';
-import { mockPosts } from './mockPosts';
+import React, { Fragment, useState } from 'react';
+import { mockPosts } from './mocks/mockCards';
 
 // import { BaseCard as CardDemo } from './Cards';
 import FilterTreeView from './FilterTree';
@@ -17,55 +17,61 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const useCards = () => {
+  const [cards, setCards] = useState(mockPosts);
+  const [filter, setFilter] = useState('');
+  // const [search, setSearch] = useState('');
+
+  // Click filter tree item
+  const handleClick = (e) => {
+    e.preventDefault();
+    const item = e.target.innerText.toLowerCase().trim();
+    setFilter(item);
+  };
+
+  // filter posts based on filter tree selection
+  const handleSearch = (newValue) => {
+    const valueProcessed = newValue.trim().toLowerCase();
+    setCards(mockPosts.filter((card) => {
+      console.log(filter);
+      if (filter) {
+        return card[filter].trim().toLowerCase().includes(valueProcessed);
+      }
+      return Object.values(card).some((val) => val.trim().toLowerCase().includes(valueProcessed));
+    }));
+  };
+
+  return {
+    cards, setCards, filter, handleClick, handleSearch,
+  };
+};
+
 export const CardsApp = () => {
   const classes = useStyles();
+  const cardsHook = useCards();
+
+  console.log(cardsHook.cards);
 
   return (
     <>
       <Grid container direction="row" spacing={3}>
         <Grid item>
           <Paper varient="outlined" style={{ minWidth: '200px' }}>
-            <FilterTreeView />
+            <FilterTreeView onNodeSelect={cardsHook.handleClick} />
           </Paper>
         </Grid>
         <Grid item>
           <Grid container direction="column" alignItems="stretch" justify="flex-start" className={classes.root}>
             <Grid item>
-              <SearchInput />
+              <SearchInput handleSearch={cardsHook.handleSearch} />
             </Grid>
-            {mockPosts.map((post, idx) => (
+            {cardsHook.cards.map((post, idx) => (
               <Grid item key={idx.toString()}>
-                <CardDemo cardHooks={post} idx={idx} />
+                <CardDemo post={post} idx={idx} />
               </Grid>
             ))}
           </Grid>
         </Grid>
-        {/* <Grid container direction="column" alignItems="stretch"
-        justify="flex-start" className={classes.root}>
-        <Grid item>
-          <SearchInput />
-        </Grid>
-        {mockPosts.map((post, idx) => (
-          <Grid item key={idx.toString()}>
-            <CardDemo cardHooks={post} idx={idx} />
-          </Grid>
-        ))} */}
-        {/* <Grid item>
-          <CardDemo user={{ name: 'Franky Fan' }} idx={0} />
-        </Grid>
-        <Grid item>
-          <CardDemo user={{ name: 'Franky Fan' }} />
-        </Grid>
-        <Grid item>
-          <CardDemo user={{ name: 'Franky Fan' }} />
-        </Grid>
-        <Grid item>
-          <CardDemo user={{ name: 'Franky Fan' }} />
-        </Grid>
-        <Grid item>
-          <CardDemo user={{ name: 'Franky Fan' }} />
-        </Grid>
-      </Grid> */}
       </Grid>
     </>
 

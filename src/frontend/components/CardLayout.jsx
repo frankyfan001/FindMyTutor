@@ -33,7 +33,7 @@ const useCardStyles = makeStyles(() => ({
   },
 }));
 
-export function CardDemo({ cardHooks }) {
+export function CardDemo({ post }) {
   const classes = useCardStyles();
   // style={{ background: 'palegreen' }}
   // const firstLetter = cardHooks.name[0];
@@ -92,7 +92,7 @@ export function CardDemo({ cardHooks }) {
           <Grid item xs={12} md={1}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
-                <Typography>{cardHooks.price}</Typography>
+                <Typography>{post.price}</Typography>
                 {' '}
                 {/* WagePerHour */}
               </Grid>

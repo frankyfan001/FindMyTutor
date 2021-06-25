@@ -114,7 +114,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function FilterTreeView() {
+export default function FilterTreeView({ onNodeSelect }) {
   const classes = useStyles();
 
   return (
@@ -124,6 +124,7 @@ export default function FilterTreeView() {
       defaultCollapseIcon={<ArrowDropDownIcon />}
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
+      onNodeSelect={onNodeSelect}
     >
       {/* <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} /> */}
       {/* <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} /> */}
