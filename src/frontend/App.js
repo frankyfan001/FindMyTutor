@@ -45,7 +45,7 @@ function App() {
           <Route path="/login">
             <LoginForm accountHook={accountHook} />
           </Route>
-          <Route path="/register">
+          <Route path="/register/">
             <SignUp accountHook={accountHook} />
           </Route>
 

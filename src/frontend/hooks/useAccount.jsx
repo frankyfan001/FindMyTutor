@@ -19,29 +19,33 @@ export default function useAccount() {
   };
 
   // setters
-  const register = async(fName, lName, email, password) => {
-    const res = await fetch('http://localhost:9000/accounts', {
+  const register = async (input) => {
+    const res = await fetch('http://localhost:5000/accounts/register', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        type: "tutor",
-        fName: fName,
-        lName: lName,
-        avatar: null})
+      body: JSON.stringify(input)
     });
-    const data = await res.json();
-    setAccount(data);
+    const output = await res.json();
+
+    // If register succeeded, login directly.
+    if (output.status === "SUCCESS") {
+      setAccount(output.data);
+    }
+    return output;
   };
 
-  const login = async(email, password) => {
-    console.log("login");
-    const res = await fetch('http://localhost:9000/accounts/' + 1, {
-      method: 'GET'
+  const login = async(input) => {
+    const res = await fetch('http://localhost:5000/accounts/login', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(input)
     });
-    const data = await res.json();
-    setAccount(data);
+    const output = await res.json();
+
+    if (output.status === "SUCCESS") {
+      setAccount(output.data);
+    }
+    return output;
   };
 
   const logout = () => {

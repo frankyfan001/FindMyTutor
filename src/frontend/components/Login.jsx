@@ -48,10 +48,24 @@ export const LoginForm = ({accountHook}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
+
+    const username = e.target.username.value;
     const password = e.target.password.value;
-    accountHook.login(email, password);
-    history.push("/");
+
+    const input = {
+      username,
+      password,
+    };
+
+    const p = accountHook.login(input);
+
+    p.then((output) => {
+      if (output.status === "SUCCESS") {
+        history.push("/");
+      } else {
+        // TODO: if login failed.
+      }
+    });
   };
 
   return (
@@ -70,10 +84,10 @@ export const LoginForm = ({accountHook}) => {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
