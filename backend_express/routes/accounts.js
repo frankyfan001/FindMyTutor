@@ -25,7 +25,7 @@ const accounts = [
 // TODO: Register a new account.
 /* Register a new account. */
 router.post('/register', function(req, res, next) {
-  // Input samples:
+  // input samples:
   const input = {
     username: "jerryliu",
     password: "liu",
@@ -60,7 +60,7 @@ router.post('/register', function(req, res, next) {
 // TODO: Login an account.
 /* Login an account. */
 router.post('/login', function(req, res, next) {
-  // Input samples:
+  // input samples:
   const input = {
     username: "frankyfan",
     password: "123456",
