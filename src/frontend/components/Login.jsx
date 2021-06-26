@@ -20,7 +20,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
-const useStyles = makeStyles((theme) => ({
+export const useFormStyle = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export const LoginForm = ({accountHook}) => {
   const history = useHistory();
 
-  const classes = useStyles();
+  const classes = useFormStyle();
 
   const onSubmit = (e) => {
     e.preventDefault();

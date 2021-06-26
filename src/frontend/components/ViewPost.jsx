@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -11,8 +11,12 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
+import queryString from 'query-string';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import { mockPost } from './mocks/mockPost';
 import FormDialog from './CommentForm';
+import usePosts from '../hooks/usePost';
 
 const useRootStyle = makeStyles(() => ({
   root: {
@@ -20,8 +24,22 @@ const useRootStyle = makeStyles(() => ({
   },
 }));
 
-export const Post = () => {
+const useSinglePost = () => {
+  const [singlePost, setSinglePost] = useState({});
+
+  const params = queryString(useLocation().search);
+  const { id } = params;
+  useEffect(() => {
+    const { getSinglePost } = usePosts();
+    setSinglePost(getSinglePost(id));
+  }, []);
+
+  return { singlePost };
+};
+
+export const Post = ({ accountHook }) => {
   const classes = useRootStyle();
+  const { post } = useSinglePost();
   return (
     <>
       <CssBaseline />
@@ -36,7 +54,7 @@ export const Post = () => {
               </Grid>
             </Grid>
             <Grid item style={{ width: '100%' }}>
-              <CommentList comments={mockPost.comments} />
+              <CommentList comments={mockPost.comments} isLogin={accountHook.isLogin} />
             </Grid>
           </Grid>
         </Container>
@@ -123,15 +141,24 @@ const useDialog = () => {
   };
 };
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, isLogin }) => {
   const classes = useStyles();
   const dialogHooks = useDialog();
   return (
     <Grid container alignItems="flex-end" direction="column" spacing={5}>
       <Grid item>
-        <Button variant="contained" color="primary" onClick={dialogHooks.handleClickOpen}>
-          Add new comment
-        </Button>
+        {isLogin
+          ? (
+            <Button variant="contained" color="primary" onClick={dialogHooks.handleClickOpen}>
+              Add new comment
+            </Button>
+          )
+          : (
+            <Button variant="contained" color="primary" component={<Link to="/" />}>
+              Add new comment
+            </Button>
+          )}
+
         <FormDialog dialogHooks={dialogHooks} />
       </Grid>
       <Grid item className={classes.root}>
