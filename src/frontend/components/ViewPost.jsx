@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import {
   Avatar,
@@ -14,9 +15,12 @@ import {
 import queryString from 'query-string';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import { ThumbDown } from '@material-ui/icons';
 import { mockPost } from './mocks/mockPost';
 import FormDialog from './CommentForm';
 import usePosts from '../hooks/usePost';
+import useComments from '../hooks/useComment';
 
 const useRootStyle = makeStyles(() => ({
   root: {
@@ -24,22 +28,16 @@ const useRootStyle = makeStyles(() => ({
   },
 }));
 
-const useSinglePost = () => {
-  const [singlePost, setSinglePost] = useState({});
-
-  const params = queryString(useLocation().search);
-  const { id } = params;
-  useEffect(() => {
-    const { getSinglePost } = usePosts();
-    setSinglePost(getSinglePost(id));
-  }, []);
-
-  return { singlePost };
-};
-
 export const Post = ({ accountHook }) => {
   const classes = useRootStyle();
-  const { post } = useSinglePost();
+  const [post, setSinglePost] = useState({});
+
+  const params = queryString.parse(useLocation().search);
+  const { id } = params;
+  const { getSinglePost } = usePosts();
+  useEffect(() => {
+    setSinglePost(getSinglePost(id));
+  }, []);
   return (
     <>
       <CssBaseline />
@@ -162,9 +160,9 @@ const CommentList = ({ comments, isLogin }) => {
         <FormDialog dialogHooks={dialogHooks} />
       </Grid>
       <Grid item className={classes.root}>
-        <Grid container>
+        <Grid container alignItems="stretch">
           {comments.map((comment, idx) => (
-            <Grid item key={idx.toString()}>
+            <Grid item key={idx.toString()} xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Comment comment={comment} />
             </Grid>
           ))}
@@ -174,23 +172,79 @@ const CommentList = ({ comments, isLogin }) => {
   );
 };
 
-const Comment = ({ comment }) => (
-  <Grid container wrap="nowrap" spacing={2}>
-    <Grid item>
-      <Avatar alt={comment.user.name} src={comment.user.img} />
+const Comment = ({ comment }) => {
+  const { updateComment } = useComments();
+  const handleClick = (e) => {
+    console.log(e.target);
+    const name = e.target.up ? 'thumbsUp' : 'thumbsDown';
+    console.log(comment[name]);
+    const rate = comment[name];
+    const newComment = {
+      ...comment,
+      [name]: rate + 1,
+    };
+
+    updateComment(newComment);
+  };
+  console.log(comment);
+  return (
+    <Grid container wrap="nowrap" spacing={2} xs={12} alignContent="space-between">
+      <Grid item xs={1}>
+        <Avatar alt={comment.user.name} src={comment.user.img} />
+      </Grid>
+      <Grid item xs={12}>
+        <h4 style={{ margin: 0, textAlign: 'left' }}>
+          {comment.user.name}
+        </h4>
+        <Typography style={{ textAlign: 'left' }}>
+          {comment.content}
+        </Typography>
+        <p style={{ textAlign: 'left', color: 'grey' }}>
+          posted at
+          {' '}
+          {new Date().toLocaleDateString()}
+        </p>
+      </Grid>
+      <Grid item align="right" justify="space-between" xs={3}>
+        <RatingArea up={comment.thumbsUp} down={comment.thumbsDown} handleClick={handleClick} />
+      </Grid>
     </Grid>
-    <Grid item>
-      <h4 style={{ margin: 0, textAlign: 'left' }}>
-        {comment.user.name}
-      </h4>
-      <Typography style={{ textAlign: 'left' }}>
-        {comment.content}
-      </Typography>
-      <p style={{ textAlign: 'left', color: 'grey' }}>
-        posted at
-        {' '}
-        {new Date().toLocaleDateString()}
-      </p>
+  );
+};
+
+const useRatingStyles = ((theme) => ({
+  hover: {
+    '&:hover': {
+      backgroundColor: 'blue',
+    },
+  },
+}));
+const RatingArea = ({ up, down, handleClick }) => {
+  const classes = useRatingStyles();
+  return (
+    <Grid container direction="row" spacing={3}>
+      <Grid item className={classes.hover}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ThumbUpIcon />}
+          onClick={handleClick}
+        >
+          {up}
+        </Button>
+      </Grid>
+      <Grid item className={classes.hover}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ThumbDown />}
+        >
+          {down}
+        </Button>
+      </Grid>
+
     </Grid>
-  </Grid>
-);
+  );
+};

@@ -14,6 +14,8 @@ export const mockPost = {
         img: 'https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg',
       },
       content: 'Super Oligei is the best tutor!!!!!',
+      thumbsUp: 5,
+      thumbsDown: 0,
     },
   ],
 };

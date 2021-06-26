@@ -1,14 +1,14 @@
 import {
-  Grid, Link, makeStyles, Paper,
+  Grid, makeStyles, Paper,
 } from '@material-ui/core';
 import React, { Fragment, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { mockPosts } from './mocks/mockPosts';
 
 import FilterTreeView from './FilterTree';
 import usePosts from '../hooks/usePost';
 import { CardDemo } from './CardLayout';
 import { SearchInput } from './Search';
-import useAccount from '../hooks/useAccount';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -75,7 +75,7 @@ export const CardsApp = ({ accountHooks }) => {
               <SearchInput handleSearch={postsHook.handleSearch} />
             </Grid>
             {postsHook.filteredPosts.map((post, idx) => (
-              <Link to={`viewPost/${post.id}`}>
+              <Link to={`viewPost/${post.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                 <Grid item key={idx.toString()}>
                   <CardDemo post={post} idx={idx} />
                 </Grid>

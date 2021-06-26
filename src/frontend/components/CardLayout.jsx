@@ -55,7 +55,7 @@ export function CardDemo({ post }) {
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
                 {/* <Typography>{cardHooks.name}</Typography> */}
-                <Typography>Super OLIGEI</Typography>
+                <Typography>{ post.tutor }</Typography>
                 {/* UserName */}
               </Grid>
               <Grid item xs={12} md={12}>
@@ -70,13 +70,13 @@ export function CardDemo({ post }) {
               <Grid item xs={12} md={12}>
                 {/* <Button variant="outlined" size="small" className="try">UBC</Button> */}
                 {/* <SchoolChip school={cardHooks.school} /> */}
-                <SchoolChip school="UBC" />
+                <SchoolChip school={post.school} />
                 {/* School */}
               </Grid>
               <Grid item xs={12} md={12}>
                 {/* <Button variant="outlined" size="small" className="try">CPSC 455</Button> */}
                 {/* <CourseChip course={cardHooks.course} /> */}
-                <CourseChip course="CPSC 455" />
+                <CourseChip course={post.course} />
                 {/* Course */}
               </Grid>
             </Grid>
@@ -84,7 +84,7 @@ export function CardDemo({ post }) {
           <Grid item xs={12} md={6}>
             <Typography>
               {/* Brief Description: this should be limited to the first 100 characters... */}
-              Best Tutor ever
+              {post.description}
               {/* {cardHooks.description} */}
               {/* BriefDescription */}
             </Typography>

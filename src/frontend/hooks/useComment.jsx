@@ -27,9 +27,6 @@ export default function useComments() {
 
   const updateComment = async (comment) => {
     console.log(`update post: ${comment.id}`);
-    const req = await api.put('/comments', JSON.stringify(comment));
-
-    const res = await req.json();
     setComments(
       comments.splice(
         comments.findIndex((oldComment) => oldComment.id === comment.id),
@@ -37,6 +34,8 @@ export default function useComments() {
         comment,
       ),
     );
+    const req = await api.put('/comments', JSON.stringify(comment));
+    const res = await req.json();
   };
 
   return {
