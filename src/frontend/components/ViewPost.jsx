@@ -19,8 +19,9 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import { ThumbDown } from '@material-ui/icons';
 import { mockPost } from './mocks/mockPost';
 import FormDialog from './CommentForm';
-import usePosts from '../hooks/usePost';
+import usePosts from '../hooks/usePosts';
 import useComments from '../hooks/useComment';
+import usePost from '../hooks/usePost';
 
 const useRootStyle = makeStyles(() => ({
   root: {
@@ -28,16 +29,41 @@ const useRootStyle = makeStyles(() => ({
   },
 }));
 
+const useRating = (updateFunc, updateObject) => {
+  const [isCancel, setCancel] = useState(false);
+  const handleClick = (e) => {
+    const name = e.currentTarget.id;
+    console.log(updateObject[name]);
+    const rate = isCancel ? updateObject[name] - 1 : updateObject[name] + 1;
+    console.log(rate);
+    const newObject = {
+      ...updateObject,
+      [name]: rate,
+    };
+    console.log(newObject);
+    setCancel(!isCancel);
+    updateFunc(newObject);
+  };
+
+  return { handleClick, isCancel };
+};
 export const Post = ({ accountHook }) => {
   const classes = useRootStyle();
-  const [post, setSinglePost] = useState({});
+  // const [post, setSinglePost] = useState(mockPost);
 
   const params = queryString.parse(useLocation().search);
   const { id } = params;
-  const { getSinglePost } = usePosts();
-  useEffect(() => {
-    setSinglePost(getSinglePost(id));
-  }, []);
+  // const { getSinglePost, updatePost } = usePosts();
+
+  const {
+    post, setPost, getPost, updatePost,
+  } = usePost();
+  // useEffect(() => {
+  //   setPost(getPost(id));
+  // }, []);
+
+  console.log(post);
+  const { handleClick } = useRating(updatePost, post);
   return (
     <>
       <CssBaseline />
@@ -47,12 +73,15 @@ export const Post = ({ accountHook }) => {
             <Grid item>
               <Grid container spacing={5} alignContent="center" direction="row">
                 <Grid item>
-                  <PostInfo profile={mockPost.profile} content={mockPost.content} />
+                  <PostInfo profile={post.profile} content={mockPost.content} />
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item>
+              <RatingArea up={post.thumbsUp} down={post.thumbsDown} handleClick={handleClick} />
+            </Grid>
             <Grid item style={{ width: '100%' }}>
-              <CommentList comments={mockPost.comments} isLogin={accountHook.isLogin} />
+              <CommentList comments={post.comments} isLogin={accountHook.isLogin} />
             </Grid>
           </Grid>
         </Container>
@@ -106,7 +135,7 @@ const PostContent = ({ content }) => (
 
 const PostInfo = ({ profile, content }) => (
   <Grid container alignItems="stretch" direction="row">
-    <Grid item xs={12} sm={6}>
+    <Grid item xs={12} ssm={6}>
       <Profile profile={profile} />
     </Grid>
     <Grid item xs={12} sm={6}>
@@ -174,19 +203,8 @@ const CommentList = ({ comments, isLogin }) => {
 
 const Comment = ({ comment }) => {
   const { updateComment } = useComments();
-  const handleClick = (e) => {
-    console.log(e.target);
-    const name = e.target.up ? 'thumbsUp' : 'thumbsDown';
-    console.log(comment[name]);
-    const rate = comment[name];
-    const newComment = {
-      ...comment,
-      [name]: rate + 1,
-    };
-
-    updateComment(newComment);
-  };
   console.log(comment);
+  const { handleClick } = useRating(updateComment, comment);
   return (
     <Grid container wrap="nowrap" spacing={2} xs={12} alignContent="space-between">
       <Grid item xs={1}>
@@ -230,6 +248,7 @@ const RatingArea = ({ up, down, handleClick }) => {
           className={classes.button}
           startIcon={<ThumbUpIcon />}
           onClick={handleClick}
+          id="thumbsUp"
         >
           {up}
         </Button>
@@ -240,6 +259,8 @@ const RatingArea = ({ up, down, handleClick }) => {
           color="secondary"
           className={classes.button}
           startIcon={<ThumbDown />}
+          id="thumbsDown"
+          onClick={handleClick}
         >
           {down}
         </Button>
