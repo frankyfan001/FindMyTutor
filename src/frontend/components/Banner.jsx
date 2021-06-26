@@ -19,9 +19,9 @@ export const TutorBanner = () => (
             to find realiable tutor
           </Banners.SubTitle>
           <Banners.Description my={30}>
-            <Banners.Button color="rgb(128, 111, 193)">
-              Login
-            </Banners.Button>
+            {/* <Banners.Button color="rgb(128, 111, 193)"> */}
+            {/*  Login */}
+            {/* </Banners.Button> */}
             {/* <Banners.Button color="rgb(128, 111, 193)" ghost>
               Login as tutor
             </Banners.Button> */}
