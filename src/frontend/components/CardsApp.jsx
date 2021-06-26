@@ -18,6 +18,9 @@ const useStyles = makeStyles(() => ({
     maxHeight: '100%',
     minWidth: '100%',
   },
+  button: {
+    // background: 'blue',
+  },
 }));
 
 const usePostsCards = () => {
@@ -77,7 +80,7 @@ export const CardsApp = ({ accountHook }) => {
               <SearchInput handleSearch={postsHook.handleSearch} />
             </Grid>
             <Grid item align="right">
-              <Link to={accountHook.isLogin ? '/newPost' : '/login'} style={{ textDecoration: 'none', color: 'black' }}>
+              <Link to={accountHook.isLogin() && accountHook.isTutor() ? '/newPost' : '/login'} style={{ textDecoration: 'none', color: 'black' }}>
                 <Button
                   variant="contained"
                   color="primary"

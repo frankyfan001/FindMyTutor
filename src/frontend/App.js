@@ -38,19 +38,18 @@ function App() {
           <Route path="/viewPost/:id" >
             <Post accountHook={accountHook} />
           </Route>
-          <Route path="/newpost">
-            {accountHook.isLogin ?
-              <PostForm accountHook={accountHook} /> :
-              <Redirect to="/" />}
+          <Route path="/newPost">
+            <PostForm accountHook={accountHook} />
           </Route>
+
           <Route path="/register/">
             <SignUp accountHook={accountHook} />
           </Route>
           <Route path="/login">
             <LoginForm accountHook={accountHook} />
           </Route>
-          // TODO: AccountPage.
           <Route path="/account">
+            // TODO: AccountPage.
             AccountPage
           </Route>
           <Route path="/team">
