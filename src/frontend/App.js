@@ -1,14 +1,12 @@
 /* eslint-disable */
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import {
-  IconBase, LoginButton, OutlinedButton, RegisterButton,
-} from './components/Buttons';
+import { IconBase, LoginButton, OutlinedButton, RegisterButton } from './components/Buttons';
 import { FilledTextField, FormBase } from './components/Forms';
 import { TutorBanner } from './components/Banner';
 import { BaseCard } from './components/Cards';
@@ -18,10 +16,11 @@ import { Grid } from '@material-ui/core';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
 import { Post } from './components/ViewPost';
-import TeamPage from "./components/TeamPage";
-import AboutPage from "./components/AboutPage";
-import ContactPage from "./components/ContactPage";
-import useAccount from "./hooks/useAccount";
+import TeamPage from './components/TeamPage';
+import AboutPage from './components/AboutPage';
+import ContactPage from './components/ContactPage';
+import useAccount from './hooks/useAccount';
+import PostForm from './components/PostForm';
 
 function App() {
   const accountHook = useAccount();
@@ -33,14 +32,12 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-           <TutorBanner />
-           <Grid container alignItems="center" justify="center">
-             <Grid item align="center">
-              {/* <CardsApp /> */}
-              <Post />
-             </Grid>
-           </Grid>
-           {/* <CardsApp /> */}
+            <TutorBanner />
+            <Grid container alignItems="center" justify="center">
+              <Grid item align="center">
+                <CardsApp />
+              </Grid>
+            </Grid>
           </Route>
           <Route path="/login">
             <LoginForm accountHook={accountHook} />
@@ -48,11 +45,14 @@ function App() {
           <Route path="/register">
             <SignUp accountHook={accountHook} />
           </Route>
-
-          // TODO: AccountPage.
-          <Route path="/account">
-            AccountPage
+          <Route path="/newpost">
+            {accountHook.isLogin? <PostForm accountHook={accountHook} /> : <Redirect to="/" />}
           </Route>
+          <Route path="/viewPost/:id" >
+            <Post accountHook={accountHook} />
+          </Route>
+          // TODO: AccountPage.
+          <Route path="/account">AccountPage</Route>
           <Route path="/team">
             <TeamPage />
           </Route>
