@@ -11,6 +11,7 @@ export const mockPost = {
   thumbsDown: 2,
   comments: [
     {
+      id: 0,
       user: {
         name: 'Super OLIGEI',
         img: 'https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg',

@@ -15,13 +15,13 @@ export default function usePost() {
   };
 
   const updatePost = async (newPost) => {
-    console.log(`update post: ${post.id}`);
-    const req = await api.put('post', JSON.stringify(post));
-
-    const res = await req.json();
+    console.log(`update post: ${newPost.id}`);
     setPost(
       newPost,
     );
+    const req = await api.put('post', JSON.stringify(post));
+
+    const res = await req.json();
   };
 
   return {

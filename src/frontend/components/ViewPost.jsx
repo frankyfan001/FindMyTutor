@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import {
@@ -31,8 +32,10 @@ const useRootStyle = makeStyles(() => ({
 
 const useRating = (updateFunc, updateObject) => {
   const [isCancel, setCancel] = useState(false);
+  console.log('handling rating');
   const handleClick = (e) => {
     const name = e.currentTarget.id;
+    console.log('handling click');
     console.log(updateObject[name]);
     const rate = isCancel ? updateObject[name] - 1 : updateObject[name] + 1;
     console.log(rate);
@@ -58,12 +61,15 @@ export const Post = ({ accountHook }) => {
   const {
     post, setPost, getPost, updatePost,
   } = usePost();
+
+  const { updateComment } = useComments(post.comments);
   // useEffect(() => {
   //   setPost(getPost(id));
   // }, []);
 
   console.log(post);
-  const { handleClick } = useRating(updatePost, post);
+  const { handleClick: handlePostRatingClick } = useRating(updatePost, post);
+  const { handleCommentRatingClick } = useRating(updateComment, post.comments);
   return (
     <>
       <CssBaseline />
@@ -78,10 +84,10 @@ export const Post = ({ accountHook }) => {
               </Grid>
             </Grid>
             <Grid item>
-              <RatingArea up={post.thumbsUp} down={post.thumbsDown} handleClick={handleClick} />
+              <RatingArea up={post.thumbsUp} down={post.thumbsDown} handleClick={handlePostRatingClick} />
             </Grid>
             <Grid item style={{ width: '100%' }}>
-              <CommentList comments={post.comments} isLogin={accountHook.isLogin} />
+              <CommentList comments={post.comments} isLogin={accountHook.isLogin} handleClick={handleCommentRatingClick} />
             </Grid>
           </Grid>
         </Container>
@@ -168,7 +174,7 @@ const useDialog = () => {
   };
 };
 
-const CommentList = ({ comments, isLogin }) => {
+const CommentList = ({ comments, isLogin, handleClick }) => {
   const classes = useStyles();
   const dialogHooks = useDialog();
   return (
@@ -181,7 +187,7 @@ const CommentList = ({ comments, isLogin }) => {
             </Button>
           )
           : (
-            <Button variant="contained" color="primary" component={<Link to="/" />}>
+            <Button variant="contained" color="primary" component={<Link to="/login" />}>
               Add new comment
             </Button>
           )}
@@ -192,7 +198,7 @@ const CommentList = ({ comments, isLogin }) => {
         <Grid container alignItems="stretch">
           {comments.map((comment, idx) => (
             <Grid item key={idx.toString()} xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <Comment comment={comment} />
+              <Comment comment={comment} handleClick={handleClick} />
             </Grid>
           ))}
         </Grid>
@@ -201,34 +207,29 @@ const CommentList = ({ comments, isLogin }) => {
   );
 };
 
-const Comment = ({ comment }) => {
-  const { updateComment } = useComments();
-  console.log(comment);
-  const { handleClick } = useRating(updateComment, comment);
-  return (
-    <Grid container wrap="nowrap" spacing={2} xs={12} alignContent="space-between">
-      <Grid item xs={1}>
-        <Avatar alt={comment.user.name} src={comment.user.img} />
-      </Grid>
-      <Grid item xs={12}>
-        <h4 style={{ margin: 0, textAlign: 'left' }}>
-          {comment.user.name}
-        </h4>
-        <Typography style={{ textAlign: 'left' }}>
-          {comment.content}
-        </Typography>
-        <p style={{ textAlign: 'left', color: 'grey' }}>
-          posted at
-          {' '}
-          {new Date().toLocaleDateString()}
-        </p>
-      </Grid>
-      <Grid item align="right" justify="space-between" xs={3}>
-        <RatingArea up={comment.thumbsUp} down={comment.thumbsDown} handleClick={handleClick} />
-      </Grid>
+const Comment = ({ comment, handleClick }) => (
+  <Grid container wrap="nowrap" spacing={2} xs={12} alignContent="space-between">
+    <Grid item xs={1}>
+      <Avatar alt={comment.user.name} src={comment.user.img} />
     </Grid>
-  );
-};
+    <Grid item xs={12}>
+      <h4 style={{ margin: 0, textAlign: 'left' }}>
+        {comment.user.name}
+      </h4>
+      <Typography style={{ textAlign: 'left' }}>
+        {comment.content}
+      </Typography>
+      <p style={{ textAlign: 'left', color: 'grey' }}>
+        posted at
+        {' '}
+        {new Date().toLocaleDateString()}
+      </p>
+    </Grid>
+    <Grid item align="right" justify="space-between" xs={3}>
+      <RatingArea up={comment.thumbsUp} down={comment.thumbsDown} handleClick={handleClick} />
+    </Grid>
+  </Grid>
+);
 
 const useRatingStyles = ((theme) => ({
   hover: {
