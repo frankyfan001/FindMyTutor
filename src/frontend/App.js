@@ -35,7 +35,7 @@ function App() {
             <TutorBanner />
             <Grid container alignItems="center" justify="center">
               <Grid item align="center">
-                <CardsApp />
+                <CardsApp accountHook={accountHook} />
               </Grid>
             </Grid>
           </Route>

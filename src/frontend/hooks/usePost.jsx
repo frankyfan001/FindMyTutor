@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { api } from '../APIs/api';
-import { mockPosts } from '../components/mocks/mockPosts';
+import { mockPost } from '../components/mocks/mockPost';
 
-export default function usePosts() {
-  const [posts, setPosts] = useState(mockPosts);
-
-  const getPosts = async (filter) => {
-    console.log('get posts');
-    const req = await api.get('/posts', { params: { filter } });
-    const res = await req.json();
-    setPosts(res);
-  };
-
-  const getSinglePost = async (id) => {
+export default function usePost() {
+  const [post, setPost] = useState(mockPost);
+  const getPost = async (id) => {
     console.log(`get single post: ${id}`);
     const req = await api.get('/posts', {
       params: { id },
@@ -21,42 +13,18 @@ export default function usePosts() {
     const data = await req.json();
     return data;
   };
-  const addPost = async (newPost) => {
-    console.log(`add post: ${newPost.id}`);
-    const req = await api.post('/posts', JSON.stringify(newPost));
 
-    const res = await req.json();
-    setPosts([...posts, newPost]);
-  };
-
-  const deletePost = async (id) => {
-    console.log(`delete post: ${id}`);
-    const req = await api.delete('posts', {
-      params: { id },
-    });
-  };
-
-  const updatePost = async (post) => {
+  const updatePost = async (newPost) => {
     console.log(`update post: ${post.id}`);
-    const req = await api.put('posts', JSON.stringify(post));
+    const req = await api.put('post', JSON.stringify(post));
 
     const res = await req.json();
-    setPosts(
-      posts.splice(
-        posts.findIndex((oldPost) => oldPost.id === post.id),
-        1,
-        post,
-      ),
+    setPost(
+      newPost,
     );
   };
 
   return {
-    posts,
-    getPosts,
-    setPosts,
-    addPost,
-    getSinglePost,
-    deletePost,
-    updatePost,
+    post, setPost, getPost, updatePost,
   };
 }

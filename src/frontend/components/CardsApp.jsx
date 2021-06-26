@@ -1,12 +1,14 @@
 import {
+  Button,
   Grid, makeStyles, Paper,
 } from '@material-ui/core';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 import { mockPosts } from './mocks/mockPosts';
 
 import FilterTreeView from './FilterTree';
-import usePosts from '../hooks/usePost';
+import usePosts from '../hooks/usePosts';
 import { CardDemo } from './CardLayout';
 import { SearchInput } from './Search';
 
@@ -57,22 +59,34 @@ const usePostsCards = () => {
   };
 };
 
-export const CardsApp = ({ accountHooks }) => {
+export const CardsApp = ({ accountHook }) => {
   const classes = useStyles();
   const postsHook = usePostsCards();
 
   return (
     <>
-      <Grid container direction="row" spacing={3}>
+      <Grid container direction="row" spacing={5}>
         <Grid item>
           <Paper varient="outlined" style={{ minWidth: '200px' }}>
             <FilterTreeView onNodeSelect={postsHook.handleClick} />
           </Paper>
         </Grid>
         <Grid item>
-          <Grid container direction="column" alignItems="stretch" justify="flex-start" className={classes.root}>
+          <Grid container direction="column" alignItems="stretch" justify="flex-start" className={classes.root} spacing={3} noWrap>
             <Grid item>
               <SearchInput handleSearch={postsHook.handleSearch} />
+            </Grid>
+            <Grid item align="right">
+              <Link to={accountHook.isLogin ? '/newPost' : '/login'} style={{ textDecoration: 'none', color: 'black' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  startIcon={<AddIcon />}
+                >
+                  New Post
+                </Button>
+              </Link>
             </Grid>
             {postsHook.filteredPosts.map((post, idx) => (
               <Link to={`viewPost/${post.id}`} style={{ textDecoration: 'none', color: 'black' }}>

@@ -12,7 +12,7 @@ import WrapTextIcon from '@material-ui/icons/WrapText';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import { useFormStyle } from './Login';
-import usePosts from '../hooks/usePost';
+import usePosts from '../hooks/usePosts';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -71,7 +71,7 @@ export default function PostForm({ id }) {
               </Grid>
             </Grid>
             <Grid item>
-              <Button color="primary" variant="contained">Post</Button>
+              <Button color="primary" variant="contained" type="submit">Post</Button>
             </Grid>
           </form>
 
