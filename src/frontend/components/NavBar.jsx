@@ -113,7 +113,7 @@ export default function NavBar({title, accountHook}) {
       <br />
       <br />
       <br />
-      <br />
+      {/*<br />*/}
     </div>
   );
 }
