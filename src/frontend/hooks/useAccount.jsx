@@ -20,29 +20,59 @@ export default function useAccount() {
   };
 
   // setters
-  const register = async(fName, lName, email, password) => {
-    const res = await fetch('http://localhost:9000/accounts', {
-      method: 'POST',
-      headers: {'Content-type': 'application/json'},
-      body: JSON.stringify({
-        email: email,
-        password: password,
+  const register = async (input) => {
+    // const res = await fetch('http://localhost:5000/accounts/register', {
+    //   method: 'POST',
+    //   headers: {'Content-type': 'application/json'},
+    //   body: JSON.stringify(input)
+    // });
+    // const output = await res.json();
+
+    const output = {
+      status: "SUCCESS",
+      data: {
+        username: "jerryliu",
+        password: "123456",
         type: "tutor",
-        fName: fName,
-        lName: lName,
-        avatar: null})
-    });
-    const data = await res.json();
-    setAccount(data);
+        fname: "Jerry",
+        lname: "Liu",
+        avatar: null,
+      },
+      err: null,
+    };
+
+    // If register succeeded, login directly.
+    if (output.status === "SUCCESS") {
+      setAccount(output.data);
+    }
+    return output;
   };
 
-  const login = async(email, password) => {
-    console.log("login");
-    const res = await fetch('http://localhost:9000/accounts/' + 1, {
-      method: 'GET'
-    });
-    const data = await res.json();
-    setAccount(data);
+  const login = async(input) => {
+    // const res = await fetch('http://localhost:5000/accounts/login', {
+    //   method: 'POST',
+    //   headers: {'Content-type': 'application/json'},
+    //   body: JSON.stringify(input)
+    // });
+    // const output = await res.json();
+
+    const output = {
+      status: "SUCCESS",
+      data: {
+        username: "frankyfan",
+        password: "123456",
+        type: "tutor",
+        fname: "Franky",
+        lname: "Fan",
+        avatar: "https://www.zhifure.com/upload/images/2018/7/16143327546.jpg",
+      },
+      err: null,
+    };
+
+    if (output.status === "SUCCESS") {
+      setAccount(output.data);
+    }
+    return output;
   };
 
   const logout = () => {

@@ -1,7 +1,7 @@
 export const mockPost = {
   profile: {
     name: 'Super OLIGEI',
-    img: 'https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg',
+    img: 'https://www.zhifure.com/upload/images/2018/7/16143327546.jpg',
   },
   content: {
     title: 'Super OLIGEI is for UBC CPSC courses',
@@ -14,7 +14,7 @@ export const mockPost = {
       id: 0,
       user: {
         name: 'Super OLIGEI',
-        img: 'https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg',
+        img: 'https://www.zhifure.com/upload/images/2018/7/16143327546.jpg',
       },
       content: 'Super Oligei is the best tutor!!!!!',
       thumbsUp: 5,

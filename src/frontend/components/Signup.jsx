@@ -6,32 +6,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import {FormControl, Radio, RadioGroup} from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
 // Thanks to material-ui example:
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Find My Tutor
-      </Link>
-      {' '}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,18 +41,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp({accountHook}) {
+  const [type, setType] = React.useState("tutor");
+
   const history = useHistory();
 
   const classes = useStyles();
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     const fname = e.target.fname.value;
     const lname = e.target.lname.value;
-    const email = e.target.email.value;
+    const username = e.target.username.value;
     const password = e.target.password.value;
-    accountHook.register(fname, lname, email, password);
-    history.push("/");
+
+    const input = {
+      username,
+      password,
+      type,
+      fname,
+      lname,
+    };
+
+    const p = accountHook.register(input);
+
+    p.then((output) => {
+      if (output.status === "SUCCESS") {
+        history.push("/");
+      } else {
+        // TODO: if register failed.
+      }
+    });
   };
 
   return (
@@ -79,6 +84,14 @@ export default function SignUp({accountHook}) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <br />
+        <br />
+        <FormControl component="fieldset">
+          <RadioGroup aria-label="type" name="type" value={type} onChange={e => setType(e.target.value)}>
+            <FormControlLabel value="tutor" control={<Radio />} label="Become A Tutor" />
+            <FormControlLabel value="student" control={<Radio />} label="Become A Student" />
+          </RadioGroup>
+        </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -109,10 +122,10 @@ export default function SignUp({accountHook}) {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
@@ -153,9 +166,6 @@ export default function SignUp({accountHook}) {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

@@ -21,6 +21,7 @@ import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
 import PostForm from './components/PostForm';
+import HomePage from "./components/HomePage";
 
 function App() {
   const accountHook = useAccount();
@@ -32,27 +33,25 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-            <TutorBanner />
-            <Grid container alignItems="center" justify="center">
-              <Grid item align="center">
-                <CardsApp accountHook={accountHook} />
-              </Grid>
-            </Grid>
-          </Route>
-          <Route path="/login">
-            <LoginForm accountHook={accountHook} />
-          </Route>
-          <Route path="/register">
-            <SignUp accountHook={accountHook} />
-          </Route>
-          <Route path="/newpost">
-            {accountHook.isLogin? <PostForm accountHook={accountHook} /> : <Redirect to="/" />}
+            <HomePage accountHook={accountHook} />
           </Route>
           <Route path="/viewPost/:id" >
             <Post accountHook={accountHook} />
           </Route>
-          // TODO: AccountPage.
-          <Route path="/account">AccountPage</Route>
+          <Route path="/newPost">
+            <PostForm accountHook={accountHook} />
+          </Route>
+
+          <Route path="/register/">
+            <SignUp accountHook={accountHook} />
+          </Route>
+          <Route path="/login">
+            <LoginForm accountHook={accountHook} />
+          </Route>
+          <Route path="/account">
+            // TODO: AccountPage.
+            AccountPage
+          </Route>
           <Route path="/team">
             <TeamPage />
           </Route>

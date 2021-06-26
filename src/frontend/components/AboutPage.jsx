@@ -25,10 +25,10 @@ export default function AboutPage(props) {
     'header': 'About Us',
     'description': 'Find My Tutor is on its best approach to change the way you get tutoring.',
     '01_image': 'https://www.k-state.edu/aac/images/tutoring/Tutoring.png',
-    '01_company': 'Tutors',
+    '01_company': 'Become A Tutor',
     '01_description': 'Professional, dedicated and local.',
     '02_image': 'https://www.atlasnetwork.org/assets/uploads/news-main/_detail/Students_liberty.png',
-    '02_company': 'Students',
+    '02_company': 'Become A Student',
     '02_description': 'Enjoy the best tutoring experiences.',
     ...props.content
   };

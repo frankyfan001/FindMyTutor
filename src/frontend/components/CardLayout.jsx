@@ -9,7 +9,17 @@ import { SchoolChip, CourseChip } from './Cards';
 const useCardStyles = makeStyles(() => ({
   root: {
     maxWidth: '100%',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
+    maxHeight: '160px',
+  },
+  root1: {
+    maxWidth: '100%',
+    background: 'linear-gradient(45deg, #EED4D9FF 30%, #EAD7CFFF 90%)',
+    maxHeight: '160px',
+  },
+  root2: {
+    maxWidth: '100%',
+    background: '#eed4d9',
     maxHeight: '160px',
   },
   light: {
@@ -33,14 +43,14 @@ const useCardStyles = makeStyles(() => ({
   },
 }));
 
-export function CardDemo({ post }) {
+export function CardDemo({ post, idx }) {
   const classes = useCardStyles();
   // style={{ background: 'palegreen' }}
   // const firstLetter = cardHooks.name[0];
   return (
     <>
       <div>
-        <Grid container spacing={2} className={classes.root}>
+        <Grid container spacing={2} className={idx % 2 === 0 ? classes.root : classes.root1}>
           <Grid item xs={12} md={1}>
             <IconButton>
               {/* <AccountCircle /> */}
