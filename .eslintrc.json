@@ -23,6 +23,7 @@
         "import/prefer-default-export": "off",
         "react/prop-types": "off",
         "react/button-has-type": "off",
-        "no-new": "off"
+        "no-new": "off",
+        "no-unused-vars":"warn"
     }
 }

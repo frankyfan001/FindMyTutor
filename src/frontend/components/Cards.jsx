@@ -68,7 +68,7 @@ export const BaseCard = ({ user, description, idx }) => {
             <Grid container>
               <Grid item>
                 <ProfileArea
-                  profile={{ name: 'Franky Fan', img: './static/abc.jpg' }}
+                  profile={{ name: user.name, img: './static/abc.jpg' }}
                   course="CPSC 110"
                   school="UBC"
                 />
@@ -105,7 +105,7 @@ const useChipStyles = makeStyles((theme) => ({
   },
 }));
 
-const CourseChip = ({ course }) => {
+export const CourseChip = ({ course }) => {
   const classes = useChipStyles();
 
   return (
@@ -113,7 +113,7 @@ const CourseChip = ({ course }) => {
   );
 };
 
-const SchoolChip = ({ school }) => {
+export const SchoolChip = ({ school }) => {
   const classes = useChipStyles();
   return (
     <Chip label={school} color="secondary" deleteIcon={<DoneIcon />} />
@@ -161,12 +161,12 @@ const ProfileArea = ({ profile, course, school }) => {
           <Grid item xs="auto">
             <Grid item align="center">
               <Avatar aria-label="recipe" className={classes.avatar}>
-                F
+                S
               </Avatar>
             </Grid>
             <Grid item align="center">
               <Typography paragraph>
-                Franky Fan
+                Super OLIGEI
               </Typography>
             </Grid>
             <Grid item align="center">
