@@ -6,28 +6,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-// Connect to MongoDB.findMyTutor.
-const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/findMyTutor";
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => {
-    console.log('MongoDB.findMyTutor is connected.');
-
-    // Initialize MongoDB.findMyTutor.
-    const initializeDatabase = require('./models/initializeDatabase');
-    initializeDatabase();
-    console.log('MongoDB.findMyTutor is initialized.')
-  })
-  .catch((err) => {
-    console.log(err)
-  });
+// Setup MongoDB.findMyTutor.
+const setupDatabase = require('./models/setupDatabase');
+setupDatabase().then();
 
 // Routers
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 const accountsRouter = require('./routes/accounts');
-var postsRouter = require('./routes/posts');
-var commentsRouter = require('./routes/comments');
-
+const postsRouter = require('./routes/posts');
+const commentsRouter = require('./routes/comments');
 
 var app = express();
 
