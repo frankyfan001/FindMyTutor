@@ -7,21 +7,35 @@ const Account = require('../models/account');
 router.post('/register', function(req, res, next) {
   const newAccount = req.body;
 
-  // TODO: respond with error message if any field of newAccount is invalid.
-  let success = true;
-  let error = "";
-  if (newAccount.username.length < 6) {
-    success = false;
-    error = "Username must be greater than or equal to 6 characters."
-  } else if (false) {
-
+  // Registration failed.
+  if (!newAccount.username.match("^[a-z0-9A-Z]+$") || newAccount.username.length < 6) {
+    res.send({
+      success: false,
+      error: "Username must contains only letters/digits with a length >= 6"
+    });
+    return;
   }
 
-  // Registration failed.
-  if (!success) {
+  if (!newAccount.password.match("^[a-z0-9A-Z]+$") || newAccount.password.length < 6) {
     res.send({
-      success: success,
-      error: error
+      success: false,
+      error: "Password must contains only letters/digits with a length >= 6"
+    });
+    return;
+  }
+
+  if (!newAccount.fname.match("^[a-zA-Z]+$") || newAccount.fname.length < 3) {
+    res.send({
+      success: false,
+      error: "First Name must contains only letters with a length >= 2"
+    });
+    return;
+  }
+
+  if (!newAccount.lname.match("^[a-zA-Z]+$") || newAccount.lname.length < 3) {
+    res.send({
+      success: false,
+      error: "Last Name must contains only letters with a length >= 2"
     });
     return;
   }
@@ -35,7 +49,14 @@ router.post('/register', function(req, res, next) {
       });
     })
     .catch((err) => {
-      console.log(err);
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.send({
+          success: false,
+          error: "Username has already been registered."
+        });
+        return;
+      }
+      console.log("duplicate key");
     });
 
   /////////////////////////////// Sample input and output ///////////////////////////////
@@ -72,9 +93,14 @@ router.post('/register', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   const account = req.body;
 
-  // Create a new account.
+  // Login an account.
   Account.find(account)
     .then((result) => {
+
+
+
+
+
       res.send({
         success: true,
         result: result
