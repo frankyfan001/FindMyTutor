@@ -10,6 +10,7 @@ import {Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   backgroundTexture: {
+    margin: 'auto',
     width: '100%',
     height: '100%',
     backgroundRepeat: 'no-repeat',
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(0),
       marginBottom: theme.spacing(2),
     },
-    background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
   },
 }));
 
@@ -37,14 +37,14 @@ export default function Banner(props) {
   return (
     <section className={classes.backgroundTexture}>
       <Container maxWidth="md">
-        <Box py={8} textAlign="center">
+        <Box py={2} textAlign="center">
           <Typography variant="h3" component="h2" gutterBottom={true}>Find My Tutor</Typography>
           <Typography variant="h5" color="textSecondary" paragraph={true}>
             A completely free platform for students to find reliable tutors.
           </Typography>
           <Box mt={4}>
             <RouterLink to="/register" style={{ textDecoration: 'none' }}>
-              <Button variant="contained" color="primary" className={classes.primaryAction}>SIGN UP</Button>
+              <Button variant="outlined" color="secondary" className={classes.primaryAction}>SIGN UP</Button>
             </RouterLink>
             <RouterLink to="/about" style={{ textDecoration: 'none' }}>
               <Button color="secondary">ABOUT US</Button>

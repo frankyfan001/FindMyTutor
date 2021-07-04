@@ -15,6 +15,7 @@ import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
 import PostForm from './components/PostForm';
 import HomePage from "./components/HomePage";
+import {makeStyles} from "@material-ui/core";
 
 function App() {
   const accountHook = useAccount();

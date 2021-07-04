@@ -1,16 +1,5 @@
 export const mockPosts = [
   {
-    id: 0,
-    tutor: 'Super Oligei',
-    date: (new Date()).toLocaleDateString(),
-    description: 'best tutor ever',
-    school: 'UBC',
-    course: 'CPSC 455',
-    price: '$5',
-    thumbsUp: 1,
-    thumbsDown: 0,
-  },
-  {
     id: 1,
     tutor: 'Bob',
     date: (new Date()).toLocaleDateString(),
@@ -43,15 +32,15 @@ export const mockPosts = [
     thumbsUp: 1,
     thumbsDown: 0,
   },
-  // {
-  //   id: 4,
-  //   tutor: 'Super Oligei',
-  //   date: (new Date()).toLocaleDateString(),
-  //   description: 'best tutor ever',
-  //   school: 'UBC',
-  //   course: 'CPSC 455',
-  //   price: '$5',
-  //   thumbsUp: 1,
-  //   thumbsDown: 0,
-  // },
+  {
+    id: 4,
+    tutor: 'Super Oligei',
+    date: (new Date()).toLocaleDateString(),
+    description: 'best tutor ever',
+    school: 'UBC',
+    course: 'CPSC 455',
+    price: '$5',
+    thumbsUp: 1,
+    thumbsDown: 0,
+  },
 ];
