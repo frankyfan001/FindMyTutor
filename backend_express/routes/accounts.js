@@ -5,6 +5,35 @@ const Account = require('../models/account');
 
 /* Register a new account. */
 router.post('/register', function(req, res, next) {
+  const input = {
+    type: "tutor",
+    username: "frankyfan",
+    password: "123456",
+    fname: "Franky",
+    lname: "Fan",
+    avatar: "https://i.redd.it/biw2bktiuur41.jpg"
+  };
+  const output = {
+    success: true,
+    result: {
+      _id: "60e1090f824db57bc7fae1e3",
+      type: "tutor",
+      username: "frankyfan",
+      password: "123456",
+      fname: "Franky",
+      lname: "Fan",
+      avatar: "https://i.redd.it/biw2bktiuur41.jpg",
+      createdAt: "2021-07-04T01:04:15.548Z",
+      updatedAt: "2021-07-04T01:04:15.548Z",
+      __v: 0
+    }
+  };
+  const output1 = {
+    success: false,
+    error: "Username has already been registered."
+  };
+  ///////////////////////////// Above is examples of input and output /////////////////////////////
+
   const newAccount = req.body;
 
   // Registration failed.
@@ -58,15 +87,13 @@ router.post('/register', function(req, res, next) {
       }
       console.log("duplicate key");
     });
+});
 
-  /////////////////////////////// Sample input and output ///////////////////////////////
+/* Login an account. */
+router.post('/login', function(req, res, next) {
   const input = {
-    type: "tutor",
     username: "frankyfan",
-    password: "123456",
-    fname: "Franky",
-    lname: "Fan",
-    avatar: "https://i.redd.it/biw2bktiuur41.jpg"
+    password: "123456"
   };
   const output = {
     success: true,
@@ -85,12 +112,10 @@ router.post('/register', function(req, res, next) {
   };
   const output1 = {
     success: false,
-    error: "Username has already been registered."
+    error: "Username or Password is incorrect."
   };
-});
+  ///////////////////////////// Above is examples of input and output /////////////////////////////
 
-/* Login an account. */
-router.post('/login', function(req, res, next) {
   const account = req.body;
 
   // Login failed.
@@ -128,31 +153,6 @@ router.post('/login', function(req, res, next) {
     .catch((err) => {
       console.log(err);
     });
-
-  /////////////////////////////// Sample input and output ///////////////////////////////
-  const input = {
-    username: "frankyfan",
-    password: "123456"
-  };
-  const output = {
-    success: true,
-    result: {
-      _id: "60e1090f824db57bc7fae1e3",
-      type: "tutor",
-      username: "frankyfan",
-      password: "123456",
-      fname: "Franky",
-      lname: "Fan",
-      avatar: "https://i.redd.it/biw2bktiuur41.jpg",
-      createdAt: "2021-07-04T01:04:15.548Z",
-      updatedAt: "2021-07-04T01:04:15.548Z",
-      __v: 0
-    }
-  };
-  const output1 = {
-    success: false,
-    error: "Username or Password is incorrect."
-  };
 });
 
 module.exports = router;
