@@ -16,6 +16,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     // Initialize MongoDB.findMyTutor.
     const initializeDatabase = require('./models/initializeDatabase');
     initializeDatabase();
+    console.log('MongoDB.findMyTutor is initialized.')
   })
   .catch((err) => {
     console.log(err)
@@ -23,7 +24,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routers
 var indexRouter = require('./routes/index');
-var accountsRouter = require('./routes/accounts');
+const accountsRouter = require('./routes/accounts');
 var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments');
 
