@@ -70,10 +70,10 @@ export default function HomePage({accountHook}) {
   return (
     <div>
       <Banner />
-      <br />
       <Grid container spacing={3} direction="column" align="center" className={classes.root}>
 
         {/*Search Bar*/}
+        <br />
         <Grid item xs={12} md={12}>
           <Grid container spacing={0}>
             <Grid item xs={12} md={12}>
@@ -82,7 +82,9 @@ export default function HomePage({accountHook}) {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
+              {/*<Paper variant="outlined">*/}
               <SearchInput handleSearch={postsHook.handleSearch} />
+              {/*</Paper>*/}
             </Grid>
           </Grid>
         </Grid>
