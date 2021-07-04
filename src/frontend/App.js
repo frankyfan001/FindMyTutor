@@ -6,13 +6,6 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { IconBase, LoginButton, OutlinedButton, RegisterButton } from './components/Buttons';
-import { FilledTextField, FormBase } from './components/Forms';
-import { TutorBanner } from './components/Banner';
-import { BaseCard } from './components/Cards';
-import { SearchBar, SearchInput } from './components/Search';
-import { CardsApp } from './components/CardsApp';
-import { Grid } from '@material-ui/core';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
 import { Post } from './components/ViewPost';
