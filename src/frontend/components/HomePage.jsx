@@ -82,9 +82,9 @@ export default function HomePage({accountHook}) {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
-              {/*<Paper variant="outlined">*/}
+              <Paper variant="outlined">
               <SearchInput handleSearch={postsHook.handleSearch} />
-              {/*</Paper>*/}
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
