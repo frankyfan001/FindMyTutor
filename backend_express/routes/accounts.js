@@ -69,24 +69,26 @@ router.post('/register', function(req, res, next) {
     return;
   }
 
-  // Registration succeeded.
-  Account.create(newAccount)
-    .then((result) => {
+  Account.findOne({username: newAccount.username}).then((result) => {
+    if (result) {
       res.send({
-        success: true,
-        result: result
+        success: false,
+        error: "Username has already been registered."
       });
-    })
-    .catch((err) => {
-      if (err.name === 'MongoError' && err.code === 11000) {
+    } else {
+      // Registration succeeded.
+      Account.create(newAccount).then((result) => {
         res.send({
-          success: false,
-          error: "Username has already been registered."
+          success: true,
+          result: result
         });
-        return;
-      }
-      console.log("duplicate key");
-    });
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }).catch((err) => {
+    console.log(err);
+  });
 });
 
 /* Login an account. */
