@@ -7,11 +7,11 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
+  CssBaseline, FormControl,
   FormControlLabel,
   Grid,
   Link,
-  makeStyles,
+  makeStyles, Radio, RadioGroup,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -45,6 +45,7 @@ export const useFormStyle = makeStyles((theme) => ({
 
 export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
   const alertHook = useAlert();
+  const [type, setType] = React.useState("tutor");
   const [username, setUsername] = useState(rememberUsername);
   const [password, setPassword] = useState(rememberPassword);
   const [checked, setChecked] = useState(true);
@@ -57,6 +58,7 @@ export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, r
     e.preventDefault();
 
     const input = {
+      type,
       username,
       password,
     };
@@ -93,6 +95,14 @@ export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, r
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <br />
+        <br />
+        <FormControl component="fieldset">
+          <RadioGroup aria-label="type" name="type" value={type} onChange={e => setType(e.target.value)}>
+            <FormControlLabel value="tutor" control={<Radio />} label="Tutor" />
+            <FormControlLabel value="student" control={<Radio />} label="Student" />
+          </RadioGroup>
+        </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
           <TextField
             variant="outlined"

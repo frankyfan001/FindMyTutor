@@ -92,6 +92,7 @@ router.post('/register', function(req, res, next) {
 /* Login an account. */
 router.post('/login', function(req, res, next) {
   const input = {
+    type: "tutor",
     username: "frankyfan",
     password: "123456"
   };
@@ -112,7 +113,7 @@ router.post('/login', function(req, res, next) {
   };
   const output1 = {
     success: false,
-    error: "Username or Password is incorrect."
+    error: "Username/Password is incorrect as a tutor."
   };
   ///////////////////////////// Above is examples of input and output /////////////////////////////
 
@@ -146,7 +147,7 @@ router.post('/login', function(req, res, next) {
       } else {
         res.send({
           success: false,
-          error: "Username or Password is incorrect."
+          error: `Username/Password is incorrect as a ${account.type}.`
         });
       }
     })
