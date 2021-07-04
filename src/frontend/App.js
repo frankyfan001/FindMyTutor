@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
@@ -25,6 +25,8 @@ import HomePage from "./components/HomePage";
 
 function App() {
   const accountHook = useAccount();
+  const [rememberUsername, setRememberUsername] = useState("");
+  const [rememberPassword, setRememberPassword] = useState("");
 
   return (
     <Router>
@@ -46,7 +48,9 @@ function App() {
             <SignUp accountHook={accountHook} />
           </Route>
           <Route path="/login">
-            <LoginForm accountHook={accountHook} />
+            <LoginForm accountHook={accountHook}
+                       rememberUsername={rememberUsername} setRememberUsername={setRememberUsername}
+                       rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>
           <Route path="/account">
             // TODO: AccountPage.

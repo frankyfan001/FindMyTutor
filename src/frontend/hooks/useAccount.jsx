@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { useState } from 'react';
-import {api} from '../APIs/api';
 
 export default function useAccount() {
   // State: account
@@ -44,8 +43,8 @@ export default function useAccount() {
     });
     const output = await res.json();
 
-    if (output.status === "SUCCESS") {
-      setAccount(output.data);
+    if (output.success) {
+      setAccount(output.result);
     }
     return output;
   };

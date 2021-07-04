@@ -15,10 +15,12 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, {useState} from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import {Alert} from "@material-ui/lab";
+import useAlert from "../hooks/useAlert";
 
 export const useFormStyle = makeStyles((theme) => ({
   paper: {
@@ -41,7 +43,12 @@ export const useFormStyle = makeStyles((theme) => ({
   },
 }));
 
-export const LoginForm = ({accountHook}) => {
+export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
+  const alertHook = useAlert();
+  const [username, setUsername] = useState(rememberUsername);
+  const [password, setPassword] = useState(rememberPassword);
+  const [checked, setChecked] = useState(true);
+
   const history = useHistory();
 
   const classes = useFormStyle();
@@ -49,21 +56,29 @@ export const LoginForm = ({accountHook}) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-
     const input = {
       username,
       password,
     };
 
     const p = accountHook.login(input);
-
     p.then((output) => {
-      if (output.status === "SUCCESS") {
-        history.push("/");
+      if (output.success) {
+        if (checked) {
+          setRememberUsername(username);
+          setRememberPassword(password);
+        } else {
+          setRememberUsername("");
+          setRememberPassword("");
+        }
+
+        alertHook.switchToSuccess("Registration is successful.");
+
+        setTimeout(function () {
+          history.push("/");
+        }, 1000)
       } else {
-        // TODO: if login failed.
+        alertHook.switchToFailure(output.error);
       }
     });
   };
@@ -88,6 +103,8 @@ export const LoginForm = ({accountHook}) => {
             label="Username"
             name="username"
             autoComplete="username"
+            value={username}
+            onChange={(e) => {setUsername(e.target.value)}}
             autoFocus
           />
           <TextField
@@ -100,9 +117,11 @@ export const LoginForm = ({accountHook}) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => {setPassword(e.target.value)}}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" checked={checked} onChange={() => {setChecked(!checked)}} />}
             label="Remember me"
             style={{ float: 'left' }}
           />
@@ -129,6 +148,15 @@ export const LoginForm = ({accountHook}) => {
           </Grid>
         </form>
       </div>
+      <br />
+      {
+        alertHook.isSuccess() ?
+          <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
+          : alertHook.isFailure() ?
+          <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
+          :
+          <></>
+      }
     </Container>
   );
 };

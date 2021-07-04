@@ -11,7 +11,7 @@ router.post('/register', function(req, res, next) {
   if (!newAccount.username.match("^[a-z0-9A-Z]+$") || newAccount.username.length < 6) {
     res.send({
       success: false,
-      error: "Username must contains only letters/digits with a length >= 6"
+      error: "Username must contains only letters/digits with a length >= 6."
     });
     return;
   }
@@ -19,7 +19,7 @@ router.post('/register', function(req, res, next) {
   if (!newAccount.password.match("^[a-z0-9A-Z]+$") || newAccount.password.length < 6) {
     res.send({
       success: false,
-      error: "Password must contains only letters/digits with a length >= 6"
+      error: "Password must contains only letters/digits with a length >= 6."
     });
     return;
   }
@@ -27,7 +27,7 @@ router.post('/register', function(req, res, next) {
   if (!newAccount.fname.match("^[a-zA-Z]+$") || newAccount.fname.length < 3) {
     res.send({
       success: false,
-      error: "First Name must contains only letters with a length >= 2"
+      error: "First Name must contains only letters with a length >= 2."
     });
     return;
   }
@@ -35,7 +35,7 @@ router.post('/register', function(req, res, next) {
   if (!newAccount.lname.match("^[a-zA-Z]+$") || newAccount.lname.length < 3) {
     res.send({
       success: false,
-      error: "Last Name must contains only letters with a length >= 2"
+      error: "Last Name must contains only letters with a length >= 2."
     });
     return;
   }
@@ -93,18 +93,37 @@ router.post('/register', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   const account = req.body;
 
-  // Login an account.
-  Account.find(account)
+  // Login failed.
+  if (!account.username.match("^[a-z0-9A-Z]+$") || account.username.length < 6) {
+    res.send({
+      success: false,
+      error: "Username must contains only letters/digits with a length >= 6."
+    });
+    return;
+  }
+
+  if (!account.password.match("^[a-z0-9A-Z]+$") || account.password.length < 6) {
+    res.send({
+      success: false,
+      error: "Password must contains only letters/digits with a length >= 6."
+    });
+    return;
+  }
+
+  // Login succeeded.
+  Account.findOne(account)
     .then((result) => {
-
-
-
-
-
-      res.send({
-        success: true,
-        result: result
-      });
+      if (result) {
+        res.send({
+          success: true,
+          result: result
+        });
+      } else {
+        res.send({
+          success: false,
+          error: "Username or Password is incorrect."
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -132,7 +151,7 @@ router.post('/login', function(req, res, next) {
   };
   const output1 = {
     success: false,
-    error: "Unknown username."
+    error: "Username or Password is incorrect."
   };
 });
 

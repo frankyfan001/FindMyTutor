@@ -75,7 +75,7 @@ export default function SignUp({accountHook}) {
 
         setTimeout(function () {
           history.push("/");
-        }, 2000)
+        }, 1000)
       } else {
         alertHook.switchToFailure(output.error);
       }
