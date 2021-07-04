@@ -6,10 +6,27 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+// Connect to MongoDB.findMyTutor.
+const mongoose = require('mongoose');
+const url = "mongodb://localhost:27017/findMyTutor";
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => {
+    console.log('MongoDB.findMyTutor is connected.');
+
+    // Initialize MongoDB.findMyTutor.
+    const initializeDatabase = require('./models/initializeDatabase');
+    initializeDatabase();
+  })
+  .catch((err) => {
+    console.log(err)
+  });
+
+// Routers
 var indexRouter = require('./routes/index');
 var accountsRouter = require('./routes/accounts');
 var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments');
+
 
 var app = express();
 
