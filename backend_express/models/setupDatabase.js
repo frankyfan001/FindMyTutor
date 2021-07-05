@@ -74,7 +74,8 @@ const initializePosts = async function() {
       phone: "604-999-8407",
       email: "frankyfan003@gmail.com",
       description: "Hi, my name is Franky, majoring Computer Science from UBC.",
-      account_ref: tutors[0]._id
+      account_ref: tutors[0]._id,
+      createdAt: new Date("2021-07-04T10:03:23.308Z")
     },
     {
       school: "UBC",
@@ -84,7 +85,8 @@ const initializePosts = async function() {
       phone: "604-999-8407",
       email: "frankyfan@gmail.com",
       description: "Hi, my name is Franky, and I'm good at Economics.",
-      account_ref: tutors[0]._id
+      account_ref: tutors[0]._id,
+      createdAt: new Date("2021-07-03T10:03:23.308Z")
     },
     {
       school: "SFU",
@@ -94,7 +96,8 @@ const initializePosts = async function() {
       phone: "604-123-456",
       email: "brookxiao@gmail.com",
       description: "I can teach CMPT 225.",
-      account_ref: tutors[1]._id
+      account_ref: tutors[1]._id,
+      createdAt: new Date("2021-07-02T10:03:23.308Z")
     },
     {
       school: "SFU",
@@ -104,7 +107,8 @@ const initializePosts = async function() {
       phone: "604-123-456",
       email: "brookxiao@gmail.com",
       description: "I can teach BIOL 110.",
-      account_ref: tutors[1]._id
+      account_ref: tutors[1]._id,
+      createdAt: new Date("2021-07-01T10:03:23.308Z")
     },
   ])
 }

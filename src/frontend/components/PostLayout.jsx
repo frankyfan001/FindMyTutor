@@ -19,6 +19,7 @@ const useCardStyles = makeStyles(() => ({
   usernameButton: {
     textTransform: 'none',
     minWidth: '8vh',
+    fontWeight: 'bold',
   },
   dateButton: {
     textTransform: 'none',
@@ -39,6 +40,12 @@ const useCardStyles = makeStyles(() => ({
     boxShadow: 'none',
   },
   description: {
+    textTransform: 'none',
+  },
+  wageButton: {
+    textTransform: 'none',
+  },
+  thumbUpButton: {
     textTransform: 'none',
   },
 }));
@@ -62,17 +69,15 @@ export default function PostLayout({ post, idx }) {
           <Grid item xs={12} md={2}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
-                <Button size="small" className={classes.usernameButton}>
-                  <Typography>
-                    <Box fontWeight="fontWeightBold">
-                      { post.account_ref.username }
-                    </Box>
+                <Button size="small">
+                  <Typography className={classes.usernameButton}>
+                    { post.account_ref.username }
                   </Typography>
                 </Button>
               </Grid>
               <Grid item xs={12} md={12}>
                 <Button size="small" className={classes.dateButton}>
-                  { post.updatedAt.substring(0,10) }
+                  { post.createdAt.substring(0,10) }
                 </Button>
               </Grid>
             </Grid>
@@ -105,12 +110,12 @@ export default function PostLayout({ post, idx }) {
           <Grid item xs={12} md={1}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
-                <Button size="small" color="textPrimary">
+                <Button size="small" className={classes.wageButton}>
                   ${post.wage}
                 </Button>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Button size="small" color="textPrimary" startIcon={<ThumbUpIcon />}>
+                <Button size="small" className={classes.thumbUpButton} startIcon={<ThumbUpIcon />}>
                   {post.thumbUp}
                 </Button>
               </Grid>
