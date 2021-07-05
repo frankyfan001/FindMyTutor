@@ -127,6 +127,10 @@ router.get('/', function(req, res, next) {
       });
     })
     .catch((err) => {
+      res.send({
+        success: false,
+        error: "Getting all posts failed."
+      });
       console.log(err);
     });
 });
