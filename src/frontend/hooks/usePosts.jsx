@@ -1,15 +1,23 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { api } from '../APIs/api';
 import { mockPosts } from '../components/mocks/mockPosts';
 
 export default function usePosts() {
-  const [posts, setPosts] = useState(mockPosts);
+  // State: posts
+  const [posts, setPosts] = useState([]);
 
-  const getPosts = async (filter) => {
-    console.log('get posts');
-    const req = await api.get('/posts', { params: { filter } });
-    const res = await req.json();
-    setPosts(res);
+  // Get all posts with its account info.
+  const getPosts = async () => {
+    const res = await fetch('http://localhost:5000/posts/', {
+      method: 'GET'
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setPosts(output.result);
+    }
+    return output;
   };
 
   const addPost = async (newPost) => {
@@ -27,11 +35,10 @@ export default function usePosts() {
     });
   };
 
-  return {
-    posts,
-    getPosts,
-    setPosts,
-    addPost,
-    deletePost,
-  };
+  // Effect: fetch posts.
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  return { posts, getPosts, setPosts, addPost, deletePost};
 }

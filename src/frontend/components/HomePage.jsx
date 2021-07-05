@@ -10,7 +10,7 @@ import { mockPosts } from './mocks/mockPosts';
 
 import FilterTreeView from './FilterTree';
 import usePosts from '../hooks/usePosts';
-import CardLayout from './CardLayout';
+import PostLayout from './PostLayout';
 import { SearchInput } from './Search';
 import Banner from "./Banner";
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const usePostsCards = () => {
-  const { posts, getPosts } = usePosts();
+  const { posts } = usePosts();
   const [filter, setFilter] = useState('');
   // const [filteredPosts, setFilteredPosts] = useState(posts);
   const [filteredPosts, setFilteredPosts] = useState(mockPosts);
@@ -51,10 +51,6 @@ const usePostsCards = () => {
   };
 
   useEffect(() => {
-    getPosts();
-  }, []);
-
-  useEffect(() => {
     setFilteredPosts(posts);
   }, [posts]);
 
@@ -65,6 +61,7 @@ const usePostsCards = () => {
 
 export default function HomePage({accountHook}) {
   const classes = useStyles();
+
   const postsHook = usePostsCards();
 
   return (
@@ -98,15 +95,15 @@ export default function HomePage({accountHook}) {
           </Link>
         </Grid>
 
-        {/*Card List*/}
+        {/*Post List*/}
         <br />
-        {postsHook.filteredPosts.map((post, idx) => (
-          <Link to={`viewPost/${post.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <Grid item xs={12} md={12} key={idx.toString()}>
-              <CardLayout post={post} idx={idx} />
+        {postsHook.posts.map((post, idx) =>
+          <Link key={post._id} to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
+            <Grid item xs={12} md={12}>
+              <PostLayout post={post} idx={idx} />
             </Grid>
           </Link>
-        ))}
+        )}
 
       </Grid>
     </div>

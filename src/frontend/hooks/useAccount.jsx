@@ -5,7 +5,6 @@ export default function useAccount() {
   // State: account
   const [account, setAccount] = useState(null);
 
-  // getters
   const isLogin = () => {
     return account !== null;
   };
@@ -35,7 +34,7 @@ export default function useAccount() {
     return output;
   };
 
-  const login = async(input) => {
+  const login = async (input) => {
     const res = await fetch('http://localhost:5000/accounts/login', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
