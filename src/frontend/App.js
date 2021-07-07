@@ -1,18 +1,11 @@
 /* eslint-disable */
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { IconBase, LoginButton, OutlinedButton, RegisterButton } from './components/Buttons';
-import { FilledTextField, FormBase } from './components/Forms';
-import { TutorBanner } from './components/Banner';
-import { BaseCard } from './components/Cards';
-import { SearchBar, SearchInput } from './components/Search';
-import { CardsApp } from './components/CardsApp';
-import { Grid } from '@material-ui/core';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
 import { Post, Post1 } from './components/ViewPost';
@@ -22,9 +15,12 @@ import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
 import PostForm from './components/PostForm';
 import HomePage from "./components/HomePage";
+import {makeStyles} from "@material-ui/core";
 
 function App() {
   const accountHook = useAccount();
+  const [rememberUsername, setRememberUsername] = useState("");
+  const [rememberPassword, setRememberPassword] = useState("");
 
   return (
     <Router>
@@ -46,7 +42,9 @@ function App() {
             <SignUp accountHook={accountHook} />
           </Route>
           <Route path="/login">
-            <LoginForm accountHook={accountHook} />
+            <LoginForm accountHook={accountHook}
+                       rememberUsername={rememberUsername} setRememberUsername={setRememberUsername}
+                       rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>
           <Route path="/account">
             // TODO: AccountPage.

@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     color: 'white',
+    margin: 'auto auto auto 1%',
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -67,7 +68,7 @@ export default function NavBar({title, accountHook}) {
             <HomeIcon />
           </IconButton>
           <RouterLink to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
-            <Typography variant="h5" aria-label="title" className={classes.title}>
+            <Typography align="left" variant="h5" aria-label="title" className={classes.title}>
               {title}
             </Typography>
           </RouterLink>
