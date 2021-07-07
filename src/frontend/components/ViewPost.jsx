@@ -50,6 +50,95 @@ const useRating = (updateFunc, updateObject) => {
 
   return { handleClick, isCancel };
 };
+export const Post1 = () => (
+  <Grid container>
+    <Grid item style={{ width: '100%' }}>
+      <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
+        <Grid item>
+          <Grid container direction="column" alignItems="center">
+            <Grid item>
+              Avatar
+            </Grid>
+            <Grid item>
+              user name
+            </Grid>
+            <Grid item>
+              Date
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container direction="column" spacing={3}>
+            <Grid item>
+              <Grid container spacing={3}>
+                <Grid item>
+                  Monday
+                </Grid>
+                <Grid item>
+                  Tuesday
+                </Grid>
+                <Grid item>
+                  Wednesday
+                </Grid>
+                <Grid item>
+                  Thursday
+                </Grid>
+                <Grid item>
+                  Friday
+                </Grid>
+                <Grid item>
+                  Saturday
+                </Grid>
+                <Grid item>
+                  Sunday
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid container justify="space-evenly">
+                <Grid item>
+                  <Grid container direction="column">
+                    <Grid item>
+                      School
+                    </Grid>
+                    <Grid item>
+                      Course
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Grid container direction="column">
+                    <Grid item>
+                      Wage
+                    </Grid>
+                    <Grid item>
+                      Thumbs up
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Grid container direction="column">
+                    <Grid item>
+                      Phone
+                    </Grid>
+                    <Grid item>
+                      Email
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>Description</Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item style={{ width: '100%' }}>
+      <CommentList comments={mockPost.comments} />
+    </Grid>
+  </Grid>
+
+);
 export const Post = ({ accountHook }) => {
   const classes = useRootStyle();
   // const [post, setSinglePost] = useState(mockPost);
@@ -87,7 +176,7 @@ export const Post = ({ accountHook }) => {
               <RatingArea up={post.thumbsUp} down={post.thumbsDown} handleClick={handlePostRatingClick} />
             </Grid>
             <Grid item style={{ width: '100%' }}>
-              <CommentList comments={post.comments} isLogin={accountHook.isLogin} handleClick={handleCommentRatingClick} />
+              <CommentList comments={post.comments} isLogin={accountHook.isLogin()} handleClick={handleCommentRatingClick} />
             </Grid>
           </Grid>
         </Container>
@@ -187,9 +276,11 @@ const CommentList = ({ comments, isLogin, handleClick }) => {
             </Button>
           )
           : (
-            <Button variant="contained" color="primary" component={<Link to="/login" />}>
-              Add new comment
-            </Button>
+            <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+              <Button variant="contained" color="primary">
+                Add new comment
+              </Button>
+            </Link>
           )}
 
         <FormDialog dialogHooks={dialogHooks} />
