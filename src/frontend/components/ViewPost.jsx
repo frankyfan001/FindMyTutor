@@ -1,23 +1,30 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import {
   Avatar,
   Box,
   Button,
   CardMedia,
+  Chip,
   Container,
   CssBaseline,
   Grid,
   makeStyles,
   Paper,
+  TextField,
   Typography,
 } from '@material-ui/core';
 import queryString from 'query-string';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import { ThumbDown } from '@material-ui/icons';
+import {
+  Bookmark, Email, Phone, SchoolOutlined, ThumbDown,
+} from '@material-ui/icons';
 import { mockPost } from './mocks/mockPost';
 import FormDialog from './CommentForm';
 import usePosts from '../hooks/usePosts';
@@ -50,95 +57,106 @@ const useRating = (updateFunc, updateObject) => {
 
   return { handleClick, isCancel };
 };
-export const Post1 = () => (
-  <Grid container>
-    <Grid item style={{ width: '100%' }}>
-      <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
-        <Grid item>
-          <Grid container direction="column" alignItems="center">
-            <Grid item>
-              Avatar
-            </Grid>
-            <Grid item>
-              user name
-            </Grid>
-            <Grid item>
-              Date
+const usePostStyles = makeStyles((theme) => ({
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+}));
+export const Post1 = () => {
+  const classes = usePostStyles();
+
+  return (
+    <Grid container>
+      <Grid item style={{ width: '100%' }}>
+        <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
+          <Grid item xs={4}>
+            <Grid container direction="column" alignItems="center">
+              <Grid item xs style={{ width: '80%', height: '80%' }}>
+                <Paper>
+                  <CardMedia image="https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg" className={classes.media} />
+                </Paper>
+              </Grid>
+              <Grid item xs>
+                user name
+              </Grid>
+              <Grid item xs>
+                {new Date().toLocaleDateString()}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item>
-          <Grid container direction="column" spacing={3}>
-            <Grid item>
-              <Grid container spacing={3}>
-                <Grid item>
-                  Monday
-                </Grid>
-                <Grid item>
-                  Tuesday
-                </Grid>
-                <Grid item>
-                  Wednesday
-                </Grid>
-                <Grid item>
-                  Thursday
-                </Grid>
-                <Grid item>
-                  Friday
-                </Grid>
-                <Grid item>
-                  Saturday
-                </Grid>
-                <Grid item>
-                  Sunday
+          <Grid item xs={8}>
+            <Grid container direction="column" spacing={3}>
+              <Grid item>
+                <Grid container spacing={3}>
+                  <Grid item>
+                    <Typography>Available Days: </Typography>
+                  </Grid>
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                    <Grid item>
+                      <Chip
+                        label={day}
+                      />
+                    </Grid>
+                  ))}
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container justify="space-evenly">
-                <Grid item>
-                  <Grid container direction="column">
-                    <Grid item>
-                      School
-                    </Grid>
-                    <Grid item>
-                      Course
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Grid container direction="column">
-                    <Grid item>
-                      Wage
-                    </Grid>
-                    <Grid item>
-                      Thumbs up
+              <Grid item>
+                <Grid container justify="space-evenly">
+                  <Grid item>
+                    <Grid container direction="column" spacing={2}>
+                      <Grid item>
+                        <Chip color="secondary" icon={<SchoolOutlined />} label="School" />
+                        {/* School */}
+                      </Grid>
+                      <Grid item>
+                        <Chip color="secondary" icon={<Bookmark />} label="Course" />
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid item>
-                  <Grid container direction="column">
-                    <Grid item>
-                      Phone
+                  <Grid item>
+                    <Grid container direction="column" spacing={2}>
+                      <Grid item>
+                        <Chip color="secondary" icon={<AttachMoneyIcon />} label="Wage" />
+                      </Grid>
+                      <Grid item>
+                        <Chip color="secondary" icon={<ThumbUpIcon />} label="ThumbsUp" />
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      Email
+                  </Grid>
+                  <Grid item>
+                    <Grid container direction="column" spacing={2}>
+                      <Grid item>
+                        <Chip color="secondary" icon={<Phone />} label="Phone" />
+                      </Grid>
+                      <Grid item>
+                        <Chip color="secondary" icon={<Email />} label="Email" />
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
+              <Grid item style={{ width: '100%', height: '100%' }}>
+                <Paper>
+                  <Typography>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                    but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                  </Typography>
+                </Paper>
+              </Grid>
             </Grid>
-            <Grid item>Description</Grid>
           </Grid>
         </Grid>
       </Grid>
+      <Grid item style={{ width: '100%' }}>
+        <CommentList comments={mockPost.comments} />
+      </Grid>
     </Grid>
-    <Grid item style={{ width: '100%' }}>
-      <CommentList comments={mockPost.comments} />
-    </Grid>
-  </Grid>
+  );
+};
 
-);
 export const Post = ({ accountHook }) => {
   const classes = useRootStyle();
   // const [post, setSinglePost] = useState(mockPost);
