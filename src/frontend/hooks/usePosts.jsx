@@ -22,10 +22,10 @@ export default function usePosts() {
 
   const addPost = async (newPost) => {
     console.log(`add post: ${newPost.id}`);
+    setPosts([...posts, newPost]);
     const req = await api.post('/posts', JSON.stringify(newPost));
 
     const res = await req.json();
-    setPosts([...posts, newPost]);
   };
 
   const deletePost = async (id) => {

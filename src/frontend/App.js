@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 import './App.css';
 import { LoginForm } from './components/Login';
 import SignUp from './components/Signup';
-import { Post } from './components/ViewPost';
+import { Post, Post1 } from './components/ViewPost';
 import TeamPage from './components/TeamPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
@@ -32,7 +32,7 @@ function App() {
             <HomePage accountHook={accountHook} />
           </Route>
           <Route path="/viewPost/:id" >
-            <Post accountHook={accountHook} />
+            <Post1 accountHook={accountHook} />
           </Route>
           <Route path="/newPost">
             <PostForm accountHook={accountHook} />

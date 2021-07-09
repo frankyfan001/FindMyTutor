@@ -11,6 +11,7 @@ import TitleIcon from '@material-ui/icons/Title';
 import WrapTextIcon from '@material-ui/icons/WrapText';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import { Link } from 'react-router-dom';
 import { useFormStyle } from './Login';
 import usePosts from '../hooks/usePosts';
 
@@ -33,11 +34,13 @@ export default function PostForm({ id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newPost = {
+      id: 9999,
       title: e.target.title.value,
       content: e.target.content.value,
       school: e.target.school.value,
       course: e.target.course.value,
     };
+    console.log(newPost);
     addPost(newPost);
   };
   return (
@@ -71,7 +74,9 @@ export default function PostForm({ id }) {
               </Grid>
             </Grid>
             <Grid item>
-              <Button color="primary" variant="contained" type="submit">Post</Button>
+              <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                <Button color="primary" variant="contained" type="submit">Post</Button>
+              </Link>
             </Grid>
           </form>
 

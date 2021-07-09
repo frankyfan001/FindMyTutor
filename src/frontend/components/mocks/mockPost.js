@@ -11,6 +11,7 @@ export const mockPost = {
   thumbsDown: 2,
   comments: [
     {
+      id: 0,
       user: {
         name: 'Super OLIGEI',
         img: 'https://www.zhifure.com/upload/images/2018/7/16143327546.jpg',

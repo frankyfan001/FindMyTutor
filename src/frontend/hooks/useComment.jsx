@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { api } from '../APIs/api';
+import { mockPost } from '../components/mocks/mockPost';
 
-export default function useComments() {
-  const [comments, setComments] = useState([]);
+export default function useComments(init) {
+  const [comments, setComments] = useState(init);
 
   const getComments = async () => {
     console.log('get posts');
@@ -26,13 +27,21 @@ export default function useComments() {
   };
 
   const updateComment = async (comment) => {
-    console.log(`update post: ${comment.id}`);
+    console.log(`update comment: ${comment.id}`);
+    console.log(comment);
+    const newComments = comments.splice(
+      comments.findIndex((oldComment) => {
+        console.log('finding idx');
+        console.log(oldComment.id);
+        console.log(comment.id);
+        return oldComment.id === comment.id;
+      }),
+      1,
+      comment,
+    );
+    console.log(newComments);
     setComments(
-      comments.splice(
-        comments.findIndex((oldComment) => oldComment.id === comment.id),
-        1,
-        comment,
-      ),
+      newComments,
     );
     const req = await api.put('/comments', JSON.stringify(comment));
     const res = await req.json();
