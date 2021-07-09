@@ -63,24 +63,31 @@ const usePostStyles = makeStyles((theme) => ({
     paddingTop: '56.25%', // 16:9
   },
 }));
-export const Post1 = () => {
+export const Post1 = ({ accountHook }) => {
   const classes = usePostStyles();
 
+  const {
+    post, setPost, getPost, updatePost,
+  } = usePost();
+
+  const { profile, comments } = post;
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       <Grid item style={{ width: '100%' }}>
         <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
           <Grid item xs={4}>
             <Grid container direction="column" alignItems="center">
               <Grid item xs style={{ width: '80%', height: '80%' }}>
                 <Paper>
+                  {/* <CardMedia image={profile.img} className={classes.media} /> */}
                   <CardMedia image="https://api.jikipedia.com/upload/9eeb4f813648581bb4ae179643065ca9_75.jpg" className={classes.media} />
                 </Paper>
               </Grid>
               <Grid item xs>
-                user name
+                profile.
               </Grid>
               <Grid item xs>
+                {/* {profile.date} */}
                 {new Date().toLocaleDateString()}
               </Grid>
             </Grid>
@@ -92,6 +99,22 @@ export const Post1 = () => {
                   <Grid item>
                     <Typography>Available Days: </Typography>
                   </Grid>
+                  {/* {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (post.days.includes(day)
+                    ? (
+                      <Grid item>
+                        <Chip
+                          label={day}
+                          color="primary"
+                        />
+                      </Grid>
+                    )
+                    : (
+                      <Grid item>
+                        <Chip
+                          label={day}
+                        />
+                      </Grid>
+                    )))} */}
                   {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
                     <Grid item>
                       <Chip
@@ -102,15 +125,17 @@ export const Post1 = () => {
                 </Grid>
               </Grid>
               <Grid item>
-                <Grid container justify="space-evenly">
+                <Grid container justify="space-between">
                   <Grid item>
                     <Grid container direction="column" spacing={2}>
                       <Grid item>
                         <Chip color="secondary" icon={<SchoolOutlined />} label="School" />
+                        {/* <Chip color="secondary" icon={<SchoolOutlined />} label={post.school} /> */}
                         {/* School */}
                       </Grid>
                       <Grid item>
                         <Chip color="secondary" icon={<Bookmark />} label="Course" />
+                        {/* <Chip color="secondary" icon={<Bookmark />} label={post.course} /> */}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -118,9 +143,11 @@ export const Post1 = () => {
                     <Grid container direction="column" spacing={2}>
                       <Grid item>
                         <Chip color="secondary" icon={<AttachMoneyIcon />} label="Wage" />
+                        {/* <Chip color="secondary" icon={<AttachMoneyIcon />} label={post.wage} /> */}
                       </Grid>
                       <Grid item>
                         <Chip color="secondary" icon={<ThumbUpIcon />} label="ThumbsUp" />
+                        {/* <Chip color="secondary" icon={<ThumbUpIcon />} label={post.thumbsUp} /> */}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -128,9 +155,11 @@ export const Post1 = () => {
                     <Grid container direction="column" spacing={2}>
                       <Grid item>
                         <Chip color="secondary" icon={<Phone />} label="Phone" />
+                        {/* <Chip color="secondary" icon={<Phone />} label={post.phone} /> */}
                       </Grid>
                       <Grid item>
                         <Chip color="secondary" icon={<Email />} label="Email" />
+                        {/* <Chip color="secondary" icon={<Email />} label={post.email} /> */}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -139,6 +168,7 @@ export const Post1 = () => {
               <Grid item style={{ width: '100%', height: '100%' }}>
                 <Paper>
                   <Typography>
+                    {/* {post.description} */}
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
                     but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
@@ -152,6 +182,7 @@ export const Post1 = () => {
       </Grid>
       <Grid item style={{ width: '100%' }}>
         <CommentList comments={mockPost.comments} />
+        {/* <CommentList comments={post.comments} /> */}
       </Grid>
     </Grid>
   );
