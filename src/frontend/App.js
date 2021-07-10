@@ -1,13 +1,13 @@
 /* eslint-disable */
 import React, {useState} from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { LoginPage } from './components/Login';
-import RegisterPage from './components/Signup';
+import { LoginPage } from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
 import ViewPostPage from './components/ViewPostPage';
 import TeamPage from './components/TeamPage';
 import AboutPage from './components/AboutPage';
@@ -37,7 +37,7 @@ function App() {
             <PostForm accountHook={accountHook} />
           </Route>
 
-          <Route path="/register/">
+          <Route path="/register">
             <RegisterPage accountHook={accountHook} />
           </Route>
           <Route path="/login">

@@ -18,7 +18,7 @@ import {
 import React, {useState} from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
 
@@ -43,9 +43,15 @@ export const useFormStyle = makeStyles((theme) => ({
   },
 }));
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export const LoginPage = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
+  const query = useQuery();
+
   const alertHook = useAlert();
-  const [type, setType] = React.useState("tutor");
+  const [type, setType] = React.useState(query.get("type"));
   const [username, setUsername] = useState(rememberUsername);
   const [password, setPassword] = useState(rememberPassword);
   const [checked, setChecked] = useState(true);

@@ -229,7 +229,7 @@ export default function ViewPostPage({ accountHook }) {
 
         {/*Comment List*/}
         <Grid item xs={12} md={12}>
-          <CommentList comments={mockPost.comments} />
+          <CommentList comments={mockPost.comments} accountHook={accountHook}/>
            {/*<CommentList comments={post.comments} />*/}
         </Grid>
 
@@ -239,20 +239,20 @@ export default function ViewPostPage({ accountHook }) {
   );
 };
 
-const CommentList = ({ comments, isLogin, handleClick }) => {
+const CommentList = ({ comments, accountHook, handleClick }) => {
   const classes = useStyles();
   const dialogHooks = useDialog();
   return (
     <Grid container alignItems="flex-end" direction="column" spacing={5}>
       <Grid item>
-        {isLogin
+        {accountHook.isLogin() && accountHook.isStudent()
           ? (
             <Button variant="contained" color="primary" onClick={dialogHooks.handleClickOpen}>
               Add new comment
             </Button>
           )
           : (
-            <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+            <Link to="/login?type=student" style={{ textDecoration: 'none', color: 'black' }}>
               <Button variant="contained" color="primary">
                 Add new comment
               </Button>

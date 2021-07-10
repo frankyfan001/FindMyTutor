@@ -12,7 +12,7 @@ import WrapTextIcon from '@material-ui/icons/WrapText';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import { Link } from 'react-router-dom';
-import { useFormStyle } from './Login';
+import { useFormStyle } from './LoginPage';
 import usePosts from '../hooks/usePosts';
 
 const useStyles = makeStyles((theme) => ({

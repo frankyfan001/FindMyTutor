@@ -88,7 +88,7 @@ export default function HomePage({accountHook}) {
 
         {/*New Post Button*/}
         <Grid item xs={12} md={12} align="right">
-          <Link to={accountHook.isLogin() && accountHook.isTutor() ? '/newPost' : '/login'} style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to={accountHook.isLogin() && accountHook.isTutor() ? '/newPost' : '/login?type=tutor'} style={{ textDecoration: 'none', color: 'black' }}>
             <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}>
               New Post
             </Button>

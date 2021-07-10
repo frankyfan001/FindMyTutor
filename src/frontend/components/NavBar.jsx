@@ -95,12 +95,12 @@ export default function NavBar({title, accountHook}) {
               </>
             :
               <>
-                <RouterLink to="/login" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/login?type=tutor" style={{ textDecoration: 'none' }}>
                   <Button size="small" aria-label="login" className={classes.loginButton}>
                     Sign in
                   </Button>
                 </RouterLink>
-                <RouterLink to="/register" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/register?type=tutor" style={{ textDecoration: 'none' }}>
                   <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
                     Sign up
                   </Button>
