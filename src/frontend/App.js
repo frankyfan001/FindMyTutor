@@ -6,7 +6,7 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { LoginPage } from './components/LoginPage';
+import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import ViewPostPage from './components/ViewPostPage';
 import TeamPage from './components/TeamPage';

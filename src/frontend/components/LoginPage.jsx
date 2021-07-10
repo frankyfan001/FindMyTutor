@@ -22,7 +22,7 @@ import {useHistory, useLocation} from 'react-router';
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
 
-export const useFormStyle = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -47,7 +47,11 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export const LoginPage = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
+export default function LoginPage({ accountHook,
+                            rememberUsername, setRememberUsername,
+                            rememberPassword, setRememberPassword }) {
+  const classes = useStyles();
+
   const query = useQuery();
 
   const alertHook = useAlert();
@@ -57,8 +61,6 @@ export const LoginPage = ({accountHook, rememberUsername, setRememberUsername, r
   const [checked, setChecked] = useState(true);
 
   const history = useHistory();
-
-  const classes = useFormStyle();
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -12,7 +12,6 @@ import WrapTextIcon from '@material-ui/icons/WrapText';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import { Link } from 'react-router-dom';
-import { useFormStyle } from './LoginPage';
 import usePosts from '../hooks/usePosts';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,10 +24,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
 }));
 
 export default function PostForm({ id }) {
-  const classes = useFormStyle();
+  const classes = useStyles();
   const { addPost } = usePosts();
 
   const handleSubmit = (e) => {
