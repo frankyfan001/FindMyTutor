@@ -6,6 +6,10 @@ const Schema = mongoose.Schema;
 
 // Using Schema constructor, create a Schema
 const PostSchema = new Schema({
+  availableDays: {
+    type: Array,
+    required: true
+  },
   school: {
     type: String,
     required: true

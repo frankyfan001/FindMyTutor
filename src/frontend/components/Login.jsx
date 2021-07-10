@@ -43,7 +43,7 @@ export const useFormStyle = makeStyles((theme) => ({
   },
 }));
 
-export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
+export const LoginPage = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
   const alertHook = useAlert();
   const [type, setType] = React.useState("tutor");
   const [username, setUsername] = useState(rememberUsername);

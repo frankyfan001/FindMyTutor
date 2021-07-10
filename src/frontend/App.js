@@ -6,16 +6,15 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { LoginForm } from './components/Login';
-import SignUp from './components/Signup';
-import { Post, Post1 } from './components/ViewPost';
+import { LoginPage } from './components/Login';
+import RegisterPage from './components/Signup';
+import ViewPostPage from './components/ViewPostPage';
 import TeamPage from './components/TeamPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
 import PostForm from './components/PostForm';
 import HomePage from "./components/HomePage";
-import {makeStyles} from "@material-ui/core";
 
 function App() {
   const accountHook = useAccount();
@@ -31,18 +30,18 @@ function App() {
           <Route exact path="/">
             <HomePage accountHook={accountHook} />
           </Route>
-          <Route path="/viewPost/:id" >
-            <Post1 accountHook={accountHook} />
+          <Route path="/viewPost/:postId" >
+            <ViewPostPage accountHook={accountHook} />
           </Route>
           <Route path="/newPost">
             <PostForm accountHook={accountHook} />
           </Route>
 
           <Route path="/register/">
-            <SignUp accountHook={accountHook} />
+            <RegisterPage accountHook={accountHook} />
           </Route>
           <Route path="/login">
-            <LoginForm accountHook={accountHook}
+            <LoginPage accountHook={accountHook}
                        rememberUsername={rememberUsername} setRememberUsername={setRememberUsername}
                        rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>

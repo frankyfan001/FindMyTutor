@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, {useEffect, useState} from 'react';
 import { api } from '../APIs/api';
-import { mockPost } from '../components/mocks/mockPost';
+import {useParams} from "react-router";
 
 export default function usePost() {
-  const [post, setPost] = useState(mockPost);
-  const getPost = async (id) => {
-    console.log(`get single post: ${id}`);
-    const req = await api.get('/posts', {
-      params: { id },
-    });
+  // State: post
+  const [post, setPost] = useState(null);
 
-    const data = await req.json();
-    return data;
+  // Get a post with its account info.
+  const getPost = async (postId) => {
+
+    const res = await fetch('http://localhost:5000/posts/' + postId, {
+      method: 'GET'
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setPost(output.result);
+    }
+    return output;
   };
 
   const updatePost = async (newPost) => {
@@ -24,7 +31,12 @@ export default function usePost() {
     const res = await req.json();
   };
 
-  return {
-    post, setPost, getPost, updatePost,
-  };
+  // Effect: fetch a post.
+  const { postId } = useParams();
+
+  useEffect(() => {
+    getPost(postId);
+  }, []);
+
+  return { post, getPost, updatePost };
 }
