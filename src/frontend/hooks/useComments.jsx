@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, {useEffect, useState} from 'react';
 import { api } from '../APIs/api';
-import { mockPost } from '../components/mocks/mockPost';
+import {useParams} from "react-router";
 
-export default function useComments(init) {
-  const [comments, setComments] = useState(init);
+export default function useComments() {
+  // State: comments
+  const [comments, setComments] = useState([]);
 
-  const getComments = async () => {
-    console.log('get posts');
-    const req = await api.get('/comments');
-    const res = await req.json();
-    setComments(res);
+  /* Get a post's all comments with its account info. */
+  const getComments = async (postId) => {
+    const res = await fetch('http://localhost:5000/comments/' + postId, {
+      method: 'GET'
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setComments(output.result);
+    }
+    return output;
   };
+
   const addComment = async (newComment) => {
     console.log(`add post: ${newComment.id}`);
     const req = await api.post('/comments', JSON.stringify(newComment));
@@ -47,11 +56,12 @@ export default function useComments(init) {
     const res = await req.json();
   };
 
-  return {
-    comments,
-    setComments,
-    addComment,
-    updateComment,
-    deleteComment,
-  };
+  // Effect: fetch a post.
+  const { postId } = useParams();
+
+  useEffect(() => {
+    getComments(postId);
+  }, []);
+
+  return { comments, getComments, addComment, deleteComment, updateComment };
 }

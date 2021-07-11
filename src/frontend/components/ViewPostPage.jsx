@@ -21,10 +21,12 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import {
   Bookmark, Email, Phone, SchoolOutlined, ThumbDown,
 } from '@material-ui/icons';
-import { mockPost } from './mocks/mockPost';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import FormDialog from './CommentForm';
-import useComments from '../hooks/useComment';
+import useComments from '../hooks/useComments';
 import usePost from '../hooks/usePost';
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,8 +90,20 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     width: '100%',
-    minHeight: theme.spacing(18),
+    minHeight: theme.spacing(19),
     padding: '3% 3% 3% 3%',
+  },
+  button: {
+    background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
+    margin: 'auto 3% auto auto',
+  },
+  commentListRoot: {
+    width: '92%',
+    margin: 'auto',
+  },
+  commentAvatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
   },
 }));
 
@@ -97,6 +111,9 @@ export default function ViewPostPage({ accountHook }) {
   const classes = useStyles();
 
   const { post } = usePost();
+  const { comments } = useComments();
+
+  const dialogHooks = useDialog();
 
   const content = {
     days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -182,12 +199,12 @@ export default function ViewPostPage({ accountHook }) {
 
                         {/*Wage*/}
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<AttachMoneyIcon />} label={post.wage} className={classes.label} />
+                          <Chip color='secondary' icon={<MonetizationOnIcon />} label={"$" + post.wage + " / hour"} className={classes.label} />
                         </Grid>
 
-                        {/*ThumbUp*/}
+                        {/*Contact*/}
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<ThumbUpIcon />} label={post.thumbUp} className={classes.label} />
+                          <Chip color='secondary' icon={<ContactPhoneIcon />} label={post.contact} className={classes.label} />
                         </Grid>
 
                       </Grid>
@@ -196,14 +213,14 @@ export default function ViewPostPage({ accountHook }) {
                     <Grid item xs={12} md={4}>
                       <Grid container spacing={2}>
 
-                        {/*Phone*/}
+                        {/*ThumbUp*/}
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<Phone />} label={post.phone} className={classes.label} />
+                          <Chip color='secondary' icon={<ThumbUpIcon />} label={post.thumbUp} className={classes.label} />
                         </Grid>
 
-                        {/*Email*/}
+                        {/*ThumbDown*/}
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<Email />} label={post.email} className={classes.label} />
+                          <Chip color='secondary' icon={<ThumbDown />} label={post.thumbDown} className={classes.label} />
                         </Grid>
 
                       </Grid>
@@ -227,10 +244,26 @@ export default function ViewPostPage({ accountHook }) {
 
         </Grid>
 
+        {/*New Comment Button*/}
+        <Grid item xs={12} md={12} align="right">
+          {accountHook.isLogin() && accountHook.isStudent() ?
+
+            <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />} onClick={dialogHooks.handleClickOpen}>
+              NEW COMMENT
+            </Button> :
+
+            <Link to="/login?type=student" style={{ textDecoration: 'none', color: 'black' }}>
+              <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}>
+                NEW COMMENT
+              </Button>
+            </Link> }
+
+          <FormDialog dialogHooks={dialogHooks} />
+        </Grid>
+
         {/*Comment List*/}
         <Grid item xs={12} md={12}>
-          <CommentList comments={mockPost.comments} accountHook={accountHook}/>
-           {/*<CommentList comments={post.comments} />*/}
+          <CommentList comments={comments} accountHook={accountHook}/>
         </Grid>
 
       </Grid>
@@ -239,33 +272,17 @@ export default function ViewPostPage({ accountHook }) {
   );
 };
 
-const CommentList = ({ comments, accountHook, handleClick }) => {
+const CommentList = ({ comments }) => {
   const classes = useStyles();
-  const dialogHooks = useDialog();
-  return (
-    <Grid container alignItems="flex-end" direction="column" spacing={5}>
-      <Grid item>
-        {accountHook.isLogin() && accountHook.isStudent()
-          ? (
-            <Button variant="contained" color="primary" onClick={dialogHooks.handleClickOpen}>
-              Add new comment
-            </Button>
-          )
-          : (
-            <Link to="/login?type=student" style={{ textDecoration: 'none', color: 'black' }}>
-              <Button variant="contained" color="primary">
-                Add new comment
-              </Button>
-            </Link>
-          )}
 
-        <FormDialog dialogHooks={dialogHooks} />
-      </Grid>
-      <Grid item className={classes.root}>
+  return (
+    <Grid container direction="column" spacing={0} className={classes.commentListRoot}>
+      <Grid item>
         <Grid container alignItems="stretch">
           {comments.map((comment, idx) => (
             <Grid item key={idx.toString()} xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <Comment comment={comment} handleClick={handleClick} />
+              <br />
+              <Comment comment={comment} />
             </Grid>
           ))}
         </Grid>
@@ -274,6 +291,36 @@ const CommentList = ({ comments, accountHook, handleClick }) => {
   );
 };
 
+const Comment = ({ comment }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container wrap="nowrap" spacing={0} alignContent="space-between">
+      <Grid item xs={2} align="center">
+        <Avatar alt={comment.account_ref.username[0].toUpperCase()} src={comment.account_ref.avatar} className={classes.commentAvatar} />
+      </Grid>
+      <Grid item xs={8}>
+        <h4 style={{ margin: 0, textAlign: 'left' }}>
+          {comment.account_ref.username}
+        </h4>
+        <Typography style={{ textAlign: 'left' }}>
+          {comment.description}
+        </Typography>
+        <br />
+        <Typography variant="caption" display="block" gutterBottom style={{ textAlign: 'left', color: 'grey' }}>
+          { 'posted at ' + comment.createdAt.substring(0,10) }
+        </Typography>
+      </Grid>
+      <Grid item xs={2} align="right">
+        { comment.isThumbUp ?
+          <ThumbUpIcon /> :
+          <ThumbDown />}
+      </Grid>
+    </Grid>
+  );
+};
+
+// Backup Codes only.
 const useRating = (updateFunc, updateObject) => {
   const [isCancel, setCancel] = useState(false);
   console.log('handling rating');
@@ -362,30 +409,6 @@ const useDialog = () => {
     open, handleClickOpen, handleClose, width,
   };
 };
-
-const Comment = ({ comment, handleClick }) => (
-  <Grid container wrap="nowrap" spacing={2} alignContent="space-between">
-    <Grid item xs={1}>
-      <Avatar alt={comment.user.name} src={comment.user.img} />
-    </Grid>
-    <Grid item xs={12}>
-      <h4 style={{ margin: 0, textAlign: 'left' }}>
-        {comment.user.name}
-      </h4>
-      <Typography style={{ textAlign: 'left' }}>
-        {comment.content}
-      </Typography>
-      <p style={{ textAlign: 'left', color: 'grey' }}>
-        posted at
-        {' '}
-        {new Date().toLocaleDateString()}
-      </p>
-    </Grid>
-    <Grid item align="right" xs={3}>
-      <RatingArea up={comment.thumbsUp} down={comment.thumbsDown} handleClick={handleClick} />
-    </Grid>
-  </Grid>
-);
 
 const useRatingStyles = makeStyles((theme) => ({
   hover: {

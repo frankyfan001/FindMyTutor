@@ -9,7 +9,6 @@ export default function usePost() {
 
   // Get a post with its account info.
   const getPost = async (postId) => {
-
     const res = await fetch('http://localhost:5000/posts/' + postId, {
       method: 'GET'
     });

@@ -22,17 +22,17 @@ const PostSchema = new Schema({
     type: Number,
     required: true
   },
+  contact: {
+    type: String,
+    required: true
+  },
   thumbUp: {
     type: Number,
     required: true
   },
-  phone: {
-    type: String,
+  thumbDown: {
+    type: Number,
     required: true
-  },
-  email: {
-    type: String,
-    required: true,
   },
   description: {
     type: String,

@@ -90,7 +90,7 @@ export default function HomePage({accountHook}) {
         <Grid item xs={12} md={12} align="right">
           <Link to={accountHook.isLogin() && accountHook.isTutor() ? '/newPost' : '/login?type=tutor'} style={{ textDecoration: 'none', color: 'black' }}>
             <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}>
-              New Post
+              NEW POST
             </Button>
           </Link>
         </Grid>

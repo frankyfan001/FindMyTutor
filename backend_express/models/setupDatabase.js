@@ -71,9 +71,9 @@ const initializePosts = async function() {
       school: "UBC",
       course: "CPSC 455",
       wage: 30,
+      contact: "604-999-8407",
       thumbUp: 20,
-      phone: "604-999-8407",
-      email: "frankyfan003@gmail.com",
+      thumbDown: 2,
       description: "Hi, my name is Franky, majoring Computer Science from UBC.",
       account_ref: tutors[0]._id,
       createdAt: new Date("2021-07-04T10:03:23.308Z")
@@ -83,9 +83,9 @@ const initializePosts = async function() {
       school: "UBC",
       course: "ECON 311",
       wage: 20,
+      contact: "604-999-8407",
       thumbUp: 10,
-      phone: "604-999-8407",
-      email: "frankyfan@gmail.com",
+      thumbDown: 1,
       description: "Hi, my name is Franky, and I'm good at Economics.",
       account_ref: tutors[0]._id,
       createdAt: new Date("2021-07-03T10:03:23.308Z")
@@ -95,9 +95,9 @@ const initializePosts = async function() {
       school: "SFU",
       course: "CMPT 225",
       wage: 25,
+      contact: "604-123-456",
       thumbUp: 15,
-      phone: "604-123-456",
-      email: "brookxiao@gmail.com",
+      thumbDown: 2,
       description: "I can teach CMPT 225.",
       account_ref: tutors[1]._id,
       createdAt: new Date("2021-07-02T10:03:23.308Z")
@@ -107,9 +107,9 @@ const initializePosts = async function() {
       school: "SFU",
       course: "BIOL 100",
       wage: 15,
+      contact: "604-123-456",
       thumbUp: 5,
-      phone: "604-123-456",
-      email: "brookxiao@gmail.com",
+      thumbDown: 1,
       description: "I can teach BIOL 110.",
       account_ref: tutors[1]._id,
       createdAt: new Date("2021-07-01T10:03:23.308Z")
@@ -118,7 +118,39 @@ const initializePosts = async function() {
 }
 
 const initializeComments = async function() {
-  // TODO:
+  await Comment.collection.drop().catch((err) => {});
+  const students = await Account.find({type: "student"});
+  const posts = await Post.find({});
+  await Comment.insertMany([
+    {
+      description: "Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!!",
+      isThumbUp: true,
+      account_ref: students[0]._id,
+      post_ref: posts[0]._id,
+      createdAt: new Date("2021-07-04T10:03:23.308Z")
+    },
+    {
+      description: "Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!!",
+      isThumbUp: false,
+      account_ref: students[1]._id,
+      post_ref: posts[0]._id,
+      createdAt: new Date("2021-07-03T10:03:23.308Z")
+    },
+    {
+      description: "Franky is the best tutor for ECON 311!!!!!",
+      isThumbUp: true,
+      account_ref: students[0]._id,
+      post_ref: posts[1]._id,
+      createdAt: new Date("2021-07-02T10:03:23.308Z")
+    },
+    {
+      description: "Franky is the worse tutor for ECON 311!!!!!",
+      isThumbUp: false,
+      account_ref: students[1]._id,
+      post_ref: posts[1]._id,
+      createdAt: new Date("2021-07-01T10:03:23.308Z")
+    },
+  ])
 }
 
 module.exports = setupDatabase;
