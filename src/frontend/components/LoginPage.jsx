@@ -85,7 +85,7 @@ export default function LoginPage({ accountHook,
         alertHook.switchToSuccess("Registration is successful.");
 
         setTimeout(function () {
-          history.push("/");
+          history.goBack();
         }, 1000)
       } else {
         alertHook.switchToFailure(output.error);
