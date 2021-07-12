@@ -16,18 +16,26 @@ export default function usePost() {
 
     if (output.success) {
       setPost(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
     }
-    return output;
   };
 
-  const updatePost = async (newPost) => {
-    console.log(`update post: ${newPost.id}`);
-    setPost(
-      newPost,
-    );
-    const req = await api.put('post', JSON.stringify(post));
+  // Update a post.
+  const updatePost = async (postId, updatedInfo) => {
+    const res = await fetch('http://localhost:5000/posts/' + postId, {
+      method: 'PUT',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(updatedInfo)
+    });
+    const output = await res.json();
 
-    const res = await req.json();
+    if (output.success) {
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
   // Effect: fetch a post.

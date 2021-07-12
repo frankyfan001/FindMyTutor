@@ -85,8 +85,12 @@ router.post('/register', function(req, res, next) {
           });
         })
       }
-    }).catch((err) => {
-      console.log(err);
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+        error: err.message
+      });
     });
 });
 
@@ -153,7 +157,10 @@ router.post('/login', function(req, res, next) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      res.send({
+        success: false,
+        error: err.message
+      });
     });
 });
 

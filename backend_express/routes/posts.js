@@ -167,7 +167,6 @@ router.get('/', function(req, res, next) {
         success: false,
         error: "Getting all posts failed."
       });
-      console.log(err);
     });
 });
 
@@ -241,7 +240,68 @@ router.get('/:postId', function(req, res, next) {
         success: false,
         error: `Getting the post with id ${postId} failed.`
       });
-      console.log(err);
+    });
+});
+
+/* Update a post. */
+router.put('/:postId', function(req, res, next) {
+  const input = {
+    "thumbUp": 21
+  };
+  const output = {
+    success: true,
+    result: {
+      availableDays: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true
+      ],
+      _id: "60ec6200b282dc54a07b7b95",
+      school: "UBC",
+      course: "CPSC 455",
+      wage: 30,
+      contact: "604-999-8407",
+      thumbUp: 21,
+      thumbDown: 2,
+      description: "Hi, my name is Franky, majoring Computer Science from UBC.",
+      account_ref: "60ec6200b282dc54a07b7b8e",
+      createdAt: "2021-07-04T10:03:23.308Z",
+      __v: 0,
+      updatedAt: "2021-07-12T15:38:40.653Z"
+    }
+  };
+  const output1 = {
+    success: false,
+    error: "Updating the post with id 60ec6200b282dc54a07b7b94 failed."
+  };
+  ///////////////////////////// Above is examples of input and output /////////////////////////////
+
+  const postId = req.params.postId;
+  const updatedInfo = req.body;
+
+  Post.findByIdAndUpdate(postId, updatedInfo)
+    .then((result) => {
+      if (result) {
+        res.send({
+          success: true,
+          result: result
+        });
+      } else {
+        res.send({
+          success: false,
+          error: `Updating the post with id ${postId} failed.`
+        });
+      }
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+        error: `Updating the post with id ${postId} failed.`
+      });
     });
 });
 

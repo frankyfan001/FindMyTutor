@@ -141,10 +141,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewPostPage({ accountHook }) {
   const classes = useStyles();
 
-  const { post } = usePost();
-  const { comments, getComments, addComment } = useComments();
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const postHook = usePost();
+  const commentsHook = useComments();
+
+  const post = postHook.post;
+  const comments = commentsHook.comments;
 
   const content = {
     days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -303,9 +306,9 @@ export default function ViewPostPage({ accountHook }) {
       <NewCommentDialog
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
-        getComments={getComments}
-        addComment={addComment}
         accountHook={accountHook}
+        postHook={postHook}
+        commentsHook={commentsHook}
       />
     </>
   );
@@ -359,7 +362,7 @@ const Comment = ({ comment }) => {
   );
 };
 
-const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, getComments, addComment, accountHook }) => {
+const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook, commentsHook }) => {
   const classes = useStyles();
   const { postId } = useParams();
 
@@ -374,20 +377,35 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, getComments, addComme
       account_ref: accountHook.account._id,
       post_ref: postId
     };
-
-    const p = addComment(newComment);
-    p.then((output) => {
-      if (output.success) {
+    // Add the comment.
+    const promise = commentsHook.addComment(newComment);
+    promise
+      // Update the post with thumbUp/thumbDown + 1.
+      .then((output) => {
+        const updatedInfo = isThumbUp ?
+          {thumbUp: postHook.post.thumbUp + 1} :
+          {thumbDown: postHook.post.thumbDown + 1};
+        return postHook.updatePost(postId, updatedInfo);
+      })
+      // Get the comments.
+      .then((output) => {
+        return commentsHook.getComments(postId);
+      })
+      // Get the post.
+      .then((output) => {
+        return postHook.getPost(postId);
+      })
+      // Clean up.
+      .then((output) => {
         setIsDialogOpen(false);
         setErrorMsg(null);
         setIsThumbUp(true);
         setDescription("");
-
-        getComments(postId);
-      } else {
-        setErrorMsg(output.error);
-      }
-    });
+      })
+      // Error handling.
+      .catch((err) => {
+        setErrorMsg(err.message);
+      });
   }
 
   const handleCancel = () => {

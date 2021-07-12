@@ -29,9 +29,10 @@ export default function useAccount() {
     // If register succeeded, login directly.
     if (output.success) {
       setAccount(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
     }
-
-    return output;
   };
 
   const login = async (input) => {
@@ -44,8 +45,10 @@ export default function useAccount() {
 
     if (output.success) {
       setAccount(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
     }
-    return output;
   };
 
   const logout = () => {

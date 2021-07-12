@@ -16,11 +16,13 @@ export default function useComments() {
 
     if (output.success) {
       setComments(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
     }
-    return output;
   };
 
-  // Add a new post.
+  // Add a new comment.
   const addComment = async (newComment) => {
     const res = await fetch('http://localhost:5000/comments', {
       method: 'POST',
@@ -29,7 +31,11 @@ export default function useComments() {
     });
     const output = await res.json();
 
-    return output;
+    if (output.success) {
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
   const deleteComment = async (id) => {
@@ -66,5 +72,5 @@ export default function useComments() {
     getComments(postId);
   }, []);
 
-  return { comments, getComments, addComment, deleteComment, updateComment };
+  return { comments, getComments, addComment };
 }

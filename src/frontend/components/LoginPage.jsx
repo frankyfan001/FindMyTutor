@@ -71,9 +71,9 @@ export default function LoginPage({ accountHook,
       password,
     };
 
-    const p = accountHook.login(input);
-    p.then((output) => {
-      if (output.success) {
+    const promise = accountHook.login(input);
+    promise
+      .then((output) => {
         if (checked) {
           setRememberUsername(username);
           setRememberPassword(password);
@@ -87,10 +87,10 @@ export default function LoginPage({ accountHook,
         setTimeout(function () {
           history.goBack();
         }, 1000)
-      } else {
-        alertHook.switchToFailure(output.error);
-      }
-    });
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (

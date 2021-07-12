@@ -16,8 +16,10 @@ export default function usePosts() {
 
     if (output.success) {
       setPosts(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
     }
-    return output;
   };
 
   const addPost = async (newPost) => {
@@ -40,5 +42,5 @@ export default function usePosts() {
     getPosts();
   }, []);
 
-  return { posts, getPosts, setPosts, addPost, deletePost};
+  return { posts, setPosts, getPosts };
 }

@@ -76,11 +76,10 @@ router.get('/:postId', function(req, res, next) {
         success: false,
         error: `Getting the comments of the post with id ${postId} failed.`
       });
-      console.log(err);
     });
 });
 
-/* Add a new post. */
+/* Add a new comment. */
 router.post('/', function(req, res, next) {
   const input = {
     isThumbUp: true,
@@ -114,6 +113,7 @@ router.post('/', function(req, res, next) {
       success: false,
       error: `The description is required.`
     });
+    return;
   }
 
   Account.findById(newComment.account_ref)
@@ -149,7 +149,10 @@ router.post('/', function(req, res, next) {
       }
     })
     .catch((err) => {
-      console.log(err);
+      res.send({
+        success: true,
+        result: "Adding the comment failed."
+      });
     });
 });
 

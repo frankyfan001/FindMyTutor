@@ -74,18 +74,18 @@ export default function RegisterPage({accountHook}) {
       avatar
     };
 
-    const p = accountHook.register(input);
-    p.then((output) => {
-      if (output.success) {
+    const promise = accountHook.register(input);
+    promise
+      .then((result) => {
         alertHook.switchToSuccess("Registration is successful.");
 
         setTimeout(function () {
           history.goBack();
         }, 1000)
-      } else {
-        alertHook.switchToFailure(output.error);
-      }
-    });
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (
