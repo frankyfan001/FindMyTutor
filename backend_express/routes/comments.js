@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 const Comment = require('../models/comment');
+const Account = require("../models/account");
 
 /* Get a post's all comments with its account info. */
 router.get('/:postId', function(req, res, next) {
@@ -75,6 +76,79 @@ router.get('/:postId', function(req, res, next) {
         success: false,
         error: `Getting the comments of the post with id ${postId} failed.`
       });
+      console.log(err);
+    });
+});
+
+/* Add a new post. */
+router.post('/', function(req, res, next) {
+  const input = {
+    isThumbUp: true,
+    description: "Franky is a good tutor for CPSC 455.",
+    account_ref: "60ec136eb96e314af2cca9f1",
+    post_ref: "60ec136eb96e314af2cca9f6"
+  }
+  const output = {
+    success: true,
+    result: {
+      _id: "60ec2617f271554d263b2166",
+      isThumbUp: true,
+      description: 'Franky is a good tutor.',
+      account_ref: "60ec25f9f271554d263b2148",
+      post_ref: "60ec25f9f271554d263b214d",
+      createdAt: "2021-07-12T11:23:03.154Z",
+      updatedAt: "2021-07-12T11:23:03.154Z",
+      __v: 0
+    }
+  };
+  const output1 = {
+    success: false,
+    error: "A student cannot add more than 3 comments on a single post."
+  };
+  ///////////////////////////// Above is examples of input and output /////////////////////////////
+
+  const newComment = req.body;
+
+  if (newComment.description === "") {
+    res.send({
+      success: false,
+      error: `The description is required.`
+    });
+  }
+
+  Account.findById(newComment.account_ref)
+    .then((result) => {
+      if (!result) {
+        res.send({
+          success: false,
+          error: `The account with id ${newComment.account_ref} does not exist.`
+        });
+      } else if (result.type !== "student") {
+        res.send({
+          success: false,
+          error: "Only an account of student type can add a comment on a post."
+        });
+      } else {
+        Comment.find({post_ref: newComment.post_ref, account_ref: newComment.account_ref})
+          .then((result) => {
+            if (result.length >= 3) {
+              res.send({
+                success: false,
+                error: "A student cannot add more than 3 comments on a single post."
+              });
+            } else {
+              Comment.create(newComment)
+                .then((result) => {
+                  res.send({
+                    success: true,
+                    result: result
+                  });
+                })
+            }
+          })
+      }
+    })
+    .catch((err) => {
       console.log(err);
     });
 });

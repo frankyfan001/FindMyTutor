@@ -69,26 +69,25 @@ router.post('/register', function(req, res, next) {
     return;
   }
 
-  Account.findOne({username: newAccount.username}).then((result) => {
-    if (result) {
-      res.send({
-        success: false,
-        error: "Username has already been registered."
-      });
-    } else {
-      // Registration succeeded.
-      Account.create(newAccount).then((result) => {
+  Account.findOne({username: newAccount.username})
+    .then((result) => {
+      if (result) {
         res.send({
-          success: true,
-          result: result
+          success: false,
+          error: "Username has already been registered."
         });
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
-  }).catch((err) => {
-    console.log(err);
-  });
+      } else {
+        // Registration succeeded.
+        Account.create(newAccount).then((result) => {
+          res.send({
+            success: true,
+            result: result
+          });
+        })
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
 });
 
 /* Login an account. */

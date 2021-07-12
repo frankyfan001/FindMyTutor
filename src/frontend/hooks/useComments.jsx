@@ -7,7 +7,7 @@ export default function useComments() {
   // State: comments
   const [comments, setComments] = useState([]);
 
-  /* Get a post's all comments with its account info. */
+  // Get a post's all comments with its account info.
   const getComments = async (postId) => {
     const res = await fetch('http://localhost:5000/comments/' + postId, {
       method: 'GET'
@@ -20,12 +20,16 @@ export default function useComments() {
     return output;
   };
 
+  // Add a new post.
   const addComment = async (newComment) => {
-    console.log(`add post: ${newComment.id}`);
-    const req = await api.post('/comments', JSON.stringify(newComment));
+    const res = await fetch('http://localhost:5000/comments', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(newComment)
+    });
+    const output = await res.json();
 
-    const res = await req.json();
-    setComments([...comments, newComment]);
+    return output;
   };
 
   const deleteComment = async (id) => {
@@ -56,9 +60,8 @@ export default function useComments() {
     const res = await req.json();
   };
 
-  // Effect: fetch a post.
+  // Effect: fetch comments.
   const { postId } = useParams();
-
   useEffect(() => {
     getComments(postId);
   }, []);

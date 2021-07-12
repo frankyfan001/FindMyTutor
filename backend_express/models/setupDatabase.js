@@ -123,29 +123,29 @@ const initializeComments = async function() {
   const posts = await Post.find({});
   await Comment.insertMany([
     {
-      description: "Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!!",
       isThumbUp: true,
+      description: "Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!!",
       account_ref: students[0]._id,
       post_ref: posts[0]._id,
       createdAt: new Date("2021-07-04T10:03:23.308Z")
     },
     {
-      description: "Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!!",
       isThumbUp: false,
+      description: "Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!!",
       account_ref: students[1]._id,
       post_ref: posts[0]._id,
       createdAt: new Date("2021-07-03T10:03:23.308Z")
     },
     {
-      description: "Franky is the best tutor for ECON 311!!!!!",
       isThumbUp: true,
+      description: "Franky is the best tutor for ECON 311!!!!!",
       account_ref: students[0]._id,
       post_ref: posts[1]._id,
       createdAt: new Date("2021-07-02T10:03:23.308Z")
     },
     {
-      description: "Franky is the worse tutor for ECON 311!!!!!",
       isThumbUp: false,
+      description: "Franky is the worse tutor for ECON 311!!!!!",
       account_ref: students[1]._id,
       post_ref: posts[1]._id,
       createdAt: new Date("2021-07-01T10:03:23.308Z")

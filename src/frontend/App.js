@@ -47,7 +47,6 @@ function App() {
           </Route>
           <Route path="/account">
             // TODO: AccountPage.
-            AccountPage
           </Route>
           <Route path="/team">
             <TeamPage />
