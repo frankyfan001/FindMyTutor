@@ -43,7 +43,7 @@ export default function Banner(props) {
             A completely free platform for students to find reliable tutors.
           </Typography>
           <Box mt={4}>
-            <RouterLink to="/register" style={{ textDecoration: 'none' }}>
+            <RouterLink to="/register?type=tutor" style={{ textDecoration: 'none' }}>
               <Button variant="outlined" color="secondary" className={classes.primaryAction}>SIGN UP</Button>
             </RouterLink>
             <RouterLink to="/about" style={{ textDecoration: 'none' }}>

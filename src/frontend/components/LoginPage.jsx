@@ -18,11 +18,12 @@ import {
 import React, {useState} from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
-export const useFormStyle = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -43,16 +44,24 @@ export const useFormStyle = makeStyles((theme) => ({
   },
 }));
 
-export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, rememberPassword, setRememberPassword}) => {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export default function LoginPage({ accountHook,
+                            rememberUsername, setRememberUsername,
+                            rememberPassword, setRememberPassword }) {
+  const classes = useStyles();
+
+  const query = useQuery();
+
   const alertHook = useAlert();
-  const [type, setType] = React.useState("tutor");
+  const [type, setType] = React.useState(query.get("type"));
   const [username, setUsername] = useState(rememberUsername);
   const [password, setPassword] = useState(rememberPassword);
   const [checked, setChecked] = useState(true);
 
   const history = useHistory();
-
-  const classes = useFormStyle();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -63,9 +72,9 @@ export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, r
       password,
     };
 
-    const p = accountHook.login(input);
-    p.then((output) => {
-      if (output.success) {
+    const promise = accountHook.login(input);
+    promise
+      .then((result) => {
         if (checked) {
           setRememberUsername(username);
           setRememberPassword(password);
@@ -79,10 +88,10 @@ export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, r
         setTimeout(function () {
           history.push("/");
         }, 1000)
-      } else {
-        alertHook.switchToFailure(output.error);
-      }
-    });
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (
@@ -159,14 +168,7 @@ export const LoginForm = ({accountHook, rememberUsername, setRememberUsername, r
         </form>
       </div>
       <br />
-      {
-        alertHook.isSuccess() ?
-          <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          : alertHook.isFailure() ?
-          <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          :
-          <></>
-      }
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 };

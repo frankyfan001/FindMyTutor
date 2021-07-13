@@ -33,7 +33,7 @@ const initializeAccounts = async function() {
       password: "123456",
       fname: "Franky",
       lname: "Fan",
-      avatar: "https://i.redd.it/biw2bktiuur41.jpg"
+      avatar: "https://cdn.shopify.com/s/files/1/2123/8425/products/76678823-LRG_e1939e5f-7238-46e4-a7c7-eb6d0d26b6d6_530x.jpg?v=1578663470"
     },
     {
       type: "tutor",
@@ -49,7 +49,7 @@ const initializeAccounts = async function() {
       password: "123456",
       fname: "Lisa",
       lname: "Watanabe",
-      avatar: "https://www.zhifure.com/upload/images/2018/7/16143327546.jpg"
+      avatar: "https://www.kozzi.com/wp-content/uploads/2020/11/Adorable-Golden-Retriever-puppy-isolated-on-white-background.jpg"
     },
     {
       type: "student",
@@ -57,7 +57,7 @@ const initializeAccounts = async function() {
       password: "123456",
       fname: "Cally",
       lname: "Fan",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqVCzf412ffJOfAw_8gJw9WiwpKMMSEaqQFQ&usqp=CAU"
+      avatar: "https://vetstreet.brightspotcdn.com/dims4/default/7eaec8d/2147483647/thumbnail/645x380/quality/90/?url=https%3A%2F%2Fvetstreet-brightspot.s3.amazonaws.com%2F67%2Fb51540a27c11e087a80050568d634f%2Ffile%2FAmerican-Shorthair-2-645mk062311.jpg"
     }
   ])
 }
@@ -67,45 +67,49 @@ const initializePosts = async function() {
   const tutors = await Account.find({type: "tutor"});
   await Post.insertMany([
     {
+      availableDays: [false, false, false, false, false, true, true],
       school: "UBC",
       course: "CPSC 455",
       wage: 30,
-      thumbUp: 20,
-      phone: "604-999-8407",
-      email: "frankyfan003@gmail.com",
+      contact: "604-999-8407",
+      thumbUp: 1,
+      thumbDown: 1,
       description: "Hi, my name is Franky, majoring Computer Science from UBC.",
       account_ref: tutors[0]._id,
       createdAt: new Date("2021-07-04T10:03:23.308Z")
     },
     {
+      availableDays: [false, false, false, false, false, true, true],
       school: "UBC",
       course: "ECON 311",
       wage: 20,
-      thumbUp: 10,
-      phone: "604-999-8407",
-      email: "frankyfan@gmail.com",
+      contact: "604-999-8407",
+      thumbUp: 1,
+      thumbDown: 1,
       description: "Hi, my name is Franky, and I'm good at Economics.",
       account_ref: tutors[0]._id,
       createdAt: new Date("2021-07-03T10:03:23.308Z")
     },
     {
+      availableDays: [false, true, false, true, false, false, false],
       school: "SFU",
       course: "CMPT 225",
       wage: 25,
-      thumbUp: 15,
-      phone: "604-123-456",
-      email: "brookxiao@gmail.com",
+      contact: "604-123-456",
+      thumbUp: 0,
+      thumbDown: 0,
       description: "I can teach CMPT 225.",
       account_ref: tutors[1]._id,
       createdAt: new Date("2021-07-02T10:03:23.308Z")
     },
     {
+      availableDays: [false, true, false, true, false, false, false],
       school: "SFU",
       course: "BIOL 100",
       wage: 15,
-      thumbUp: 5,
-      phone: "604-123-456",
-      email: "brookxiao@gmail.com",
+      contact: "604-123-456",
+      thumbUp: 0,
+      thumbDown: 0,
       description: "I can teach BIOL 110.",
       account_ref: tutors[1]._id,
       createdAt: new Date("2021-07-01T10:03:23.308Z")
@@ -114,7 +118,39 @@ const initializePosts = async function() {
 }
 
 const initializeComments = async function() {
-  // TODO:
+  await Comment.collection.drop().catch((err) => {});
+  const students = await Account.find({type: "student"});
+  const posts = await Post.find({});
+  await Comment.insertMany([
+    {
+      isThumbUp: true,
+      description: "Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!! Franky is the best tutor for CPSC 455!!!!!",
+      account_ref: students[0]._id,
+      post_ref: posts[0]._id,
+      createdAt: new Date("2021-07-04T10:03:23.308Z")
+    },
+    {
+      isThumbUp: false,
+      description: "Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!! Franky is the worse tutor for CPSC 455!!!!!",
+      account_ref: students[1]._id,
+      post_ref: posts[0]._id,
+      createdAt: new Date("2021-07-03T10:03:23.308Z")
+    },
+    {
+      isThumbUp: true,
+      description: "Franky is the best tutor for ECON 311!!!!!",
+      account_ref: students[0]._id,
+      post_ref: posts[1]._id,
+      createdAt: new Date("2021-07-02T10:03:23.308Z")
+    },
+    {
+      isThumbUp: false,
+      description: "Franky is the worse tutor for ECON 311!!!!!",
+      account_ref: students[1]._id,
+      post_ref: posts[1]._id,
+      createdAt: new Date("2021-07-01T10:03:23.308Z")
+    },
+  ])
 }
 
 module.exports = setupDatabase;

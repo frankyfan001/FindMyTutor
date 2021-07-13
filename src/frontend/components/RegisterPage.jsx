@@ -12,11 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import {FormControl, Radio, RadioGroup} from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
 // Thanks to material-ui example:
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
@@ -42,9 +43,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({accountHook}) {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export default function RegisterPage({accountHook}) {
+  const query = useQuery();
+
   const alertHook = useAlert();
-  const [type, setType] = React.useState("tutor");
+  const [type, setType] = React.useState(query.get("type"));
 
   const history = useHistory();
 
@@ -68,18 +75,18 @@ export default function SignUp({accountHook}) {
       avatar
     };
 
-    const p = accountHook.register(input);
-    p.then((output) => {
-      if (output.success) {
+    const promise = accountHook.register(input);
+    promise
+      .then((result) => {
         alertHook.switchToSuccess("Registration is successful.");
 
         setTimeout(function () {
           history.push("/");
         }, 1000)
-      } else {
-        alertHook.switchToFailure(output.error);
-      }
-    });
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (
@@ -187,14 +194,7 @@ export default function SignUp({accountHook}) {
         </form>
       </div>
       <br />
-      {
-        alertHook.isSuccess() ?
-          <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          : alertHook.isFailure() ?
-          <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          :
-          <></>
-      }
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 }

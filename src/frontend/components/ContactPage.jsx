@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Alert} from '@material-ui/lab';
 import useAlert from '../hooks/useAlert';
 import emailjs from 'emailjs-com';
+import AlertMessage from "./AlertMessage";
 
 const useStyles = makeStyles((theme) => ({
   firstBox: {
@@ -45,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ContactPage(props) {
+  const classes = useStyles();
+
   const alertHook = useAlert();
   const [checked, setChecked] = useState(false);
-
-  const classes = useStyles();
 
   const content = {
     'header': 'Contact Us',
@@ -124,14 +124,7 @@ export default function ContactPage(props) {
                 </Box>
               </form>
               <br />
-              {
-                alertHook.isSuccess() ?
-                  <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-                : alertHook.isFailure() ?
-                  <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-                :
-                  <></>
-              }
+              <AlertMessage alertHook={alertHook} />
             </Container>
           </Box>
         </Grid>

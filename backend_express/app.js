@@ -11,7 +11,6 @@ const setupDatabase = require('./models/setupDatabase');
 setupDatabase().then();
 
 // Routers
-const indexRouter = require('./routes/index');
 const accountsRouter = require('./routes/accounts');
 const postsRouter = require('./routes/posts');
 const commentsRouter = require('./routes/comments');
@@ -29,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
 app.use('/accounts', accountsRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
