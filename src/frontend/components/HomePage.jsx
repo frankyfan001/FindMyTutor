@@ -25,6 +25,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const usePostsCards = () => {
+  const filters = ['tutor', 'school', 'thumbup', 'course'];
   const { posts } = usePosts();
   const [filter, setFilter] = useState('');
   // const [filteredPosts, setFilteredPosts] = useState(posts);
@@ -42,10 +43,14 @@ const usePostsCards = () => {
     const valueProcessed = newValue.trim().toLowerCase();
     const newCards = mockPosts.filter((card) => {
       console.log(filter);
-      if (filter) {
+      if (filter && filters.includes(filter)) {
         return card[filter].trim().toLowerCase().includes(valueProcessed);
       }
-      return Object.values(card).some((val) => val.trim().toLowerCase().includes(valueProcessed));
+      console.log(Object.values(card));
+      return Object.values(card).some((val) => {
+        console.log(val);
+        return val.toString().trim().toLowerCase().includes(valueProcessed);
+      });
     });
     setFilteredPosts(newCards);
   };
