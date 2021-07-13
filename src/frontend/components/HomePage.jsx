@@ -3,8 +3,8 @@ import {
   Button,
   Grid, makeStyles, Paper,
 } from '@material-ui/core';
-import React, { Fragment, useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import { mockPosts } from './mocks/mockPosts';
 
@@ -13,6 +13,9 @@ import usePosts from '../hooks/usePosts';
 import PostLayout from './PostLayout';
 import { SearchInput } from './Search';
 import Banner from "./Banner";
+import AlertMessage from "./AlertMessage";
+import {useHistory} from "react-router";
+import useAlert from "../hooks/useAlert";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,7 +25,81 @@ const useStyles = makeStyles(() => ({
   button: {
     background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
   },
+  alertMessageDiv: {
+    maxWidth: '390px',
+  },
 }));
+
+export default function HomePage({accountHook, postsHook}) {
+  const classes = useStyles();
+
+  const alertHook = useAlert();
+
+  const history = useHistory();
+
+  const handleNewPostButton = () => {
+    if (accountHook.isLogin() && accountHook.isTutor()) {
+      history.push("/newPost");
+    } else {
+      alertHook.switchToFailure("Please sign in as a tutor to add posts.");
+      setTimeout(function () {
+        history.push("/login?type=tutor");
+      }, 5000)
+    }
+  };
+
+  return (
+    <div>
+      <Banner />
+      <Grid container spacing={1} direction="column" align="center" className={classes.root}>
+
+        {/*Search Bar*/}
+        <br />
+        <Grid item xs={12} md={12}>
+          <Grid container spacing={0}>
+            <Grid item xs={12} md={12}>
+              <Paper variant="outlined">
+              <FilterTreeView onNodeSelect={postsHook.handleClick} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Paper variant="outlined">
+              <SearchInput handleSearch={postsHook.handleSearch} />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/*New Post Button*/}
+        <br />
+        <Grid item xs={12} md={12} align="right">
+          <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}
+                  onClick={handleNewPostButton}>
+            NEW POST
+          </Button>
+        </Grid>
+
+        {/*Show the alert message when user is not a login student.*/}
+        <Grid item xs={12} md={12} align="right">
+          <div className={classes.alertMessageDiv}>
+            <AlertMessage alertHook={alertHook} />
+          </div>
+        </Grid>
+
+        {/*Post List*/}
+        <br />
+        {postsHook.posts.map((post, idx) =>
+          <Link key={post._id} to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
+            <Grid item xs={12} md={12}>
+              <PostLayout post={post} idx={idx} />
+            </Grid>
+          </Link>
+        )}
+
+      </Grid>
+    </div>
+  );
+};
 
 const usePostsCards = () => {
   const { posts } = usePosts();
@@ -57,55 +134,4 @@ const usePostsCards = () => {
   return {
     posts, filter, filteredPosts, handleClick: handleFilterClick, handleSearch,
   };
-};
-
-export default function HomePage({accountHook}) {
-  const classes = useStyles();
-
-  const postsHook = usePostsCards();
-
-  return (
-    <div>
-      <Banner />
-      <Grid container spacing={3} direction="column" align="center" className={classes.root}>
-
-        {/*Search Bar*/}
-        <br />
-        <Grid item xs={12} md={12}>
-          <Grid container spacing={0}>
-            <Grid item xs={12} md={12}>
-              <Paper variant="outlined">
-              <FilterTreeView onNodeSelect={postsHook.handleClick} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Paper variant="outlined">
-              <SearchInput handleSearch={postsHook.handleSearch} />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        {/*New Post Button*/}
-        <Grid item xs={12} md={12} align="right">
-          <Link to={accountHook.isLogin() && accountHook.isTutor() ? '/newPost' : '/login?type=tutor'} style={{ textDecoration: 'none', color: 'black' }}>
-            <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}>
-              NEW POST
-            </Button>
-          </Link>
-        </Grid>
-
-        {/*Post List*/}
-        <br />
-        {postsHook.posts.map((post, idx) =>
-          <Link key={post._id} to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
-            <Grid item xs={12} md={12}>
-              <PostLayout post={post} idx={idx} />
-            </Grid>
-          </Link>
-        )}
-
-      </Grid>
-    </div>
-  );
 };
