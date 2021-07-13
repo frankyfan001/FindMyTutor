@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { api } from '../APIs/api';
-import { mockPosts } from '../components/mocks/mockPosts';
 
 export default function usePosts() {
   // State: posts
@@ -22,12 +21,20 @@ export default function usePosts() {
     }
   };
 
+  // Add a post.
   const addPost = async (newPost) => {
-    console.log(`add post: ${newPost.id}`);
-    setPosts([...posts, newPost]);
-    const req = await api.post('/posts', JSON.stringify(newPost));
+    const res = await fetch('http://localhost:5000/posts', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(newPost)
+    });
+    const output = await res.json();
 
-    const res = await req.json();
+    if (output.success) {
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
   const deletePost = async (id) => {
@@ -42,5 +49,5 @@ export default function usePosts() {
     getPosts();
   }, []);
 
-  return { posts, setPosts, getPosts };
+  return { posts, getPosts, addPost };
 }

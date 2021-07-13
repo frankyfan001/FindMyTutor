@@ -1,28 +1,23 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import React, { useState } from 'react';
 import {
   Avatar,
-  Box,
   Button, ButtonGroup,
-  CardMedia,
   Chip,
-  Container,
-  CssBaseline,
-  Grid, IconButton,
+  Grid,
   makeStyles,
   Paper,
   Typography,
 } from '@material-ui/core';
-import queryString from 'query-string';
-import {useLocation, useParams} from 'react-router';
+import {useHistory, useParams} from 'react-router';
 import { Link } from 'react-router-dom';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import {
-  Bookmark, Email, Phone, SchoolOutlined, ThumbDown,
+  Bookmark, SchoolOutlined, ThumbDown,
 } from '@material-ui/icons';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import useComments from '../hooks/useComments';
 import usePost from '../hooks/usePost';
 import AddIcon from "@material-ui/icons/Add";
@@ -32,6 +27,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
+import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,6 +99,10 @@ const useStyles = makeStyles((theme) => ({
     background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
     margin: 'auto 3% auto auto',
   },
+  alertMessageDiv: {
+    maxWidth: '390px',
+    margin: 'auto 3% auto auto',
+  },
   commentListRoot: {
     width: '92%',
     margin: 'auto',
@@ -141,6 +142,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewPostPage({ accountHook }) {
   const classes = useStyles();
 
+  const alertHook = useAlert();
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const postHook = usePost();
@@ -149,15 +152,28 @@ export default function ViewPostPage({ accountHook }) {
   const post = postHook.post;
   const comments = commentsHook.comments;
 
+  const history = useHistory();
+
   const content = {
     days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  };
+
+  const handleNewCommentButton = () => {
+    if (accountHook.isLogin() && accountHook.isStudent()) {
+      setIsDialogOpen(true);
+    } else {
+      alertHook.switchToFailure("Please sign in as a student to add comments.");
+      setTimeout(function () {
+        history.push("/login?type=student");
+      }, 5000)
+    }
   };
 
   return (
     <>
       <br />
       {post &&
-      <Grid container spacing={3} className={classes.root}>
+      <Grid container spacing={1} className={classes.root}>
 
         {/*Post*/}
         <Grid item xs={12} md={12}>
@@ -222,7 +238,7 @@ export default function ViewPostPage({ accountHook }) {
 
                         {/*Course*/}
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<Bookmark />} label={post.course} className={classes.label} />
+                          <Chip color='secondary' icon={<ImportContactsIcon />} label={post.course} className={classes.label} />
                         </Grid>
 
                       </Grid>
@@ -280,18 +296,17 @@ export default function ViewPostPage({ accountHook }) {
 
         {/*New Comment Button*/}
         <Grid item xs={12} md={12} align="right">
-          {accountHook.isLogin() && accountHook.isStudent() ?
+          <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}
+                  onClick={handleNewCommentButton}>
+            NEW COMMENT
+          </Button>
+        </Grid>
 
-            <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}
-                    onClick={() => setIsDialogOpen(true)}>
-              NEW COMMENT
-            </Button> :
-
-            <Link to="/login?type=student" style={{ textDecoration: 'none', color: 'black' }}>
-              <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}>
-                NEW COMMENT
-              </Button>
-            </Link> }
+        {/*Show the alert message when user is not a login student.*/}
+        <Grid item xs={12} md={12} align="right">
+          <div className={classes.alertMessageDiv}>
+            <AlertMessage alertHook={alertHook} />
+          </div>
         </Grid>
 
         {/*Comments*/}
@@ -366,9 +381,10 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
   const classes = useStyles();
   const { postId } = useParams();
 
+  const alertHook = useAlert();
+
   const [isThumbUp, setIsThumbUp] = useState(true);
   const [description, setDescription] = useState("");
-  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleSubmit = () => {
     const newComment = {
@@ -381,37 +397,40 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
     const promise = commentsHook.addComment(newComment);
     promise
       // Update the post with thumbUp/thumbDown + 1.
-      .then((output) => {
+      .then((result) => {
         const updatedInfo = isThumbUp ?
           {thumbUp: postHook.post.thumbUp + 1} :
           {thumbDown: postHook.post.thumbDown + 1};
         return postHook.updatePost(postId, updatedInfo);
       })
       // Get the comments.
-      .then((output) => {
+      .then((result) => {
         return commentsHook.getComments(postId);
       })
       // Get the post.
-      .then((output) => {
+      .then((result) => {
         return postHook.getPost(postId);
       })
       // Clean up.
-      .then((output) => {
-        setIsDialogOpen(false);
-        setErrorMsg(null);
-        setIsThumbUp(true);
-        setDescription("");
+      .then((result) => {
+        alertHook.switchToSuccess("Comment added successfully.");
+        setTimeout(function () {
+          setIsDialogOpen(false);
+          alertHook.switchToIdle(null);
+          setIsThumbUp(true);
+          setDescription("");
+        }, 1000)
       })
       // Error handling.
       .catch((err) => {
-        setErrorMsg(err.message);
+        alertHook.switchToFailure(err.message);
       });
   }
 
   const handleCancel = () => {
     setIsDialogOpen(false);
-    setErrorMsg(null);
-    if (errorMsg) {
+    if (!alertHook.isIdle()) {
+      alertHook.switchToIdle(null);
       setIsThumbUp(true);
       setDescription("");
     }
@@ -451,14 +470,8 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
               e.currentTarget.value.length)}
         />
 
-        {/*Show the error message when adding a comment failed.*/}
-        { errorMsg &&
-          <>
-            <br />
-            <br />
-            <Typography color="secondary">{"Error: " + errorMsg}</Typography>
-          </>
-        }
+        {/*Show the alert message when adding a comment failed.*/}
+        <AlertMessage alertHook={alertHook} />
 
       </DialogContent>
       <DialogActions>
@@ -472,108 +485,3 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
     </Dialog>
   );
 }
-
-// const useRating = (updateFunc, updateObject) => {
-//   const [isCancel, setCancel] = useState(false);
-//   console.log('handling rating');
-//   const handleClick = (e) => {
-//     const name = e.currentTarget.id;
-//     console.log('handling click');
-//     console.log(updateObject[name]);
-//     const rate = isCancel ? updateObject[name] - 1 : updateObject[name] + 1;
-//     console.log(rate);
-//     const newObject = {
-//       ...updateObject,
-//       [name]: rate,
-//     };
-//     console.log(newObject);
-//     setCancel(!isCancel);
-//     updateFunc(newObject);
-//   };
-//
-//   return { handleClick, isCancel };
-// };
-//
-// const Profile = ({ profile }) => {
-//   const classes = useStyles();
-//   return (
-//     <Grid container alignItems="space-around" className={classes.root}>
-//       <Paper variant="outlined" style={{ width: '100%' }}>
-//         <Grid item xs={6} className={classes.root}>
-//           <CardMedia image={profile.img} title="profile img" />
-//         </Grid>
-//         <Grid item xs={6}>
-//           <Typography variat="body2" color="textSecondary" component="p">
-//             {profile.name}
-//           </Typography>
-//         </Grid>
-//       </Paper>
-//     </Grid>
-//   );
-// };
-//
-// const PostContent = ({ content }) => (
-//   <Paper variant="outlined">
-//     <Grid container spacing={2} alignItems="flex-start">
-//       <Grid item md={9}>
-//         <Box pt={3} pr={3} pl={3} pb={2}>
-//           <Typography variant="h6">{content.title}</Typography>
-//         </Box>
-//       </Grid>
-//       <Grid item>
-//         <Box pt={2}>{content.text}</Box>
-//       </Grid>
-//     </Grid>
-//   </Paper>
-// );
-//
-// const PostInfo = ({ profile, content }) => (
-//   <Grid container alignItems="stretch" direction="row">
-//     <Grid item xs={12} ssm={6}>
-//       <Profile profile={profile} />
-//     </Grid>
-//     <Grid item xs={12} sm={6}>
-//       <PostContent content={content} />
-//     </Grid>
-//   </Grid>
-// );
-//
-// const useRatingStyles = makeStyles((theme) => ({
-//   hover: {
-//     '&:hover': {
-//       backgroundColor: 'blue',
-//     },
-//   },
-// }));
-//
-// const RatingArea = ({ up, down, handleClick }) => {
-//   const classes = useRatingStyles();
-//
-//   return (
-//     <Grid container direction="row" spacing={3}>
-//       <Grid item className={classes.hover}>
-//         <Button
-//           variant="contained"
-//           color="secondary"
-//           startIcon={<ThumbUpIcon />}
-//           onClick={handleClick}
-//           id="thumbsUp"
-//         >
-//           {up}
-//         </Button>
-//       </Grid>
-//       <Grid item className={classes.hover}>
-//         <Button
-//           variant="contained"
-//           color="secondary"
-//           startIcon={<ThumbDown />}
-//           id="thumbsDown"
-//           onClick={handleClick}
-//         >
-//           {down}
-//         </Button>
-//       </Grid>
-//
-//     </Grid>
-//   );
-// };

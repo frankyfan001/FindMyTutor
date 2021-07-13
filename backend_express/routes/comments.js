@@ -150,8 +150,8 @@ router.post('/', function(req, res, next) {
     })
     .catch((err) => {
       res.send({
-        success: true,
-        result: "Adding the comment failed."
+        success: false,
+        error: "Adding the comment failed."
       });
     });
 });

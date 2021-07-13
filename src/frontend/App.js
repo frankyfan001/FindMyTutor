@@ -13,11 +13,13 @@ import TeamPage from './components/TeamPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
-import PostForm from './components/PostForm';
+import NewPostPage from './components/NewPostPage';
 import HomePage from "./components/HomePage";
+import usePosts from "./hooks/usePosts";
 
 function App() {
   const accountHook = useAccount();
+  const postsHook = usePosts();
   const [rememberUsername, setRememberUsername] = useState("");
   const [rememberPassword, setRememberPassword] = useState("");
 
@@ -28,13 +30,13 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-            <HomePage accountHook={accountHook} />
+            <HomePage accountHook={accountHook} postsHook={postsHook} />
+          </Route>
+          <Route path="/newPost">
+            <NewPostPage accountHook={accountHook} postsHook={postsHook} />
           </Route>
           <Route path="/viewPost/:postId" >
             <ViewPostPage accountHook={accountHook} />
-          </Route>
-          <Route path="/newPost">
-            <PostForm accountHook={accountHook} />
           </Route>
 
           <Route path="/register">

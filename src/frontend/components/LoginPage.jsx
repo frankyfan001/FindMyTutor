@@ -21,6 +21,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import {useHistory, useLocation} from 'react-router';
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -73,7 +74,7 @@ export default function LoginPage({ accountHook,
 
     const promise = accountHook.login(input);
     promise
-      .then((output) => {
+      .then((result) => {
         if (checked) {
           setRememberUsername(username);
           setRememberPassword(password);
@@ -85,7 +86,7 @@ export default function LoginPage({ accountHook,
         alertHook.switchToSuccess("Registration is successful.");
 
         setTimeout(function () {
-          history.goBack();
+          history.push("/");
         }, 1000)
       })
       .catch((err) => {
@@ -167,14 +168,7 @@ export default function LoginPage({ accountHook,
         </form>
       </div>
       <br />
-      {
-        alertHook.isSuccess() ?
-          <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          : alertHook.isFailure() ?
-          <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          :
-          <></>
-      }
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 };

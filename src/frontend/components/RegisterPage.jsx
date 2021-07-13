@@ -17,6 +17,7 @@ import {FormControl, Radio, RadioGroup} from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
 // Thanks to material-ui example:
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
@@ -80,7 +81,7 @@ export default function RegisterPage({accountHook}) {
         alertHook.switchToSuccess("Registration is successful.");
 
         setTimeout(function () {
-          history.goBack();
+          history.push("/");
         }, 1000)
       })
       .catch((err) => {
@@ -193,14 +194,7 @@ export default function RegisterPage({accountHook}) {
         </form>
       </div>
       <br />
-      {
-        alertHook.isSuccess() ?
-          <Alert severity="success" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          : alertHook.isFailure() ?
-          <Alert severity="warning" onClose={() => {alertHook.switchToIdle("")}}>{alertHook.message}</Alert>
-          :
-          <></>
-      }
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 }
