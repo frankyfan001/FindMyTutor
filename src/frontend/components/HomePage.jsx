@@ -46,7 +46,7 @@ export default function HomePage({accountHook, postsHook}) {
       alertHook.switchToFailure("Please sign in as a tutor to add posts.");
       setTimeout(function () {
         history.push("/login?type=tutor");
-      }, 5000)
+      }, 3000)
     }
   };
 

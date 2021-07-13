@@ -165,7 +165,7 @@ export default function ViewPostPage({ accountHook }) {
       alertHook.switchToFailure("Please sign in as a student to add comments.");
       setTimeout(function () {
         history.push("/login?type=student");
-      }, 5000)
+      }, 3000)
     }
   };
 
