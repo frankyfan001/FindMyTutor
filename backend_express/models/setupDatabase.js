@@ -4,14 +4,16 @@ const Account = require('./account');
 const Post = require("./post");
 const Comment = require("./comment");
 
+// const url = "mongodb://localhost:27017/findMyTutor";
+const url = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.g6db0.mongodb.net/findMyTutor?retryWrites=true&w=majority";
+
 const setupDatabase = async function() {
   await connectDatabase();
-  await initializeDatabase();
+  // await initializeDatabase();
 }
 
 // Connect MongoDB.findMyTutor.
 const connectDatabase = async function() {
-  const url = "mongodb://localhost:27017/findMyTutor";
   await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
   console.log('MongoDB.findMyTutor is connected.');
 }
