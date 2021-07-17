@@ -83,7 +83,7 @@ export default function LoginPage({ accountHook,
           setRememberPassword("");
         }
 
-        alertHook.switchToSuccess("Registration is successful.");
+        alertHook.switchToSuccess("Login is successful.");
 
         setTimeout(function () {
           history.push("/");
