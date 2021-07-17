@@ -53,7 +53,7 @@ router.post('/register', function(req, res, next) {
     return;
   }
 
-  if (!newAccount.fname.match("^[a-zA-Z]+$") || newAccount.fname.length < 3) {
+  if (!newAccount.fname.match("^[a-zA-Z]+$") || newAccount.fname.length < 2) {
     res.send({
       success: false,
       error: "First Name must contains only letters with a length >= 2."
@@ -61,7 +61,7 @@ router.post('/register', function(req, res, next) {
     return;
   }
 
-  if (!newAccount.lname.match("^[a-zA-Z]+$") || newAccount.lname.length < 3) {
+  if (!newAccount.lname.match("^[a-zA-Z]+$") || newAccount.lname.length < 2) {
     res.send({
       success: false,
       error: "Last Name must contains only letters with a length >= 2."
