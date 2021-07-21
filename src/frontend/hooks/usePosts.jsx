@@ -37,11 +37,9 @@ export default function usePosts() {
     }
   };
 
+  // TODO:
   const deletePost = async (id) => {
-    console.log(`delete post: ${id}`);
-    const req = await api.delete('posts', {
-      params: { id },
-    });
+
   };
 
   // Effect: fetch posts.

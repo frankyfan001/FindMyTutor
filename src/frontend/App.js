@@ -16,6 +16,7 @@ import useAccount from './hooks/useAccount';
 import NewPostPage from './components/NewPostPage';
 import HomePage from "./components/HomePage";
 import usePosts from "./hooks/usePosts";
+import AccountPage from "./components/AccountPage";
 
 function App() {
   const accountHook = useAccount();
@@ -48,7 +49,7 @@ function App() {
                        rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>
           <Route path="/account">
-            // TODO: AccountPage.
+            <AccountPage />
           </Route>
           <Route path="/team">
             <TeamPage />
