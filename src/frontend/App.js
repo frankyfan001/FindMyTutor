@@ -1,30 +1,28 @@
 /* eslint-disable */
-import React from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import './App.css';
-import { IconBase, LoginButton, OutlinedButton, RegisterButton } from './components/Buttons';
-import { FilledTextField, FormBase } from './components/Forms';
-import { TutorBanner } from './components/Banner';
-import { BaseCard } from './components/Cards';
-import { SearchBar, SearchInput } from './components/Search';
-import { CardsApp } from './components/CardsApp';
-import { Grid } from '@material-ui/core';
-import { LoginForm } from './components/Login';
-import SignUp from './components/Signup';
-import { Post } from './components/ViewPost';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
+import ViewPostPage from './components/ViewPostPage';
 import TeamPage from './components/TeamPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import useAccount from './hooks/useAccount';
-import PostForm from './components/PostForm';
+import NewPostPage from './components/NewPostPage';
 import HomePage from "./components/HomePage";
+import usePosts from "./hooks/usePosts";
+import AccountPage from "./components/AccountPage";
 
 function App() {
   const accountHook = useAccount();
+  const postsHook = usePosts();
+  const [rememberUsername, setRememberUsername] = useState("");
+  const [rememberPassword, setRememberPassword] = useState("");
 
   return (
     <Router>
@@ -33,24 +31,25 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-            <HomePage accountHook={accountHook} />
-          </Route>
-          <Route path="/viewPost/:id" >
-            <Post accountHook={accountHook} />
+            <HomePage accountHook={accountHook} postsHook={postsHook} />
           </Route>
           <Route path="/newPost">
-            <PostForm accountHook={accountHook} />
+            <NewPostPage accountHook={accountHook} postsHook={postsHook} />
+          </Route>
+          <Route path="/viewPost/:postId" >
+            <ViewPostPage accountHook={accountHook} />
           </Route>
 
-          <Route path="/register/">
-            <SignUp accountHook={accountHook} />
+          <Route path="/register">
+            <RegisterPage accountHook={accountHook} />
           </Route>
           <Route path="/login">
-            <LoginForm accountHook={accountHook} />
+            <LoginPage accountHook={accountHook}
+                       rememberUsername={rememberUsername} setRememberUsername={setRememberUsername}
+                       rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>
           <Route path="/account">
-            // TODO: AccountPage.
-            AccountPage
+            <AccountPage />
           </Route>
           <Route path="/team">
             <TeamPage />

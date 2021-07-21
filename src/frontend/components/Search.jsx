@@ -7,7 +7,7 @@ import { IconButton, InputAdornment } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
       width: '100%',
     },
   },

@@ -47,7 +47,7 @@ export default function AboutPage(props) {
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
                 <Card>
-                  <CardActionArea component={RouterLink} to="/register">
+                  <CardActionArea component={RouterLink} to="/register?type=tutor">
                     <CardMedia className={classes.media} image={content['01_image']} />
                     <CardHeader title={content['01_company']} subheader={content['01_description']} titleTypographyProps={{gutterBottom: true}}/>
                   </CardActionArea>
@@ -55,7 +55,7 @@ export default function AboutPage(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Card>
-                  <CardActionArea component={RouterLink} to="/register">
+                  <CardActionArea component={RouterLink} to="/register?type=student">
                     <CardMedia className={classes.media} image={content['02_image']} />
                     <CardHeader title={content['02_company']} subheader={content['02_description']} titleTypographyProps={{gutterBottom: true}} />
                   </CardActionArea>

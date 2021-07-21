@@ -1,30 +1,62 @@
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, {useEffect, useState} from 'react';
 import { api } from '../APIs/api';
-import { mockPost } from '../components/mocks/mockPost';
+import {useParams} from "react-router";
 
-export default function usePost() {
-  const [post, setPost] = useState(mockPost);
-  const getPost = async (id) => {
-    console.log(`get single post: ${id}`);
-    const req = await api.get('/posts', {
-      params: { id },
+export default function usePost(address) {
+  // State: post
+  const [post, setPost] = useState(null);
+  // State: map
+  const [map, setMap] = useState(null);
+
+  // Get a post with its account info.
+  const getPost = async (postId) => {
+    const res = await fetch('http://localhost:5000/posts/' + postId, {
+      method: 'GET'
     });
+    const output = await res.json();
 
-    const data = await req.json();
-    return data;
+    if (output.success) {
+      setPost(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
-  const updatePost = async (newPost) => {
-    console.log(`update post: ${post.id}`);
-    const req = await api.put('post', JSON.stringify(post));
+  // Update a post.
+  const updatePost = async (postId, updatedInfo) => {
+    const res = await fetch('http://localhost:5000/posts/' + postId, {
+      method: 'PUT',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(updatedInfo)
+    });
+    const output = await res.json();
 
-    const res = await req.json();
-    setPost(
-      newPost,
-    );
+    if (output.success) {
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
-  return {
-    post, setPost, getPost, updatePost,
+  // TODO: Kevin
+  // Get google map.
+  const getGoogleMap = async (address) => {
+    const googleMap = null;
+    setMap(googleMap);
   };
+
+  // Effect: fetch a post and its map info.
+  const { postId } = useParams();
+
+  useEffect(() => {
+    getPost(postId).then(r => {
+      if (post && post.address) {
+        getGoogleMap(post.address);
+      }
+    });
+  }, []);
+
+  return { post, map, getPost, updatePost };
 }

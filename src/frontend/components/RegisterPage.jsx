@@ -12,9 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import {FormControl, Radio, RadioGroup} from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import {Alert} from "@material-ui/lab";
+import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
 // Thanks to material-ui example:
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
@@ -40,8 +43,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({accountHook}) {
-  const [type, setType] = React.useState("tutor");
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export default function RegisterPage({accountHook}) {
+  const query = useQuery();
+
+  const alertHook = useAlert();
+  const [type, setType] = React.useState(query.get("type"));
 
   const history = useHistory();
 
@@ -50,28 +60,33 @@ export default function SignUp({accountHook}) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const fname = e.target.fname.value;
-    const lname = e.target.lname.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
+    const fname = e.target.fname.value;
+    const lname = e.target.lname.value;
+    const avatar = e.target.avatar.value;
 
     const input = {
+      type,
       username,
       password,
-      type,
       fname,
       lname,
+      avatar
     };
 
-    const p = accountHook.register(input);
+    const promise = accountHook.register(input);
+    promise
+      .then((result) => {
+        alertHook.switchToSuccess("Registration is successful.");
 
-    p.then((output) => {
-      if (output.status === "SUCCESS") {
-        history.push("/");
-      } else {
-        // TODO: if register failed.
-      }
-    });
+        setTimeout(function () {
+          history.push("/");
+        }, 1000)
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (
@@ -94,6 +109,30 @@ export default function SignUp({accountHook}) {
         </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
@@ -103,7 +142,6 @@ export default function SignUp({accountHook}) {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -122,22 +160,11 @@ export default function SignUp({accountHook}) {
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name="avatar"
+                label="Avatar"
+                type="avatar"
+                id="avatar"
+                autoComplete="avatar"
               />
             </Grid>
             <Grid item xs={12}>
@@ -166,6 +193,8 @@ export default function SignUp({accountHook}) {
           </Grid>
         </form>
       </div>
+      <br />
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 }

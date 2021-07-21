@@ -7,20 +7,23 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
+  CssBaseline, FormControl,
   FormControlLabel,
   Grid,
   Link,
-  makeStyles,
+  makeStyles, Radio, RadioGroup,
   TextField,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, {useState} from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import {useHistory, useLocation} from 'react-router';
+import {Alert} from "@material-ui/lab";
+import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
 
-export const useFormStyle = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -41,31 +44,54 @@ export const useFormStyle = makeStyles((theme) => ({
   },
 }));
 
-export const LoginForm = ({accountHook}) => {
-  const history = useHistory();
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
-  const classes = useFormStyle();
+export default function LoginPage({ accountHook,
+                            rememberUsername, setRememberUsername,
+                            rememberPassword, setRememberPassword }) {
+  const classes = useStyles();
+
+  const query = useQuery();
+
+  const alertHook = useAlert();
+  const [type, setType] = React.useState(query.get("type"));
+  const [username, setUsername] = useState(rememberUsername);
+  const [password, setPassword] = useState(rememberPassword);
+  const [checked, setChecked] = useState(true);
+
+  const history = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-
     const input = {
+      type,
       username,
       password,
     };
 
-    const p = accountHook.login(input);
+    const promise = accountHook.login(input);
+    promise
+      .then((result) => {
+        if (checked) {
+          setRememberUsername(username);
+          setRememberPassword(password);
+        } else {
+          setRememberUsername("");
+          setRememberPassword("");
+        }
 
-    p.then((output) => {
-      if (output.status === "SUCCESS") {
-        history.push("/");
-      } else {
-        // TODO: if login failed.
-      }
-    });
+        alertHook.switchToSuccess("Login is successful.");
+
+        setTimeout(function () {
+          history.push("/");
+        }, 1000)
+      })
+      .catch((err) => {
+        alertHook.switchToFailure(err.message);
+      });
   };
 
   return (
@@ -78,6 +104,14 @@ export const LoginForm = ({accountHook}) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <br />
+        <br />
+        <FormControl component="fieldset">
+          <RadioGroup aria-label="type" name="type" value={type} onChange={e => setType(e.target.value)}>
+            <FormControlLabel value="tutor" control={<Radio />} label="Tutor" />
+            <FormControlLabel value="student" control={<Radio />} label="Student" />
+          </RadioGroup>
+        </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
           <TextField
             variant="outlined"
@@ -88,6 +122,8 @@ export const LoginForm = ({accountHook}) => {
             label="Username"
             name="username"
             autoComplete="username"
+            value={username}
+            onChange={(e) => {setUsername(e.target.value)}}
             autoFocus
           />
           <TextField
@@ -100,9 +136,11 @@ export const LoginForm = ({accountHook}) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => {setPassword(e.target.value)}}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" checked={checked} onChange={() => {setChecked(!checked)}} />}
             label="Remember me"
             style={{ float: 'left' }}
           />
@@ -129,6 +167,8 @@ export const LoginForm = ({accountHook}) => {
           </Grid>
         </form>
       </div>
+      <br />
+      <AlertMessage alertHook={alertHook} />
     </Container>
   );
 };

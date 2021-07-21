@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Alert} from '@material-ui/lab';
-import useContact from '../hooks/useContact';
+import useAlert from '../hooks/useAlert';
 import emailjs from 'emailjs-com';
+import AlertMessage from "./AlertMessage";
 
 const useStyles = makeStyles((theme) => ({
   firstBox: {
@@ -45,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ContactPage(props) {
-  const contactHook = useContact();
-  const [checked, setChecked] = useState(false);
-
   const classes = useStyles();
+
+  const alertHook = useAlert();
+  const [checked, setChecked] = useState(false);
 
   const content = {
     'header': 'Contact Us',
@@ -79,9 +79,9 @@ export default function ContactPage(props) {
       e.target.reset();
       setChecked(false);
 
-      contactHook.switchToSuccess();
+      alertHook.switchToSuccess("Email sent successfully.");
     } else {
-      contactHook.switchToFailure();
+      alertHook.switchToFailure("Please select \"I agree to the terms of use and privacy policy\".");
     }
   };
 
@@ -124,14 +124,7 @@ export default function ContactPage(props) {
                 </Box>
               </form>
               <br />
-              {
-                contactHook.isSuccess() ?
-                  <Alert severity="success" onClose={() => {contactHook.switchToIdle()}}>Email sent successfully.</Alert>
-                : contactHook.isFailure() ?
-                  <Alert severity="warning" onClose={() => {contactHook.switchToIdle()}}>Please select "I agree to the terms of use and privacy policy".</Alert>
-                :
-                  <></>
-              }
+              <AlertMessage alertHook={alertHook} />
             </Container>
           </Box>
         </Grid>

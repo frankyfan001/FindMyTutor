@@ -7,6 +7,14 @@ import { AccountCircle } from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link as RouterLink } from 'react-router-dom';
 import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,6 +24,7 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     color: 'white',
+    margin: 'auto auto auto 1%',
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -43,21 +52,26 @@ const useStyles = makeStyles(() => ({
     color: 'white',
     borderColor: 'white',
   },
-  accountButton: {
-    color: 'white',
+  accountTypeAndUsernameDiv: {
+    width: '90px',
   },
-  logoutButton: {
-    borderRadius: 20,
-    textTransform: 'none',
-    '&:hover': {
-      backgroundColor: 'transparent',
-    },
-    color: 'white',
+  accountType: {
+    fontWeight: 'bold'
   },
 }));
 
 export default function NavBar({title, accountHook}) {
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div>
@@ -67,7 +81,7 @@ export default function NavBar({title, accountHook}) {
             <HomeIcon />
           </IconButton>
           <RouterLink to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
-            <Typography variant="h5" aria-label="title" className={classes.title}>
+            <Typography align="left" variant="h5" aria-label="title" className={classes.title}>
               {title}
             </Typography>
           </RouterLink>
@@ -75,31 +89,60 @@ export default function NavBar({title, accountHook}) {
           {
             accountHook.isLogin() ?
               <>
-                <RouterLink to="/account">
-                  <IconButton aria-label="account" className={classes.accountButton}>
-                    {
-                      accountHook.account.avatar ?
-                        <Avatar alt="" src={accountHook.account.avatar} />
-                      :
-                        <AccountCircle />
-                    }
-                  </IconButton>
-                </RouterLink>
-                <RouterLink to="/" style={{ textDecoration: 'none' }}>
-                  <Button size="small" aria-label="logout" className={classes.logoutButton}
-                          onClick={() => {accountHook.logout()}}>
-                    Logout
-                  </Button>
-                </RouterLink>
+                {/*Account Type & Username*/}
+                <Grid container spacing={0} className={classes.accountTypeAndUsernameDiv}>
+                  <Grid item xs={12} md={12}>
+                    <Typography variant="body2" className={classes.accountType}>
+                      {accountHook.account.type.charAt(0).toUpperCase() + accountHook.account.type.slice(1)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Typography variant="body2">
+                      {accountHook.account.username}
+                    </Typography>
+                  </Grid>
+                </Grid>
+
+                {/*Account Avatar*/}
+                <IconButton onClick={handleClick} aria-label="account">
+                  {
+                    accountHook.account.avatar ?
+                      <Avatar alt={accountHook.account.username[0].toUpperCase()} src={accountHook.account.avatar} />
+                    :
+                      <AccountCircle />
+                  }
+                </IconButton>
+
+                {/*Dropdown Menu for Account & Logout*/}
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <StyledMenuItem component={RouterLink} to="/account" onClick={handleClose}>
+                    <ListItemIcon>
+                      <AccountBoxIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="My Account" />
+                  </StyledMenuItem>
+                  <StyledMenuItem component={RouterLink} to="/" onClick={() => { handleClose(); accountHook.logout() }}>
+                    <ListItemIcon>
+                      <ExitToAppIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </StyledMenuItem>
+                </StyledMenu>
               </>
             :
               <>
-                <RouterLink to="/login" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/login?type=tutor" style={{ textDecoration: 'none' }}>
                   <Button size="small" aria-label="login" className={classes.loginButton}>
                     Sign in
                   </Button>
                 </RouterLink>
-                <RouterLink to="/register" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/register?type=tutor" style={{ textDecoration: 'none' }}>
                   <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
                     Sign up
                   </Button>
@@ -117,3 +160,34 @@ export default function NavBar({title, accountHook}) {
     </div>
   );
 }
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      background: '#FF8E53',
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);

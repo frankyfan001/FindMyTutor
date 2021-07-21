@@ -6,10 +6,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-var indexRouter = require('./routes/index');
-var accountsRouter = require('./routes/accounts');
-var postsRouter = require('./routes/posts');
-var commentsRouter = require('./routes/comments');
+// Setup MongoDB.findMyTutor.
+const setupDatabase = require('./models/setupDatabase');
+setupDatabase().then();
+
+// Routers
+const accountsRouter = require('./routes/accounts');
+const postsRouter = require('./routes/posts');
+const commentsRouter = require('./routes/comments');
 
 var app = express();
 
@@ -24,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
 app.use('/accounts', accountsRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);

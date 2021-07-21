@@ -1,37 +1,64 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { api } from '../APIs/api';
-import { mockPosts } from '../components/mocks/mockPosts';
 
 export default function usePosts() {
-  const [posts, setPosts] = useState(mockPosts);
+  // State: posts
+  const [posts, setPosts] = useState([]);
 
-  const getPosts = async (filter) => {
-    console.log('get posts');
-    const req = await api.get('/posts', { params: { filter } });
-    const res = await req.json();
-    setPosts(res);
-  };
-
-  const addPost = async (newPost) => {
-    console.log(`add post: ${newPost.id}`);
-    const req = await api.post('/posts', JSON.stringify(newPost));
-
-    const res = await req.json();
-    setPosts([...posts, newPost]);
-  };
-
-  const deletePost = async (id) => {
-    console.log(`delete post: ${id}`);
-    const req = await api.delete('posts', {
-      params: { id },
+  // Get all posts with its account info.
+  const getPosts = async () => {
+    const res = await fetch('http://localhost:5000/posts/', {
+      method: 'GET'
     });
+    const output = await res.json();
+
+    if (output.success) {
+      setPosts(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
-  return {
-    posts,
-    getPosts,
-    setPosts,
-    addPost,
-    deletePost,
+  // Add a post.
+  const addPost = async (newPost) => {
+    const res = await fetch('http://localhost:5000/posts', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(newPost)
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
+
+  // TODO: Jerry - filter
+  // Get filtered posts.
+  const getFilteredPosts = async (filter) => {
+    const res = await fetch('http://localhost:5000/posts/filter', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(filter)
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setPosts(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  };
+
+  // Effect: fetch posts.
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  return { posts, getPosts, addPost };
 }
