@@ -175,6 +175,11 @@ export default function ViewPostPage({ accountHook }) {
       {post &&
       <Grid container spacing={1} className={classes.root}>
 
+        {/* TODO: Kevin */}
+        <div>
+          {postHook.map}
+        </div>
+
         {/*Post*/}
         <Grid item xs={12} md={12}>
           <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
@@ -313,6 +318,8 @@ export default function ViewPostPage({ accountHook }) {
         <Grid item xs={12} md={12}>
           <CommentList comments={comments} accountHook={accountHook}/>
         </Grid>
+
+        {/* TODO: Jerry - pagination */}
 
       </Grid>
       }

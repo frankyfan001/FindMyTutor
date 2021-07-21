@@ -37,9 +37,22 @@ export default function usePosts() {
     }
   };
 
-  // TODO:
-  const deletePost = async (id) => {
+  // TODO: Jerry - filter
+  // Get filtered posts.
+  const getFilteredPosts = async (filter) => {
+    const res = await fetch('http://localhost:5000/posts/filter', {
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(filter)
+    });
+    const output = await res.json();
 
+    if (output.success) {
+      setPosts(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
   };
 
   // Effect: fetch posts.

@@ -9,7 +9,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import usePosts from "../hooks/usePosts";
+import useTutorPosts from "../hooks/useTutorPosts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountPage({ accountHook }) {
   const classes = useStyles();
 
-  const postsHook = usePosts();
+  const tutorPostsHook = useTutorPosts();
 
   return (
     <>
-      TODO:
+      {/* TODO: CQ */}
     </>
   );
 };

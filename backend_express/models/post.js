@@ -42,7 +42,11 @@ const PostSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
     required: true,
-  }
+  },
+  address: {
+    type: String,
+    required: true,
+  },
 }, { timestamps: true });
 
 // Create model from the schema

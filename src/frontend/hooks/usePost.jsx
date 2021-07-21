@@ -3,9 +3,11 @@ import React, {useEffect, useState} from 'react';
 import { api } from '../APIs/api';
 import {useParams} from "react-router";
 
-export default function usePost() {
+export default function usePost(address) {
   // State: post
   const [post, setPost] = useState(null);
+  // State: map
+  const [map, setMap] = useState(null);
 
   // Get a post with its account info.
   const getPost = async (postId) => {
@@ -38,12 +40,23 @@ export default function usePost() {
     }
   };
 
-  // Effect: fetch a post.
+  // TODO: Kevin
+  // Get google map.
+  const getGoogleMap = async (address) => {
+    const googleMap = null;
+    setMap(googleMap);
+  };
+
+  // Effect: fetch a post and its map info.
   const { postId } = useParams();
 
   useEffect(() => {
-    getPost(postId);
+    getPost(postId).then(r => {
+      if (post && post.address) {
+        getGoogleMap(post.address);
+      }
+    });
   }, []);
 
-  return { post, getPost, updatePost };
+  return { post, map, getPost, updatePost };
 }
