@@ -10,7 +10,7 @@ import { mockPosts } from './mocks/mockPosts';
 
 import FilterTreeView from './FilterTree';
 import usePosts from '../hooks/usePosts';
-import PostLayout from './PostLayout';
+import PostList from './PostList';
 import { SearchInput } from './Search';
 import Banner from "./Banner";
 import AlertMessage from "./AlertMessage";
@@ -89,14 +89,7 @@ export default function HomePage({accountHook, postsHook}) {
         </Grid>
 
         {/*Post List*/}
-        <br />
-        {postsHook.posts.map((post, idx) =>
-          <Link key={post._id} to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
-            <Grid item xs={12} md={12}>
-              <PostLayout post={post} idx={idx} />
-            </Grid>
-          </Link>
-        )}
+        <PostList postsHook={postsHook} />
 
       </Grid>
     </div>

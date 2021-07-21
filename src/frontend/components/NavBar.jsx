@@ -121,12 +121,12 @@ export default function NavBar({title, accountHook}) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  {/*<StyledMenuItem component={RouterLink} to="/account" onClick={handleClose}>*/}
-                  {/*  <ListItemIcon>*/}
-                  {/*    <AccountBoxIcon fontSize="small" />*/}
-                  {/*  </ListItemIcon>*/}
-                  {/*  <ListItemText primary="My Account" />*/}
-                  {/*</StyledMenuItem>*/}
+                  <StyledMenuItem component={RouterLink} to="/account" onClick={handleClose}>
+                    <ListItemIcon>
+                      <AccountBoxIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="My Account" />
+                  </StyledMenuItem>
                   <StyledMenuItem component={RouterLink} to="/" onClick={() => { handleClose(); accountHook.logout() }}>
                     <ListItemIcon>
                       <ExitToAppIcon fontSize="small" />

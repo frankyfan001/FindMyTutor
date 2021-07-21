@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Box from "@material-ui/core/Box";
 
-const useCardStyles = makeStyles(() => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '98.3%',
     background: '#f6ddd1',
@@ -51,7 +51,7 @@ const useCardStyles = makeStyles(() => ({
 }));
 
 export default function PostLayout({ post, idx }) {
-  const classes = useCardStyles();
+  const classes = useStyles();
 
   return (
     <>
