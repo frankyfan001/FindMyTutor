@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { useState } from 'react';
+import api from '../APIs/api';
 
 export default function useAccount() {
   // State: account
@@ -19,9 +20,9 @@ export default function useAccount() {
 
   // setters
   const register = async (input) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/accounts/register', {
+    const res = await fetch(api.baseURL + '/accounts/register', {
       method: 'POST',
-      headers: {'Content-type': 'application/json'},
+      headers: api.headers,
       body: JSON.stringify(input)
     });
     const output = await res.json();
@@ -36,9 +37,9 @@ export default function useAccount() {
   };
 
   const login = async (input) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/accounts/login', {
+    const res = await fetch(api.baseURL + '/accounts/login', {
       method: 'POST',
-      headers: {'Content-type': 'application/json'},
+      headers: api.headers,
       body: JSON.stringify(input)
     });
     const output = await res.json();

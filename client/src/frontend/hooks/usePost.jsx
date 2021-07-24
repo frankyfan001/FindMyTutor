@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React, {useEffect, useState} from 'react';
-import { api } from '../APIs/api';
-import {useParams} from "react-router";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router";
+import api from '../APIs/api';
 
 export default function usePost(address) {
   // State: post
@@ -11,7 +11,7 @@ export default function usePost(address) {
 
   // Get a post with its account info.
   const getPost = async (postId) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
+    const res = await fetch(api.baseURL + `/posts/${postId}`, {
       method: 'GET'
     });
     const output = await res.json();
@@ -26,9 +26,9 @@ export default function usePost(address) {
 
   // Update a post.
   const updatePost = async (postId, updatedInfo) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
+    const res = await fetch(api.baseURL + `/posts/${postId}`, {
       method: 'PUT',
-      headers: {'Content-type': 'application/json'},
+      headers: api.headers,
       body: JSON.stringify(updatedInfo)
     });
     const output = await res.json();
@@ -49,7 +49,6 @@ export default function usePost(address) {
 
   // Effect: fetch a post and its map info.
   const { postId } = useParams();
-
   useEffect(() => {
     getPost(postId).then(r => {
       if (post && post.address) {

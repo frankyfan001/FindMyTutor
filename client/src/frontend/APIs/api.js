@@ -1,13 +1,11 @@
-const axios = require('axios');
+const baseURL_development = 'http://localhost:5000';
+const baseURL_production = 'https://find-my-tutor-ubc.herokuapp.com';
 
-const baseURL = 'http://localhost:8080/';
-const headers = {
-  'Content-Type': 'application/json',
+const headers = { 'Content-Type': 'application/json' };
+
+const api = {
+  baseURL: baseURL_development,
+  headers: headers
 };
-const instance = axios.create({
-  baseURL,
-  timeout: 1000,
-  headers,
-});
 
-export { instance as api };
+export default api;

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React, {useEffect, useState} from 'react';
-import { api } from '../APIs/api';
-import {useParams} from "react-router";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router";
+import api from '../APIs/api';
 
 export default function useComments() {
   // State: comments
@@ -9,7 +9,7 @@ export default function useComments() {
 
   // Get a post's all comments with its account info.
   const getComments = async (postId) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/comments/' + postId, {
+    const res = await fetch(api.baseURL + `/comments/${postId}`, {
       method: 'GET'
     });
     const output = await res.json();
@@ -24,9 +24,9 @@ export default function useComments() {
 
   // Add a new comment.
   const addComment = async (newComment) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/comments', {
+    const res = await fetch(api.baseURL + '/comments', {
       method: 'POST',
-      headers: {'Content-type': 'application/json'},
+      headers: api.headers,
       body: JSON.stringify(newComment)
     });
     const output = await res.json();
@@ -36,34 +36,6 @@ export default function useComments() {
     } else {
       throw new Error(output.error);
     }
-  };
-
-  const deleteComment = async (id) => {
-    console.log(`delete post: ${id}`);
-    const req = await api.delete('/comments', {
-      params: { id },
-    });
-  };
-
-  const updateComment = async (comment) => {
-    console.log(`update comment: ${comment.id}`);
-    console.log(comment);
-    const newComments = comments.splice(
-      comments.findIndex((oldComment) => {
-        console.log('finding idx');
-        console.log(oldComment.id);
-        console.log(comment.id);
-        return oldComment.id === comment.id;
-      }),
-      1,
-      comment,
-    );
-    console.log(newComments);
-    setComments(
-      newComments,
-    );
-    const req = await api.put('/comments', JSON.stringify(comment));
-    const res = await req.json();
   };
 
   // Effect: fetch comments.

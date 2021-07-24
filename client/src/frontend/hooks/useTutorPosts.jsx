@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
+import api from '../APIs/api';
 
 export default function useTutorPosts() {
   // State: tutor posts
@@ -8,7 +9,7 @@ export default function useTutorPosts() {
   // TODO: CQ
   // Get all posts of a tutor.
   const getTutorPosts = async (tutorId) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/?tutorId=' + tutorId, {
+    const res = await fetch(api.baseURL + `/posts/?tutorId=${tutorId}`, {
       method: 'GET'
     });
     const output = await res.json();
@@ -24,7 +25,7 @@ export default function useTutorPosts() {
   // TODO: CQ
   // Delete a post.
   const deletePost = async (postId) => {
-    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
+    const res = await fetch(api.baseURL + `/posts/${postId}`, {
       method: 'DELETE'
     });
     const output = await res.json();
