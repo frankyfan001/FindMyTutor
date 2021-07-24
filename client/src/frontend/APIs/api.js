@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const baseURL_development = 'http://localhost:5000';
 const baseURL_production = 'https://find-my-tutor-ubc.herokuapp.com';
 
