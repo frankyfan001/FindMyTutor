@@ -11,7 +11,7 @@ export default function usePost(address) {
 
   // Get a post with its account info.
   const getPost = async (postId) => {
-    const res = await fetch('http://localhost:5000/posts/' + postId, {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
       method: 'GET'
     });
     const output = await res.json();
@@ -26,7 +26,7 @@ export default function usePost(address) {
 
   // Update a post.
   const updatePost = async (postId, updatedInfo) => {
-    const res = await fetch('http://localhost:5000/posts/' + postId, {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
       method: 'PUT',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(updatedInfo)

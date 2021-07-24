@@ -8,7 +8,7 @@ export default function useTutorPosts() {
   // TODO: CQ
   // Get all posts of a tutor.
   const getTutorPosts = async (tutorId) => {
-    const res = await fetch('http://localhost:5000/posts/?tutorId=' + tutorId, {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/?tutorId=' + tutorId, {
       method: 'GET'
     });
     const output = await res.json();
@@ -24,7 +24,7 @@ export default function useTutorPosts() {
   // TODO: CQ
   // Delete a post.
   const deletePost = async (postId) => {
-    const res = await fetch('http://localhost:5000/posts/' + postId, {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/' + postId, {
       method: 'DELETE'
     });
     const output = await res.json();

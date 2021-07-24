@@ -9,7 +9,7 @@ export default function useComments() {
 
   // Get a post's all comments with its account info.
   const getComments = async (postId) => {
-    const res = await fetch('http://localhost:5000/comments/' + postId, {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/comments/' + postId, {
       method: 'GET'
     });
     const output = await res.json();
@@ -24,7 +24,7 @@ export default function useComments() {
 
   // Add a new comment.
   const addComment = async (newComment) => {
-    const res = await fetch('http://localhost:5000/comments', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/comments', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(newComment)

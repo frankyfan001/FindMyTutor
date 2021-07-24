@@ -8,7 +8,7 @@ export default function usePosts() {
 
   // Get all posts with its account info.
   const getPosts = async () => {
-    const res = await fetch('http://localhost:5000/posts/', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/', {
       method: 'GET'
     });
     const output = await res.json();
@@ -23,7 +23,7 @@ export default function usePosts() {
 
   // Add a post.
   const addPost = async (newPost) => {
-    const res = await fetch('http://localhost:5000/posts', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(newPost)
@@ -40,7 +40,7 @@ export default function usePosts() {
   // TODO: Jerry - filter
   // Get filtered posts.
   const getFilteredPosts = async (filter) => {
-    const res = await fetch('http://localhost:5000/posts/filter', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/posts/filter', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(filter)

@@ -19,7 +19,7 @@ export default function useAccount() {
 
   // setters
   const register = async (input) => {
-    const res = await fetch('http://localhost:5000/accounts/register', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/accounts/register', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(input)
@@ -36,7 +36,7 @@ export default function useAccount() {
   };
 
   const login = async (input) => {
-    const res = await fetch('http://localhost:5000/accounts/login', {
+    const res = await fetch('https://find-my-tutor-ubc.herokuapp.com/accounts/login', {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(input)
