@@ -164,4 +164,31 @@ router.post('/login', function(req, res, next) {
     });
 });
 
+/* Update a post. */
+router.put('/:accountId', function(req, res, next) {
+  const accountId = req.params.accountId;
+  const updatedInfo = req.body;
+  console.log(accountId);
+  Account.findByIdAndUpdate(accountId, updatedInfo)
+      .then((result) => {
+        if (result) {
+          res.send({
+            success: true,
+            result: result
+          });
+        } else {
+          res.send({
+            success: false,
+            error: `Updating the account with id ${accountId} failed.`
+          });
+        }
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          error: `Updating the account with id ${accountId} failed.`
+        });
+      });
+});
+
 module.exports = router;

@@ -1,17 +1,16 @@
 /* eslint-disable */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Avatar,
-    Button, ButtonGroup,
+    Button,
     Chip,
     Grid,
     makeStyles,
-    Paper,
     Typography,
 } from '@material-ui/core';
 import useTutorPosts from "../hooks/useTutorPosts";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import {SchoolOutlined} from "@material-ui/icons";
+import {SchoolOutlined, ThumbDown} from "@material-ui/icons";
 import PersonIcon from '@material-ui/icons/Person';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -19,6 +18,12 @@ import {Link} from "react-router-dom";
 import PostLayout from "./PostLayout";
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@material-ui/core/TextField";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import {useHistory} from "react-router";
 
 
@@ -83,15 +88,16 @@ export default function AccountPage({accountHook}) {
     let tutorPostsHook = useTutorPosts({accountHook});
     let tutorPost = tutorPostsHook.tutorPosts;
     const alertHook = useAlert();
-    const history = useHistory();
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     function handleNewAvatarButton() {
-        // TODO
+        setIsDialogOpen(true);
     }
 
     const handleDeleteClick = (postId) => {
         const promise = tutorPostsHook.deletePost(postId);
-        promise.then((result) => {
+        promise.then(() => {
             alertHook.switchToSuccess("Delete Post is successful");
         }).catch((err) => {
             alertHook.switchToFailure(err.message);
@@ -223,6 +229,80 @@ export default function AccountPage({accountHook}) {
                 </Grid>
             </Grid>
             }
+            {/*New Avatar Dialog*/}
+            <NewAvatarDialog
+                isDialogOpen={isDialogOpen}
+                setIsDialogOpen={setIsDialogOpen}
+                accountHook={accountHook}
+            />
         </>
+    );
+};
+
+const NewAvatarDialog = ({isDialogOpen, setIsDialogOpen, accountHook}) => {
+    const [avatar, setAvatar] = useState("");
+    const alertHook = useAlert();
+
+    const handleSubmit = () => {
+        const updateInfo = {avatar: avatar};
+        return accountHook.updateAccount(updateInfo).then((result) => {
+            alertHook.switchToSuccess("Update Avatar is successful");
+            setTimeout(function () {
+                setIsDialogOpen(false);
+                if (!alertHook.isIdle()) {
+                    alertHook.switchToIdle(null);
+                    setAvatar("");
+                }
+            }, 1000)
+        }).catch((err) => {
+            alertHook.switchToFailure(err.message);
+        })
+    }
+
+    const handleCancel = () => {
+        setIsDialogOpen(false);
+        if (!alertHook.isIdle()) {
+            alertHook.switchToIdle(null);
+            setAvatar("");
+        }
+    }
+
+    return (
+        <Dialog open={isDialogOpen} onClose={handleCancel} contentStyle={{
+            width: '50%',
+            maxWidth: 'none',
+        }}>
+            <DialogTitle id="form-dialog-title">New Avatar</DialogTitle>
+            <DialogContent>
+                <TextField
+                    margin="dense"
+                    id="comment-id"
+                    label="New Avatar Link"
+                    type="text"
+                    fullWidth
+                    multiline
+                    rows={5}
+                    value={avatar}
+                    onChange={e => setAvatar(e.target.value)}
+                    autoFocus
+                    onFocus={(e) =>
+                        e.currentTarget.setSelectionRange(
+                            e.currentTarget.value.length,
+                            e.currentTarget.value.length)}
+                />
+
+                {/*Show the alert message when adding a avatar failed.*/}
+                <AlertMessage alertHook={alertHook} />
+
+            </DialogContent>
+            <DialogActions>
+                <Button color="primary" onClick={handleCancel}>
+                    CANCEL
+                </Button>
+                <Button color="primary" onClick={handleSubmit} >
+                    SUBMIT
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

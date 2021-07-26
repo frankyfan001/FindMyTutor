@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import api from '../APIs/api';
 
 export default function useAccount() {
@@ -56,5 +56,22 @@ export default function useAccount() {
     setAccount(null);
   };
 
-  return { account, isLogin, isTutor, isStudent, register, login, logout};
+  // Update a account.
+  const updateAccount = async (updatedInfo) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}`, {
+      method: 'PUT',
+      headers: api.headers,
+      body: JSON.stringify(updatedInfo)
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setAccount(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  };
+
+  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount};
 }
