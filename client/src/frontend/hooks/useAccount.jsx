@@ -73,5 +73,5 @@ export default function useAccount() {
     }
   };
 
-  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount};
+  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount, setAccount};
 }

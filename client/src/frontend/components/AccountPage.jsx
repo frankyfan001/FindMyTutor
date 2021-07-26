@@ -203,6 +203,16 @@ export default function AccountPage({accountHook}) {
                             <br/>
                         </Grid>
                     }
+                    {accountHook.isStudent() &&
+                    <Grid container xs={12} md={12} sm={12} justify="flex-start" alignItems="flex-start">
+                        <Grid item spacing={3}>
+                            <Typography variant="h6">My Favorites</Typography>
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </Grid>
+                    }
 
                     <AlertMessage alertHook={alertHook} />
                     <br/>
@@ -245,18 +255,34 @@ const NewAvatarDialog = ({isDialogOpen, setIsDialogOpen, accountHook}) => {
 
     const handleSubmit = () => {
         const updateInfo = {avatar: avatar};
-        return accountHook.updateAccount(updateInfo).then((result) => {
-            alertHook.switchToSuccess("Update Avatar is successful");
-            setTimeout(function () {
-                setIsDialogOpen(false);
-                if (!alertHook.isIdle()) {
-                    alertHook.switchToIdle(null);
-                    setAvatar("");
-                }
-            }, 1000)
-        }).catch((err) => {
-            alertHook.switchToFailure(err.message);
-        })
+
+        // call twice to update account page avatar
+        return accountHook.updateAccount(updateInfo).then(() => {
+            accountHook.updateAccount(updateInfo).then((result) => {
+                alertHook.switchToSuccess("Update Avatar is successful");
+                setTimeout(function () {
+                    setIsDialogOpen(false);
+                        alertHook.switchToIdle(null);
+                        setAvatar("");
+                }, 1000)
+            }).catch((err) => {
+                alertHook.switchToFailure(err.message);
+            })
+        });
+
+        // need to submit twice bug
+        // return accountHook.updateAccount(updateInfo).then((result) => {
+        //     alertHook.switchToSuccess("Update Avatar is successful");
+        //     setTimeout(function () {
+        //         setIsDialogOpen(false);
+        //         if (!alertHook.isIdle()) {
+        //             alertHook.switchToIdle(null);
+        //             setAvatar("");
+        //         }
+        //     }, 1000)
+        // }).catch((err) => {
+        //     alertHook.switchToFailure(err.message);
+        // })
     }
 
     const handleCancel = () => {
