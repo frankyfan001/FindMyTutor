@@ -17,6 +17,9 @@ import FaceIcon from '@material-ui/icons/Face';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from "react-router-dom";
 import PostLayout from "./PostLayout";
+import useAlert from "../hooks/useAlert";
+import AlertMessage from "./AlertMessage";
+import {useHistory} from "react-router";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,15 +80,22 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountPage({accountHook}) {
     const classes = useStyles();
     const account = accountHook.account;
-    const tutorPostsHook = useTutorPosts({accountHook});
-    const tutorPost = tutorPostsHook.tutorPosts;
+    let tutorPostsHook = useTutorPosts({accountHook});
+    let tutorPost = tutorPostsHook.tutorPosts;
+    const alertHook = useAlert();
+    const history = useHistory();
 
     function handleNewAvatarButton() {
         // TODO
     }
 
-    function handleDelete(postId) {
-        // TODO
+    const handleDeleteClick = (postId) => {
+        const promise = tutorPostsHook.deletePost(postId);
+        promise.then((result) => {
+            alertHook.switchToSuccess("Delete Post is successful");
+        }).catch((err) => {
+            alertHook.switchToFailure(err.message);
+        })
     }
 
     return (
@@ -114,7 +124,6 @@ export default function AccountPage({accountHook}) {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        {/*Avatar Info*/}
 
                         {/*Account Info*/}
                         <Grid item xs={12} md={8} className={classes.accountInfo}>
@@ -132,7 +141,6 @@ export default function AccountPage({accountHook}) {
                                 {/*Details*/}
                                 <Grid item xs={12} md={12} className={classes.details}>
                                     <Grid container spacing={2}>
-
                                         <Grid item xs={12} md={12}>
                                             <Grid container spacing={2}>
 
@@ -173,36 +181,45 @@ export default function AccountPage({accountHook}) {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                {/*Account Info*/}
-
-
                             </Grid>
                         </Grid>
                     </Grid>
-
-
-                    {/*Post List*/}
                     <br/>
+
+                    {/*Posts Title*/}
+                    {accountHook.isTutor() &&
+                        <Grid container xs={12} md={12} sm={12} justify="flex-start" alignItems="flex-start">
+                        <Grid item spacing={3}>
+                        <Typography variant="h6">My Posts</Typography>
+                        </Grid>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </Grid>
+                    }
+
+                    <AlertMessage alertHook={alertHook} />
+                    <br/>
+                    {/*Post List*/}
                     {accountHook.isTutor() && tutorPost.map((post, idx) =>
-                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
+                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
                             <Grid item xs={12} md={11}>
                                 <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
-                                <PostLayout post={post} idx={idx}/>
+                                    <PostLayout post={post} idx={idx}/>
                                 </Link>
                             </Grid>
                             <Grid item xs={12} md={1}>
                                 <Button variant="contained" color="primary" className={classes.deleteButton}
                                         startIcon={<DeleteIcon/>}
-                                        onClick={handleDelete(post._id) }>
+                                        onClick={() => handleDeleteClick(post._id)}>
                                     DELETE
                                 </Button>
                             </Grid>
-                            </Grid>
-
+                            <br/>
+                            <br/>
+                            <br/>
+                        </Grid>
                     )}
-
-
-
                 </Grid>
             </Grid>
             }

@@ -31,6 +31,7 @@ export default function useTutorPosts({accountHook}) {
     const output = await res.json();
 
     if (output.success) {
+      getTutorPosts(tutorAccountHook.account._id);
       return output.result;
     } else {
       throw new Error(output.error);
