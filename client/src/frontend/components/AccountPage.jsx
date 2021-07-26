@@ -71,9 +71,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AccountPage({accountHook}) {
     const classes = useStyles();
-
     const account = accountHook.account;
-    const tutorPostsHook = useTutorPosts();
+    const tutorPostsHook = useTutorPosts({accountHook});
     const tutorPost = tutorPostsHook.tutorPosts;
 
     function handleNewAvatarButton() {
@@ -170,18 +169,17 @@ export default function AccountPage({accountHook}) {
 
                             </Grid>
                         </Grid>
-
                     </Grid>
+                    {/*Post List*/}
+                    <br/>
+                    {accountHook.isTutor() && tutorPost.map((post, idx) =>
+                        <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
+                            <Grid item xs={12} md={12}>
+                                <PostLayout post={post} idx={idx}/>
+                            </Grid>
+                        </Link>
+                    )}
                 </Grid>
-                {/*Post List*/}
-                <br/>
-                {accountHook.isTutor() && tutorPost.map((post, idx) =>
-                    <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
-                        <Grid item xs={12} md={12}>
-                            <PostLayout post={post} idx={idx}/>
-                        </Grid>
-                    </Link>
-                )}
             </Grid>
             }
         </>

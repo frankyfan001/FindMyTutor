@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import api from '../APIs/api';
 import useAccount from "./useAccount";
 
-export default function useTutorPosts() {
+export default function useTutorPosts({accountHook}) {
   // State: tutor posts
   const [tutorPosts, setTutorPosts] = useState([]);
+  const tutorAccountHook = accountHook;
 
   // Get all posts of a tutor.
   const getTutorPosts = async (tutorId) => {
@@ -38,8 +39,10 @@ export default function useTutorPosts() {
 
   // Effect: fetch posts.
   useEffect(() => {
-    getTutorPosts();
-  }, []);
+    if (tutorAccountHook.account) {
+      getTutorPosts(tutorAccountHook.account._id);
+    }
+  }, [tutorAccountHook.account]);
 
   return { tutorPosts, getTutorPosts, deletePost};
 }
