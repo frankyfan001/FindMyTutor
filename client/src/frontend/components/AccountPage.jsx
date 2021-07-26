@@ -14,7 +14,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import {SchoolOutlined} from "@material-ui/icons";
 import PersonIcon from '@material-ui/icons/Person';
 import FaceIcon from '@material-ui/icons/Face';
-import PostList from "./PostList";
+import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from "react-router-dom";
 import PostLayout from "./PostLayout";
 
@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
+        margin: 'auto 3% auto auto',
+    },
+    deleteButton: {
+        background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
+        verticalAlign: "middle",
         margin: 'auto 3% auto auto',
     },
     accountInfo: {
@@ -76,6 +81,10 @@ export default function AccountPage({accountHook}) {
     const tutorPost = tutorPostsHook.tutorPosts;
 
     function handleNewAvatarButton() {
+        // TODO
+    }
+
+    function handleDelete(postId) {
         // TODO
     }
 
@@ -170,15 +179,30 @@ export default function AccountPage({accountHook}) {
                             </Grid>
                         </Grid>
                     </Grid>
+
+
                     {/*Post List*/}
                     <br/>
                     {accountHook.isTutor() && tutorPost.map((post, idx) =>
-                        <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
-                            <Grid item xs={12} md={12}>
+                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
+                            <Grid item xs={12} md={11}>
+                                <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
                                 <PostLayout post={post} idx={idx}/>
+                                </Link>
                             </Grid>
-                        </Link>
+                            <Grid item xs={12} md={1}>
+                                <Button variant="contained" color="primary" className={classes.deleteButton}
+                                        startIcon={<DeleteIcon/>}
+                                        onClick={handleDelete(post._id) }>
+                                    DELETE
+                                </Button>
+                            </Grid>
+                            </Grid>
+
                     )}
+
+
+
                 </Grid>
             </Grid>
             }

@@ -420,10 +420,11 @@ router.put('/:postId', function(req, res, next) {
     });
 });
 
-/* Update a post. */
+/* Delete a post. */
 router.delete('/:postId', function(req, res, next) {
   const postId = req.params.postId;
-  Post.deleteOne({_id : new ObjectId(id)})
+  console.log(postId);
+  Post.findByIdAndRemove(postId)
       .then(result => {
         res.send({
           success: true,
