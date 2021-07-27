@@ -29,7 +29,13 @@ const AccountSchema = new Schema({
   avatar: {
     type: String,
     required: true,
-  }
+  },
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post',
+    }
+  ]
 }, { timestamps: true });
 
 // Create model from the schema

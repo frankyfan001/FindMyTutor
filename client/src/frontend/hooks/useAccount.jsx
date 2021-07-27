@@ -5,6 +5,7 @@ import api from '../APIs/api';
 export default function useAccount() {
   // State: account
   const [account, setAccount] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
   const isLogin = () => {
     return account !== null;
@@ -73,5 +74,28 @@ export default function useAccount() {
     }
   };
 
-  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount, setAccount};
+  // Get favorite posts
+  const getFavoritePosts = async() => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites`, {
+      method: 'GET',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setFavorites(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  useEffect(() => {
+    if (account) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+    }
+  }, [account]);
+
+
+
+  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,favorites, getFavoritePosts};
 }

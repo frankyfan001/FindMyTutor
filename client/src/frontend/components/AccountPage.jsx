@@ -23,8 +23,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import {useHistory} from "react-router";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountPage({accountHook}) {
     const classes = useStyles();
     const account = accountHook.account;
+    const studentFav = accountHook.favorites;
     let tutorPostsHook = useTutorPosts({accountHook});
     let tutorPost = tutorPostsHook.tutorPosts;
     const alertHook = useAlert();
@@ -107,7 +106,7 @@ export default function AccountPage({accountHook}) {
     return (
         <>
             <br/>
-            {account &&
+            {account && (account.type === "tutor" || studentFav) &&
             <Grid container spacing={1} className={classes.root}>
                 <Grid item xs={12} md={12}>
                     <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
@@ -230,6 +229,19 @@ export default function AccountPage({accountHook}) {
                                         onClick={() => handleDeleteClick(post._id)}>
                                     DELETE
                                 </Button>
+                            </Grid>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </Grid>
+                    )}
+
+                    {accountHook.isStudent() && studentFav.map((post, idx) =>
+                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
+                            <Grid item xs={12} md={11}>
+                                <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
+                                    <PostLayout post={post} idx={idx}/>
+                                </Link>
                             </Grid>
                             <br/>
                             <br/>
