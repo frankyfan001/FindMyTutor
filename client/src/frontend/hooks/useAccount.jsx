@@ -75,7 +75,7 @@ export default function useAccount() {
   };
 
   // Get favorite posts
-  const getFavoritePosts = async() => {
+  const getFavoritePosts = async () => {
     const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites`, {
       method: 'GET',
     });
@@ -89,6 +89,40 @@ export default function useAccount() {
     }
   }
 
+  // Add favorite post
+  const addFavoritesPost = async (postId) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites/${postId}`, {
+      method: 'PUT',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  // Delete favorite post
+  const deleteFavoritesPost = async (postId) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites/${postId}`, {
+      method: 'DELETE',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  const isFavoritePost = (postId) => {
+    return favorites.filter((fav) => fav._id === postId).length !== 0;
+  };
+
   useEffect(() => {
     if (account) {
       getFavoritePosts().then((res)=> setFavorites(res));
@@ -97,5 +131,5 @@ export default function useAccount() {
 
 
 
-  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,favorites, getFavoritePosts};
+  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,favorites, addFavoritesPost, deleteFavoritesPost, isFavoritePost};
 }
