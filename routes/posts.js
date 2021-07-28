@@ -3,10 +3,10 @@ var express = require('express');
 var router = express.Router();
 const Post = require('../models/post');
 const Account = require("../models/account");
-const {ObjectId} = require("bson");
+const { ObjectId } = require("bson");
 
 /* Get all posts with its account info. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   const output = {
     success: true,
     result: [
@@ -157,43 +157,43 @@ router.get('/', function(req, res, next) {
   let tutorId = req.query.tutorId;
 
   if (tutorId) {
-    Post.find({account_ref:new ObjectId(tutorId)})
-        .populate('account_ref')
-        .sort({createdAt: -1})
-        .exec()
-        .then((result) => {
-          res.send({
-            success: true,
-            result: result
-          });
-        })
-        .catch((err) => {
-          res.send({
-            success: false,
-            error: "Getting all posts failed."
-          });
+    Post.find({ account_ref: new ObjectId(tutorId) })
+      .populate('account_ref')
+      .sort({ createdAt: -1 })
+      .exec()
+      .then((result) => {
+        res.send({
+          success: true,
+          result: result
         });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          error: "Getting all posts failed."
+        });
+      });
   } else {
     Post.find({}).populate('account_ref')
-        .sort({createdAt: -1})
-        .exec()
-        .then((result) => {
-          res.send({
-            success: true,
-            result: result
-          });
-        })
-        .catch((err) => {
-          res.send({
-            success: false,
-            error: "Getting all posts failed."
-          });
+      .sort({ createdAt: -1 })
+      .exec()
+      .then((result) => {
+        res.send({
+          success: true,
+          result: result
         });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          error: "Getting all posts failed."
+        });
+      });
   }
 });
 
 /* Add a post. */
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   const input = {
     availableDays: [false, false, false, false, false, true, true],
     school: "UBC",
@@ -237,7 +237,7 @@ router.post('/', function(req, res, next) {
   };
   ///////////////////////////// Above is examples of input and output /////////////////////////////
 
-  const newPost = {...req.body, thumbUp: 0, thumbDown: 0};
+  const newPost = { ...req.body, thumbUp: 0, thumbDown: 0 };
 
   if (newPost.availableDays.filter(day => day === true).length === 0) {
     res.send({
@@ -286,7 +286,7 @@ router.post('/', function(req, res, next) {
 });
 
 /* Get a post with its account info. */
-router.get('/:postId', function(req, res, next) {
+router.get('/:postId', function (req, res, next) {
   const output = {
     success: true,
     result: {
@@ -359,7 +359,7 @@ router.get('/:postId', function(req, res, next) {
 });
 
 /* Update a post. */
-router.put('/:postId', function(req, res, next) {
+router.put('/:postId', function (req, res, next) {
   const input = {
     "thumbUp": 21
   };
@@ -421,21 +421,71 @@ router.put('/:postId', function(req, res, next) {
 });
 
 /* Delete a post. */
-router.delete('/:postId', function(req, res, next) {
+router.delete('/:postId', function (req, res, next) {
   const postId = req.params.postId;
   console.log(postId);
   Post.findByIdAndRemove(postId)
-      .then(result => {
+    .then(result => {
+    }).catch(err => {
+      res.send({
+        success: false,
+        error: `Deleting the post with id ${postId} failed`
+      })
+    })
+});
+
+router.post('/filter', function (req, res, next) {
+  console.log("getting request filter body");
+  console.log(req.body);
+  const filter = req.body;
+  let filterKey = filter.filterKey;
+  const filterValue = filter.filterValue;
+
+  if (filterKey === "thumbup") {
+    Post.find({ thumbUp: { $gte: filterValue } }).populate('account_ref').exec().then((result) => {
+      if (result) {
         res.send({
           success: true,
           result: result
         });
-      }).catch(err => {
+      } else {
         res.send({
           success: false,
-          error: `Deleting the post with id ${postId} failed`
-        })
-  })
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+      }
+    }).catch((err) => {
+      res.send({
+        success: false,
+        error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+      });
+    })
+  } else {
+    let query = {};
+    query[filterKey] = {
+      "$regex": filterValue,
+      "$options": "i"
+    };
+    console.log(query);
+    Post.find(query).populate('account_ref').exec().then((result) => {
+      if (result) {
+        res.send({
+          success: true,
+          result: result
+        });
+      } else {
+        res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+      }
+    }).catch((err) => {
+      res.send({
+        success: false,
+        error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+      });
+    });
+  }
 });
 
 module.exports = router;
