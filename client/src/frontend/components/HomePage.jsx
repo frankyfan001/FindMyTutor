@@ -33,6 +33,11 @@ const useStyles = makeStyles(() => ({
 export default function HomePage({accountHook, postsHook}) {
   const classes = useStyles();
 
+  // Effect: fetch posts.
+  useEffect(() => {
+    postsHook.getPosts();
+  }, []);
+
   const alertHook = useAlert();
 
   // filter posts based on filter tree selection

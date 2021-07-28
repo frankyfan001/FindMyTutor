@@ -100,7 +100,11 @@ export default function AccountPage({accountHook}) {
             alertHook.switchToSuccess("Delete Post is successful");
         }).catch((err) => {
             alertHook.switchToFailure(err.message);
-        })
+        }).finally(() => {
+            setTimeout(function () {
+                alertHook.switchToIdle(null);
+            }, 1000)
+        });
     }
 
     return (
@@ -193,9 +197,9 @@ export default function AccountPage({accountHook}) {
 
                     {/*Posts Title*/}
                     {accountHook.isTutor() &&
-                        <Grid container xs={12} md={12} sm={12} justify="flex-start" alignItems="flex-start">
-                        <Grid item spacing={3}>
-                        <Typography variant="h6">My Posts</Typography>
+                        <Grid container justify="flex-start" alignItems="flex-start">
+                        <Grid item>
+                            <Typography variant="h6">My Posts</Typography>
                         </Grid>
                             <br/>
                             <br/>
@@ -203,23 +207,23 @@ export default function AccountPage({accountHook}) {
                         </Grid>
                     }
                     {accountHook.isStudent() &&
-                    <Grid container xs={12} md={12} sm={12} justify="flex-start" alignItems="flex-start">
-                        <Grid item spacing={3}>
-                            <Typography variant="h6">My Favorites</Typography>
+                        <Grid container justify="flex-start" alignItems="flex-start">
+                            <Grid item>
+                                <Typography variant="h6">My Favorites</Typography>
+                            </Grid>
+                            <br/>
+                            <br/>
+                            <br/>
                         </Grid>
-                        <br/>
-                        <br/>
-                        <br/>
-                    </Grid>
                     }
 
                     <AlertMessage alertHook={alertHook} />
                     <br/>
                     {/*Post List*/}
                     {accountHook.isTutor() && tutorPost.map((post, idx) =>
-                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
+                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
                             <Grid item xs={12} md={11}>
-                                <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
+                                <Link to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
                                     <PostLayout post={post} idx={idx}/>
                                 </Link>
                             </Grid>
@@ -237,9 +241,9 @@ export default function AccountPage({accountHook}) {
                     )}
 
                     {accountHook.isStudent() && studentFav.map((post, idx) =>
-                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center">
+                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center"  key={post._id}>
                             <Grid item xs={12} md={11}>
-                                <Link key={post._id} to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
+                                <Link to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
                                     <PostLayout post={post} idx={idx}/>
                                 </Link>
                             </Grid>
