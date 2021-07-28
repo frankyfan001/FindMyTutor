@@ -96,8 +96,6 @@ export default function HomePage({accountHook, postsHook}) {
 
         {/*Post List*/}
         <PostList postsHook={postsHook} />
-
-        {/* TODO: Jerry - pagination */}
       </Grid>
     </div>
   );
