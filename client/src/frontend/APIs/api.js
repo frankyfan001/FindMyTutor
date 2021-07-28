@@ -6,7 +6,7 @@ const baseURL_production = 'https://find-my-tutor-ubc.herokuapp.com';
 const headers = { 'Content-Type': 'application/json' };
 
 const api = {
-  baseURL: baseURL_development,
+  baseURL: baseURL_production,
   headers: headers
 };
 

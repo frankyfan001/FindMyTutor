@@ -29,6 +29,9 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,6 +155,9 @@ export default function ViewPostPage({ accountHook }) {
   const post = postHook.post;
   const comments = commentsHook.comments;
 
+  const account = accountHook.account;
+  const studentFavorites = accountHook.favorites;
+
   const history = useHistory();
 
   const content = {
@@ -169,6 +175,18 @@ export default function ViewPostPage({ accountHook }) {
     }
   };
 
+  const handleAddFavorites = (postId) => {
+    if(accountHook.isLogin() && accountHook.isStudent()) {
+      accountHook.addFavoritesPost(postId).then(() => {});
+    }
+  }
+
+  const handleDeleteFavorites = (postId) => {
+    if(accountHook.isLogin() && accountHook.isStudent()) {
+      accountHook.deleteFavoritesPost(postId).then(() => {});
+    }
+  }
+
   return (
     <>
       <br />
@@ -176,6 +194,24 @@ export default function ViewPostPage({ accountHook }) {
       <Grid container spacing={1} className={classes.root}>
 
         
+
+        {/*New Favorites icon*/}
+
+        {account && account.type === "student" && studentFavorites && accountHook.isFavoritePost(post._id) &&
+        <Grid item xs={12} md={12} align="right">
+          <IconButton color="secondary" onClick={() => handleDeleteFavorites(post._id)}>
+            <FavoriteIcon/>
+          </IconButton>
+        </Grid>
+        }
+
+        {account && account.type === "student" && studentFavorites && !accountHook.isFavoritePost(post._id)  &&
+        <Grid item xs={12} md={12} align="right" onClick={() => handleAddFavorites(post._id)}>
+          <IconButton color="secondary">
+            <FavoriteBorderIcon/>
+          </IconButton>
+        </Grid>
+        }
 
         {/*Post*/}
         <Grid item xs={12} md={12}>
@@ -333,6 +369,7 @@ export default function ViewPostPage({ accountHook }) {
     </>
   );
 };
+
 
 const CommentList = ({ comments }) => {
   const classes = useStyles();
