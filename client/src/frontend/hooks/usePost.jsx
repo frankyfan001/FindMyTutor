@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import api from '../APIs/api';
 
-export default function usePost(address) {
+export default function usePost() {
   // State: post
   const [post, setPost] = useState(null);
   // State: map
@@ -42,18 +42,23 @@ export default function usePost(address) {
 
   // TODO: Kevin
   // Get google map.
-  const getGoogleMap = async (address) => {
-    const googleMap = null;
-    setMap(googleMap);
-  };
+  // const getGoogleMap = async () => {
+  //   // let address = post.address;
+  //   const googleMap = await fetch(
+  //     "https://maps.googleapis.com/maps/api/staticmap?center="+address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew", {
+  //     method: 'GET'
+  //   });
+  //   // const googleMap = null;
+  //   setMap(googleMap);
+  // };
 
   // Effect: fetch a post and its map info.
   const { postId } = useParams();
   useEffect(() => {
     getPost(postId).then(r => {
-      if (post && post.address) {
-        getGoogleMap(post.address);
-      }
+      // if (post && post.address) {
+      //   getGoogleMap();
+      // }
     });
   }, []);
 
