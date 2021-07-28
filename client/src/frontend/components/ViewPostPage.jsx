@@ -193,10 +193,7 @@ export default function ViewPostPage({ accountHook }) {
       {post &&
       <Grid container spacing={1} className={classes.root}>
 
-        {/* TODO: Kevin */}
-        <div>
-          {postHook.map}
-        </div>
+        
 
         {/*New Favorites icon*/}
 
@@ -349,7 +346,8 @@ export default function ViewPostPage({ accountHook }) {
             <AlertMessage alertHook={alertHook} />
           </div>
         </Grid>
-
+        {/* TODO: Kevin */}
+        <img src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
         {/*Comments*/}
         <Grid item xs={12} md={12}>
           <CommentList comments={comments} accountHook={accountHook}/>

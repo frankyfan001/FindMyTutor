@@ -11,6 +11,7 @@ import {SchoolOutlined} from "@material-ui/icons";
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
+import BusinessIcon from '@material-ui/icons/Business';
 import DescriptionIcon from '@material-ui/icons/Description';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import {useHistory} from "react-router";
@@ -80,8 +81,9 @@ export default function NewPostPage({ accountHook, postsHook }) {
   const [course, setCourse] = useState("");
   const [wageInStr, setWageInStr] = useState("");
   const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
-
+  
   const history = useHistory();
 
   const handleSubmit = (e) => {
@@ -101,6 +103,7 @@ export default function NewPostPage({ accountHook, postsHook }) {
       contact,
       thumbUp,
       thumbDown,
+      address,
       description,
       account_ref
     }
@@ -171,6 +174,11 @@ export default function NewPostPage({ accountHook, postsHook }) {
                     <FormInput label="Contact" icon={<ContactPhoneIcon value={contact} />} setValue={setContact} />
                   </Grid>
                 </Grid>
+              </Grid>
+
+              {/*Address*/}
+              <Grid item xs={12} md={12}>
+                <FormInput label="Address" icon={<BusinessIcon />} value={address} setValue={setAddress} />
               </Grid>
 
               {/*Description*/}

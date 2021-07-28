@@ -34,6 +34,10 @@ const PostSchema = new Schema({
     type: Number,
     required: true
   },
+  address: {
+    type: String,
+    required: false,
+  },
   description: {
     type: String,
     required: true,
@@ -42,10 +46,6 @@ const PostSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
     required: true,
-  },
-  address: {
-    type: String,
-    required: false,
   },
 }, { timestamps: true });
 
