@@ -67,7 +67,7 @@ export default function HomePage({accountHook, postsHook}) {
           <Grid container spacing={0}>
             <Grid item xs={12} md={12}>
               <Paper variant="outlined">
-              <FilterTreeView onNodeSelect={postsHook.handleClick} />
+              <FilterTreeView onNodeSelect={postsHook.handleFilterSelect} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -98,7 +98,6 @@ export default function HomePage({accountHook, postsHook}) {
         <PostList postsHook={postsHook} />
 
         {/* TODO: Jerry - pagination */}
-
       </Grid>
     </div>
   );

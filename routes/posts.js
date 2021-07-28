@@ -420,22 +420,76 @@ router.put('/:postId', function(req, res, next) {
     });
 });
 
+<<<<<<< HEAD
 /* Delete a post. */
 router.delete('/:postId', function(req, res, next) {
   const postId = req.params.postId;
   console.log(postId);
   Post.findByIdAndRemove(postId)
       .then(result => {
+=======
+router.post('/filter', function(req, res, next) {
+  console.log("getting request filter body");
+  console.log(req.body);
+  const filter = req.body;
+  let filterKey = filter.filterKey;
+  const filterValue = filter.filterValue;
+
+  if (filterKey === "thumbup") {
+    Post.find({thumbUp : { $gte : filterValue}}).populate('account_ref').exec().then((result) => {
+      if (result) {
+>>>>>>> impl filter and pagination
         res.send({
           success: true,
           result: result
         });
+<<<<<<< HEAD
       }).catch(err => {
         res.send({
           success: false,
           error: `Deleting the post with id ${postId} failed`
         })
   })
+=======
+      } else {
+        res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+      }
+    }).catch((err) => {
+      res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+    })
+  } else {
+    let query = {};
+    query[filterKey] = {
+      "$regex": filterValue,
+      "$options": "i"
+    };
+    console.log(query);
+    Post.find(query).populate('account_ref').exec().then((result) => {
+      if (result) {
+        res.send({
+          success: true,
+          result: result
+        });
+      } else {
+        res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+      }
+    }).catch((err) => {
+      res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
+        });
+    });
+  }
+>>>>>>> impl filter and pagination
 });
 
 module.exports = router;
