@@ -164,4 +164,138 @@ router.post('/login', function(req, res, next) {
     });
 });
 
+/* Update a post. */
+router.put('/:accountId', function(req, res, next) {
+  const accountId = req.params.accountId;
+  const updatedInfo = req.body;
+  Account.findByIdAndUpdate(accountId, updatedInfo)
+      .then((result) => {
+        if (result) {
+          res.send({
+            success: true,
+            result: result
+          });
+        } else {
+          res.send({
+            success: false,
+            error: `Updating the account with id ${accountId} failed.`
+          });
+        }
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          error: `Updating the account with id ${accountId} failed.`
+        });
+      });
+});
+
+// add a post to favorites
+// return populated favorite array
+router.get('/:accountId/favorites', function (req, res, next) {
+  const accountId = req.params.accountId;
+  Account.findById(accountId)
+      .populate({
+        path: 'favorites',
+        model: 'Post',
+        populate: {
+          path: 'account_ref',
+          model: 'Account'
+        }
+      })
+      .exec()
+      .then((account) => {
+        res.send({
+          success: true,
+          result: account.favorites,
+        });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          error: `Getting the comments of the post with id ${postId} failed.`
+        });
+      });
+});
+
+// add a post to favorites
+// return updated favorite array
+router.put('/:accountId/favorites/:postId', function (req, res, next) {
+  const accountId = req.params.accountId;
+  const postId = req.params.postId;
+  Account.findById(accountId).then((account) => {
+    if (!account.favorites) {
+      account.favorites = [];
+    }
+    if (!account.favorites.includes(postId)) {
+      account.favorites.push(postId);
+    }
+    Account.findByIdAndUpdate(accountId, {favorites: account.favorites})
+        .then((result) => {
+          if (result) {
+            res.send({
+              success: true,
+              result: account.favorites
+            });
+          } else {
+            res.send({
+              success: false,
+              error: `Adding favorites post ${postId} to account ${accountId} failed.`
+            });
+          }
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            error: `Adding favorites post ${postId} to account ${accountId} failed.`
+          });
+        });
+  }).catch((err) => {
+    res.send({
+      success: false,
+      error: `Adding favorites post ${postId} to account ${accountId} failed.`
+    });
+  })
+});
+
+// remove a post to favorites
+// return updated favorite array
+router.delete('/:accountId/favorites/:postId', function (req, res, next) {
+  const accountId = req.params.accountId;
+  const postId = req.params.postId;
+  Account.findById(accountId).then((account) => {
+    if (!account.favorites) {
+      account.favorites = [];
+    }
+    if (account.favorites.includes(postId)) {
+      account.favorites = account.favorites.filter((id) => id != postId);
+    }
+    Account.findByIdAndUpdate(accountId, {favorites: account.favorites})
+        .then((result) => {
+          if (result) {
+            res.send({
+              success: true,
+              result: account.favorites
+            });
+          } else {
+            res.send({
+              success: false,
+              error: `Deleting favorites post ${postId} to account ${accountId} failed.`
+            });
+          }
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            error: `Deleting favorites post ${postId} to account ${accountId} failed.`
+          });
+        });
+  }).catch((err) => {
+    res.send({
+      success: false,
+      error: `Deleting favorites post ${postId} to account ${accountId} failed.`
+    });
+  })
+});
+
 module.exports = router;

@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 const Post = require('../models/post');
 const Account = require("../models/account");
+const {ObjectId} = require("bson");
 
 /* Get all posts with its account info. */
 router.get('/', function(req, res, next) {
@@ -153,22 +154,42 @@ router.get('/', function(req, res, next) {
   };
   ///////////////////////////// Above is examples of input and output /////////////////////////////
 
-  Post.find({})
-    .populate('account_ref')
-    .sort({createdAt: -1})
-    .exec()
-    .then((result) => {
-      res.send({
-        success: true,
-        result: result
-      });
-    })
-    .catch((err) => {
-      res.send({
-        success: false,
-        error: "Getting all posts failed."
-      });
-    });
+  let tutorId = req.query.tutorId;
+
+  if (tutorId) {
+    Post.find({account_ref:new ObjectId(tutorId)})
+        .populate('account_ref')
+        .sort({createdAt: -1})
+        .exec()
+        .then((result) => {
+          res.send({
+            success: true,
+            result: result
+          });
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            error: "Getting all posts failed."
+          });
+        });
+  } else {
+    Post.find({}).populate('account_ref')
+        .sort({createdAt: -1})
+        .exec()
+        .then((result) => {
+          res.send({
+            success: true,
+            result: result
+          });
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            error: "Getting all posts failed."
+          });
+        });
+  }
 });
 
 /* Add a post. */
@@ -397,6 +418,24 @@ router.put('/:postId', function(req, res, next) {
         error: `Updating the post with id ${postId} failed.`
       });
     });
+});
+
+/* Delete a post. */
+router.delete('/:postId', function(req, res, next) {
+  const postId = req.params.postId;
+  console.log(postId);
+  Post.findByIdAndRemove(postId)
+      .then(result => {
+        res.send({
+          success: true,
+          result: result
+        });
+      }).catch(err => {
+        res.send({
+          success: false,
+          error: `Deleting the post with id ${postId} failed`
+        })
+  })
 });
 
 module.exports = router;

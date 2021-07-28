@@ -1,10 +1,11 @@
 /* eslint-disable */
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import api from '../APIs/api';
 
 export default function useAccount() {
   // State: account
   const [account, setAccount] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
   const isLogin = () => {
     return account !== null;
@@ -56,5 +57,79 @@ export default function useAccount() {
     setAccount(null);
   };
 
-  return { account, isLogin, isTutor, isStudent, register, login, logout};
+  // Update a account.
+  const updateAccount = async (updatedInfo) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}`, {
+      method: 'PUT',
+      headers: api.headers,
+      body: JSON.stringify(updatedInfo)
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setAccount(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  };
+
+  // Get favorite posts
+  const getFavoritePosts = async () => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites`, {
+      method: 'GET',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      setFavorites(output.result);
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  // Add favorite post
+  const addFavoritesPost = async (postId) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites/${postId}`, {
+      method: 'PUT',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  // Delete favorite post
+  const deleteFavoritesPost = async (postId) => {
+    const res = await fetch(api.baseURL + `/accounts/${account._id}/favorites/${postId}`, {
+      method: 'DELETE',
+    });
+    const output = await res.json();
+
+    if (output.success) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+      return output.result;
+    } else {
+      throw new Error(output.error);
+    }
+  }
+
+  const isFavoritePost = (postId) => {
+    return favorites.filter((fav) => fav._id === postId).length !== 0;
+  };
+
+  useEffect(() => {
+    if (account) {
+      getFavoritePosts().then((res)=> setFavorites(res));
+    }
+  }, [account]);
+
+
+
+  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,favorites, addFavoritesPost, deleteFavoritesPost, isFavoritePost};
 }

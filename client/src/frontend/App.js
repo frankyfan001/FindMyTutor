@@ -49,7 +49,7 @@ function App() {
                        rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
           </Route>
           <Route path="/account">
-            <AccountPage />
+            <AccountPage accountHook={accountHook}/>
           </Route>
           <Route path="/team">
             <TeamPage />
