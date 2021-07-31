@@ -92,6 +92,7 @@ export default function AccountPage({ accountHook }) {
     const account = accountHook.account;
     const studentFav = accountHook.favorites;
     const tutorPostsHook = useTutorPosts({accountHook});
+    const tutorPosts = tutorPostsHook.tutorPosts;
     const alertHook = useAlert();
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -103,6 +104,7 @@ export default function AccountPage({ accountHook }) {
     const handleDeleteClick = (postId) => {
         const promise = tutorPostsHook.deletePost(postId);
         promise.then(() => {
+            tutorPostsHook.getTutorPosts(account._id).catch((err) => {});
             alertHook.switchToSuccess("Delete Post is successful");
         }).catch((err) => {
             alertHook.switchToFailure(err.message);
@@ -229,7 +231,7 @@ export default function AccountPage({ accountHook }) {
                         <br />
 
                         {/*Post List*/}
-                        {accountHook.isTutor() && tutorPostsHook.tutorPosts.slice((page - 1) * 10, page * 10).map((post, idx) =>
+                        {accountHook.isTutor() && tutorPosts.slice((page - 1) * 10, page * 10).map((post, idx) =>
                             <Grid container spacing={0} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
                                 <Grid item xs={12} md={11}>
                                     <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
@@ -262,7 +264,7 @@ export default function AccountPage({ accountHook }) {
                             </Grid>
                         )}
                         {accountHook.isLogin() ?
-                            <Pagination page={page} count={accountHook.isStudent() ? Math.ceil((studentFav.length) / 10) : accountHook.isTutor() ? Math.ceil((tutorPostsHook.tutorPosts.length) / 10) : <br />} showFirstButton showLastButton onChange={handleChange}
+                            <Pagination page={page} count={accountHook.isStudent() ? Math.ceil((studentFav.length) / 10) : accountHook.isTutor() ? Math.ceil((tutorPosts.length) / 10) : <br />} showFirstButton showLastButton onChange={handleChange}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
