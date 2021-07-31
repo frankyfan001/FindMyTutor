@@ -25,6 +25,7 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import usePages from "../hooks/usePages";
 import { Pagination } from '@material-ui/lab';
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
     },
     avatarInfo: {
         width: '100%',
-        height: theme.spacing(60),
+        height: theme.spacing(45),
         margin: 'auto',
     },
     avatar: {
         width: '100%',
-        height: theme.spacing(40),
+        height: theme.spacing(30),
         margin: 'auto',
         borderRadius: '0.5rem',
     },
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
     accountInfo: {
         width: '100%',
-        minHeight: theme.spacing(60),
+        minHeight: theme.spacing(45),
         margin: 'auto',
     },
     details: {
@@ -71,10 +72,12 @@ const useStyles = makeStyles((theme) => ({
     label: {
         width: '100%',
         background: '#a5c1e2',
+        fontWeight: 'bold',
     },
     labelText: {
         width: '100%',
         background: '#f1af8d',
+        fontWeight: 'bold',
     },
     accountTitle: {
         width: '100%',
@@ -118,6 +121,8 @@ export default function AccountPage({ accountHook }) {
             {account && (account.type === "tutor" || studentFav) &&
                 <Grid container spacing={1} className={classes.root}>
                     <Grid item xs={12} md={12}>
+
+                        {/*Account Info*/}
                         <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
 
                             {/*Avatar Info*/}
@@ -147,7 +152,7 @@ export default function AccountPage({ accountHook }) {
                                         <Grid container spacing={2} justify="space-evenly">
 
                                             <Grid item xs={12} md={12}>
-                                                <Typography variant="h6">Account Information</Typography>
+                                                <Typography variant="h4">{accountHook.isTutor() ? "Tutor Account" : "Student Account"}</Typography>
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -156,7 +161,7 @@ export default function AccountPage({ accountHook }) {
                                     <Grid item xs={12} md={12} className={classes.details}>
                                         <Grid container spacing={2}>
                                             <Grid item xs={12} md={12}>
-                                                <Grid container spacing={2}>
+                                                <Grid container spacing={3}>
 
                                                     {/*AccountType*/}
                                                     <Grid item xs={12} md={6}>
@@ -198,32 +203,31 @@ export default function AccountPage({ accountHook }) {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <br />
 
                         {/*Posts Title*/}
+                        <br />
+                        <br />
                         {accountHook.isTutor() &&
                             <Grid container justify="flex-start" alignItems="flex-start">
                                 <Grid item>
                                     <Typography variant="h6">My Posts</Typography>
                                 </Grid>
-                                <br />
-                                <br />
-                                <br />
                             </Grid>
                         }
                         {accountHook.isStudent() &&
-                            <Grid container justify="flex-start" alignItems="flex-start">
+                            <Grid container spacing={1} justify="flex-start" alignItems="flex-start">
+                                <Grid item>
+                                    <FavoriteIcon color="secondary" />
+                                </Grid>
                                 <Grid item>
                                     <Typography variant="h6">My Favorites</Typography>
                                 </Grid>
-                                <br />
-                                <br />
-                                <br />
                             </Grid>
                         }
 
                         <AlertMessage alertHook={alertHook} />
                         <br />
+
                         {/*Post List*/}
                         {accountHook.isTutor() && tutorPostsHook.tutorPosts.slice((page - 1) * 10, page * 10).map((post, idx) =>
                             <Grid container spacing={0} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
@@ -247,7 +251,7 @@ export default function AccountPage({ accountHook }) {
 
                         {accountHook.isStudent() && studentFav.slice((page - 1) * 10, page * 10).map((post, idx) =>
                             <Grid container spacing={0} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
-                                <Grid item xs={12} md={11}>
+                                <Grid item xs={12} md={12}>
                                     <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
                                         <PostLayout post={post} idx={idx} />
                                     </Link>

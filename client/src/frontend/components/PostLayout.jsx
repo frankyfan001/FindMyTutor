@@ -9,11 +9,11 @@ import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '98.3%',
+    width: '100%',
     background: '#f6ddd1',
   },
   root1: {
-    width: '98.3%',
+    width: '100%',
     background: '#fcf4ee',
   },
   usernameButton: {

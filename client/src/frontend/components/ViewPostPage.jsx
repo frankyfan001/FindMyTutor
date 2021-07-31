@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     width: '100%',
-    minHeight: theme.spacing(24),
+    minHeight: theme.spacing(20),
     padding: '3% 3% 3% 3%',
   },
   button: {
