@@ -58,9 +58,9 @@ export default function HomePage({accountHook, postsHook}) {
   return (
     <div>
       <Banner />
+
       <Grid container spacing={1} direction="column" align="center" className={classes.root}>
 
-        {/* TODO: Jerry - filter */}
         {/*Search Bar*/}
         <br />
         <Grid item xs={12} md={12}>

@@ -26,14 +26,6 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
-  thumbUp: {
-    type: Number,
-    required: true
-  },
-  thumbDown: {
-    type: Number,
-    required: true
-  },
   address: {
     type: String,
     required: true,
@@ -41,6 +33,14 @@ const PostSchema = new Schema({
   description: {
     type: String,
     required: true,
+  },
+  thumbUp: {
+    type: Number,
+    required: true
+  },
+  thumbDown: {
+    type: Number,
+    required: true
   },
   account_ref: {
     type: mongoose.Schema.Types.ObjectId,

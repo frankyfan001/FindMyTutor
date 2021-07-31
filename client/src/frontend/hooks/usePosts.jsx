@@ -37,7 +37,6 @@ export default function usePosts() {
     }
   };
 
-  // TODO: Jerry - filter
   const { filter, handleSearch, handleFilterSelect } = useFilter();
   // Get filtered posts.
   const getFilteredPosts = async (filter) => {

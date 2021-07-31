@@ -34,11 +34,36 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import usePages from '../hooks/usePages';
 import { Pagination } from '@material-ui/lab';
+import BusinessIcon from "@material-ui/icons/Business";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '80%',
     margin: 'auto',
+  },
+  mapDiv: {
+    margin: 'auto 2.5% auto auto',
+  },
+  map: {
+    width: '100%',
+    height: theme.spacing(35),
+    borderTopLeftRadius: '0.5rem',
+    borderTopRightRadius: '0.5rem',
+    borderBottomLeftRadius: '0rem',
+    borderBottomRightRadius: '0rem',
+  },
+  addressLabel: {
+    fontWeight: 'bold',
+    width: '100%',
+    background: 'linear-gradient(45deg, #F36887AE 30%, #F18651B0 90%)',
+    color: 'white',
+    borderTopLeftRadius: '0rem',
+    borderTopRightRadius: '0rem',
+    borderBottomLeftRadius: '0.5rem',
+    borderBottomRightRadius: '0.5rem',
+  },
+  favoritesIconDiv: {
+    margin: 'auto 2% auto auto',
   },
   accountInfo: {
     width: '100%',
@@ -49,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: theme.spacing(40),
     margin: 'auto',
+    borderRadius: '0.5rem',
   },
   username: {
     textTransform: 'none',
@@ -68,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
   availableDays: {
     width: '100%',
-    minHeight: theme.spacing(15),
+    minHeight: theme.spacing(10),
     margin: 'auto',
   },
   available: {
@@ -88,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   label: {
+    fontWeight: 'bold',
     width: '70%',
     background: '#a5c1e2',
   },
@@ -97,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     width: '100%',
-    minHeight: theme.spacing(19),
+    minHeight: theme.spacing(24),
     padding: '3% 3% 3% 3%',
   },
   button: {
@@ -191,33 +218,31 @@ export default function ViewPostPage({ accountHook }) {
 
   return (
     <>
-      <br />
       {post &&
       <Grid container spacing={1} className={classes.root}>
-
-        
-
-        {/*New Favorites icon*/}
-
-        {account && account.type === "student" && studentFavorites && accountHook.isFavoritePost(post._id) &&
-        <Grid item xs={12} md={12} align="right">
-          <IconButton color="secondary" onClick={() => handleDeleteFavorites(post._id)}>
-            <FavoriteIcon/>
-          </IconButton>
-        </Grid>
-        }
-
-        {account && account.type === "student" && studentFavorites && !accountHook.isFavoritePost(post._id)  &&
-        <Grid item xs={12} md={12} align="right" onClick={() => handleAddFavorites(post._id)}>
-          <IconButton color="secondary">
-            <FavoriteBorderIcon/>
-          </IconButton>
-        </Grid>
-        }
 
         {/*Post*/}
         <Grid item xs={12} md={12}>
           <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
+
+            {/*Map & Address*/}
+            <Grid item xs={12} md={12} className={classes.mapDiv}>
+
+              <Avatar variant="square" className={classes.map} alt="map"
+                      src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
+
+              <Chip color='secondary' icon={<BusinessIcon />} label={post.address} className={classes.addressLabel} />
+
+            </Grid>
+
+            {/*New Favorites icon*/}
+            {account && account.type === "student" && studentFavorites &&
+              <Grid item xs={12} md={12} align="right" className={classes.favoritesIconDiv}>
+                <IconButton color="secondary" onClick={() => accountHook.isFavoritePost(post._id) ? handleDeleteFavorites(post._id) : handleAddFavorites(post._id)}>
+                  {accountHook.isFavoritePost(post._id) ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
+                </IconButton>
+              </Grid>
+            }
 
             {/*Account Info*/}
             <Grid item xs={12} md={4} className={classes.accountInfo}>
@@ -268,15 +293,14 @@ export default function ViewPostPage({ accountHook }) {
                 <Grid item xs={12} md={12} className={classes.details}>
                   <Grid container spacing={2}>
 
+                    {/*School & Course*/}
                     <Grid item xs={12} md={4}>
                       <Grid container spacing={2}>
 
-                        {/*School*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<SchoolOutlined />} label={post.school} className={classes.label} />
                         </Grid>
 
-                        {/*Course*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<ImportContactsIcon />} label={post.course} className={classes.label} />
                         </Grid>
@@ -284,15 +308,14 @@ export default function ViewPostPage({ accountHook }) {
                       </Grid>
                     </Grid>
 
+                    {/*Wage & Contact*/}
                     <Grid item xs={12} md={4}>
                       <Grid container spacing={2}>
 
-                        {/*Wage*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<MonetizationOnIcon />} label={"$" + post.wage + " / hour"} className={classes.label} />
                         </Grid>
 
-                        {/*Contact*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<ContactPhoneIcon />} label={post.contact} className={classes.label} />
                         </Grid>
@@ -300,15 +323,14 @@ export default function ViewPostPage({ accountHook }) {
                       </Grid>
                     </Grid>
 
+                    {/*ThumbUp & ThumbDown*/}
                     <Grid item xs={12} md={4}>
                       <Grid container spacing={2}>
 
-                        {/*ThumbUp*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<ThumbUpIcon />} label={post.thumbUp} className={classes.label} />
                         </Grid>
 
-                        {/*ThumbDown*/}
                         <Grid item xs={12} md={12}>
                           <Chip color='secondary' icon={<ThumbDown />} label={post.thumbDown} className={classes.label} />
                         </Grid>
@@ -330,6 +352,7 @@ export default function ViewPostPage({ accountHook }) {
 
               </Grid>
             </Grid>
+
           </Grid>
 
         </Grid>
@@ -348,15 +371,11 @@ export default function ViewPostPage({ accountHook }) {
             <AlertMessage alertHook={alertHook} />
           </div>
         </Grid>
-        {/* TODO: Kevin */}
-        <img src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
+
         {/*Comments*/}
         <Grid item xs={12} md={12}>
           <CommentList comments={comments} accountHook={accountHook}/>
         </Grid>
-
-        {/* TODO: Jerry - pagination */}
-
       </Grid>
       }
 

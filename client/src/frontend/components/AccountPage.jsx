@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: theme.spacing(40),
         margin: 'auto',
+        borderRadius: '0.5rem',
     },
     username: {
         textTransform: 'none',
@@ -84,10 +85,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AccountPage({ accountHook }) {
     const classes = useStyles();
+
     const account = accountHook.account;
     const studentFav = accountHook.favorites;
-    let tutorPostsHook = useTutorPosts({ accountHook });
-    let tutorPost = tutorPostsHook.tutorPosts;
+    const tutorPostsHook = useTutorPosts({accountHook});
     const alertHook = useAlert();
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -224,8 +225,8 @@ export default function AccountPage({ accountHook }) {
                         <AlertMessage alertHook={alertHook} />
                         <br />
                         {/*Post List*/}
-                        {accountHook.isTutor() && tutorPost.slice((page - 1) * 10, page * 10).map((post, idx) =>
-                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
+                        {accountHook.isTutor() && tutorPostsHook.tutorPosts.slice((page - 1) * 10, page * 10).map((post, idx) =>
+                            <Grid container spacing={0} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
                                 <Grid item xs={12} md={11}>
                                     <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
                                         <PostLayout post={post} idx={idx} />
@@ -233,19 +234,19 @@ export default function AccountPage({ accountHook }) {
                                 </Grid>
                                 <Grid item xs={12} md={1}>
                                     <Button variant="contained" color="primary" className={classes.deleteButton}
-                                        startIcon={<DeleteIcon />}
-                                        onClick={() => handleDeleteClick(post._id)}>
+                                            startIcon={<DeleteIcon />}
+                                            onClick={() => handleDeleteClick(post._id)}>
                                         DELETE
-                                </Button>
+                                    </Button>
+                                    <br />
+                                    <br />
+                                    <br />
                                 </Grid>
-                                <br />
-                                <br />
-                                <br />
                             </Grid>
                         )}
 
                         {accountHook.isStudent() && studentFav.slice((page - 1) * 10, page * 10).map((post, idx) =>
-                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
+                            <Grid container spacing={0} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
                                 <Grid item xs={12} md={11}>
                                     <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
                                         <PostLayout post={post} idx={idx} />
@@ -257,7 +258,7 @@ export default function AccountPage({ accountHook }) {
                             </Grid>
                         )}
                         {accountHook.isLogin() ?
-                            <Pagination page={page} count={accountHook.isStudent() ? Math.ceil((studentFav.length) / 10) : accountHook.isTutor() ? Math.ceil((tutorPost.length) / 10) : <br />} showFirstButton showLastButton onChange={handleChange}
+                            <Pagination page={page} count={accountHook.isStudent() ? Math.ceil((studentFav.length) / 10) : accountHook.isTutor() ? Math.ceil((tutorPostsHook.tutorPosts.length) / 10) : <br />} showFirstButton showLastButton onChange={handleChange}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -267,6 +268,7 @@ export default function AccountPage({ accountHook }) {
                     </Grid>
                 </Grid>
             }
+
             {/*New Avatar Dialog*/}
             <NewAvatarDialog
                 isDialogOpen={isDialogOpen}

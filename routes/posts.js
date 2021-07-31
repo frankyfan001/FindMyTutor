@@ -423,13 +423,18 @@ router.put('/:postId', function (req, res, next) {
 /* Delete a post. */
 router.delete('/:postId', function (req, res, next) {
   const postId = req.params.postId;
-  console.log(postId);
+
   Post.findByIdAndRemove(postId)
-    .then(result => {
-    }).catch(err => {
+    .then((result) => {
+      res.send({
+        success: true,
+        result: result
+      });
+    })
+    .catch(err => {
       res.send({
         success: false,
-        error: `Deleting the post with id ${postId} failed`
+        error: `Deleting the post with id ${postId} failed.`
       })
     })
 });

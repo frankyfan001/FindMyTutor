@@ -40,26 +40,10 @@ export default function usePost() {
     }
   };
 
-  // TODO: Kevin
-  // Get google map.
-  // const getGoogleMap = async () => {
-  //   // let address = post.address;
-  //   const googleMap = await fetch(
-  //     "https://maps.googleapis.com/maps/api/staticmap?center="+address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew", {
-  //     method: 'GET'
-  //   });
-  //   // const googleMap = null;
-  //   setMap(googleMap);
-  // };
-
   // Effect: fetch a post and its map info.
   const { postId } = useParams();
   useEffect(() => {
-    getPost(postId).then(r => {
-      // if (post && post.address) {
-      //   getGoogleMap();
-      // }
-    });
+    getPost(postId).catch((err) => {});
   }, []);
 
   return { post, map, getPost, updatePost };

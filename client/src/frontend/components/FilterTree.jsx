@@ -127,7 +127,7 @@ export default function FilterTreeView({ onNodeSelect }) {
     >
       {/* <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} /> */}
       {/* <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} /> */}
-      <StyledTreeItem nodeId="3" labelText="-------------------- Filters --------------------" labelIcon={Label}>
+      <StyledTreeItem nodeId="3" labelText="------------------- Filters -------------------" labelIcon={Label}>
         <StyledTreeItem
           nodeId="5"
           labelText="Tutor"

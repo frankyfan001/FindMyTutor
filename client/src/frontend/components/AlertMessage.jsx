@@ -5,7 +5,6 @@ import {Alert} from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   alertMessage: {
-    // minHeight: "50px",
   },
 }));
 

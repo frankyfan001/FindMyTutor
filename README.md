@@ -1,3 +1,7 @@
+# Project Description
+
+Find my Tutor is a free, peer-to-peer tutoring platform connecting tutors of all different domains with their respective students. Tutors are encouraged to post their specialties and contact information, making tutoring services more accessible for students of all backgrounds. Students can choose to contact tutors directly for tutoring services and rate their experiences with respective tutors, promoting transparency in the tutoring industry.
+
 # Project Team - SuperAOLIGEI
 
 Team members:
@@ -5,10 +9,6 @@ Team members:
 * e9j2b - Deyu Liu
 * u3j1b - Kehong Liu
 * p2k2b - Chengzhi Fan
-
-# Project Description
-
-This project is proposed to be a website for students to look for tutors, or vice versa. The site will provide easy and instant information of tutoring to students and also allow them to comment on the tutoring posts. All the user info, the posts and the comments are managed in the website. We might add a sharing system of study resources based on time constraints.
 
 # Project Task Requirements
 
@@ -44,4 +44,5 @@ Stretch Requirements:
 
 # Prototypes
 
-[prototypes.pdf](Project%20Requirements/prototypes.pdf)
+![Image of prototypes](Project%20Requirements/prototypes.png)
+
