@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Avatar,
     Button,
@@ -10,11 +10,11 @@ import {
 } from '@material-ui/core';
 import useTutorPosts from "../hooks/useTutorPosts";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import {SchoolOutlined, ThumbDown} from "@material-ui/icons";
+import { SchoolOutlined, ThumbDown } from "@material-ui/icons";
 import PersonIcon from '@material-ui/icons/Person';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import PostLayout from "./PostLayout";
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
@@ -23,6 +23,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
+import usePages from "../hooks/usePages";
+import { Pagination } from '@material-ui/lab';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,11 +82,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AccountPage({accountHook}) {
+export default function AccountPage({ accountHook }) {
     const classes = useStyles();
     const account = accountHook.account;
     const studentFav = accountHook.favorites;
-    let tutorPostsHook = useTutorPosts({accountHook});
+    let tutorPostsHook = useTutorPosts({ accountHook });
     let tutorPost = tutorPostsHook.tutorPosts;
     const alertHook = useAlert();
 
@@ -107,84 +109,87 @@ export default function AccountPage({accountHook}) {
         });
     }
 
+    const { page, handleChange } = usePages();
+
     return (
         <>
-            <br/>
+            <br />
             {account && (account.type === "tutor" || studentFav) &&
-            <Grid container spacing={1} className={classes.root}>
-                <Grid item xs={12} md={12}>
-                    <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
+                <Grid container spacing={1} className={classes.root}>
+                    <Grid item xs={12} md={12}>
+                        <Grid container spacing={3} direction="row" justify="space-evenly" alignItems="center">
 
-                        {/*Avatar Info*/}
-                        <Grid item xs={12} md={4} className={classes.avatarInfo}>
-                            <Grid container spacing={3} direction="column" justify="space-evenly" alignItems="center">
-                                {/*Avatar*/}
-                                <Grid item xs={12} md={12}>
-                                    <Avatar variant="square" className={classes.avatar}
-                                            alt={account.username[0].toUpperCase()} src={account.avatar}/>
-                                </Grid>
-                                {/*New Avatar Button*/}
-                                <Grid item xs={12} md={12} align="right">
-                                    <Button variant="contained" color="primary" className={classes.button}
-                                            startIcon={<AddAPhotoIcon/>}
+                            {/*Avatar Info*/}
+                            <Grid item xs={12} md={4} className={classes.avatarInfo}>
+                                <Grid container spacing={3} direction="column" justify="space-evenly" alignItems="center">
+                                    {/*Avatar*/}
+                                    <Grid item xs={12} md={12}>
+                                        <Avatar variant="square" className={classes.avatar}
+                                            alt={account.username[0].toUpperCase()} src={account.avatar} />
+                                    </Grid>
+                                    {/*New Avatar Button*/}
+                                    <Grid item xs={12} md={12} align="right">
+                                        <Button variant="contained" color="primary" className={classes.button}
+                                            startIcon={<AddAPhotoIcon />}
                                             onClick={handleNewAvatarButton}>
-                                        CHANGE
+                                            CHANGE
                                     </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                        {/*Account Info*/}
-                        <Grid item xs={12} md={8} className={classes.accountInfo}>
-                            <Grid container spacing={3}>
-                                {/*Account Detail Title*/}
-                                <Grid item xs={12} md={12} className={classes.accountTitle}>
-                                    <Grid container spacing={2} justify="space-evenly">
-
-                                        <Grid item xs={12} md={12}>
-                                            <Typography variant="h6">Account Information</Typography>
-                                        </Grid>
                                     </Grid>
                                 </Grid>
+                            </Grid>
 
-                                {/*Details*/}
-                                <Grid item xs={12} md={12} className={classes.details}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} md={12}>
-                                            <Grid container spacing={2}>
+                            {/*Account Info*/}
+                            <Grid item xs={12} md={8} className={classes.accountInfo}>
+                                <Grid container spacing={3}>
+                                    {/*Account Detail Title*/}
+                                    <Grid item xs={12} md={12} className={classes.accountTitle}>
+                                        <Grid container spacing={2} justify="space-evenly">
 
-                                                {/*AccountType*/}
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary' icon={<SchoolOutlined/>}
-                                                          label="Account Type" className={classes.label}/>
-                                                </Grid>
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary'
-                                                          label={account.type.charAt(0).toUpperCase() + account.type.slice(1).toLowerCase()}
-                                                          className={classes.labelText}/>
-                                                </Grid>
-                                                {/*Username*/}
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary' icon={<PersonIcon/>}
-                                                          label="Username" className={classes.label}/>
-                                                </Grid>
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary'
-                                                          label={account.username} className={classes.labelText}/>
-                                                </Grid>
-                                                {/*Name*/}
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary' icon={<FaceIcon/>}
-                                                          label="Name" className={classes.label}/>
-                                                </Grid>
-                                                <Grid item xs={12} md={6}>
-                                                    <Chip color='secondary'
-                                                          label={account.fname.charAt(0).toUpperCase()
-                                                          + account.fname.slice(1).toLowerCase()
-                                                          + " "
-                                                          + account.lname.charAt(0).toUpperCase()
-                                                          + account.lname.slice(1).toLowerCase()}
-                                                          className={classes.labelText}/>
+                                            <Grid item xs={12} md={12}>
+                                                <Typography variant="h6">Account Information</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                    {/*Details*/}
+                                    <Grid item xs={12} md={12} className={classes.details}>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={2}>
+
+                                                    {/*AccountType*/}
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary' icon={<SchoolOutlined />}
+                                                            label="Account Type" className={classes.label} />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary'
+                                                            label={account.type.charAt(0).toUpperCase() + account.type.slice(1).toLowerCase()}
+                                                            className={classes.labelText} />
+                                                    </Grid>
+                                                    {/*Username*/}
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary' icon={<PersonIcon />}
+                                                            label="Username" className={classes.label} />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary'
+                                                            label={account.username} className={classes.labelText} />
+                                                    </Grid>
+                                                    {/*Name*/}
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary' icon={<FaceIcon />}
+                                                            label="Name" className={classes.label} />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <Chip color='secondary'
+                                                            label={account.fname.charAt(0).toUpperCase()
+                                                                + account.fname.slice(1).toLowerCase()
+                                                                + " "
+                                                                + account.lname.charAt(0).toUpperCase()
+                                                                + account.lname.slice(1).toLowerCase()}
+                                                            className={classes.labelText} />
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -192,68 +197,75 @@ export default function AccountPage({accountHook}) {
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                    <br/>
+                        <br />
 
-                    {/*Posts Title*/}
-                    {accountHook.isTutor() &&
-                        <Grid container justify="flex-start" alignItems="flex-start">
-                        <Grid item>
-                            <Typography variant="h6">My Posts</Typography>
-                        </Grid>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </Grid>
-                    }
-                    {accountHook.isStudent() &&
-                        <Grid container justify="flex-start" alignItems="flex-start">
-                            <Grid item>
-                                <Typography variant="h6">My Favorites</Typography>
+                        {/*Posts Title*/}
+                        {accountHook.isTutor() &&
+                            <Grid container justify="flex-start" alignItems="flex-start">
+                                <Grid item>
+                                    <Typography variant="h6">My Posts</Typography>
+                                </Grid>
+                                <br />
+                                <br />
+                                <br />
                             </Grid>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </Grid>
-                    }
+                        }
+                        {accountHook.isStudent() &&
+                            <Grid container justify="flex-start" alignItems="flex-start">
+                                <Grid item>
+                                    <Typography variant="h6">My Favorites</Typography>
+                                </Grid>
+                                <br />
+                                <br />
+                                <br />
+                            </Grid>
+                        }
 
-                    <AlertMessage alertHook={alertHook} />
-                    <br/>
-                    {/*Post List*/}
-                    {accountHook.isTutor() && tutorPost.map((post, idx) =>
-                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
-                            <Grid item xs={12} md={11}>
-                                <Link to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
-                                    <PostLayout post={post} idx={idx}/>
-                                </Link>
-                            </Grid>
-                            <Grid item xs={12} md={1}>
-                                <Button variant="contained" color="primary" className={classes.deleteButton}
-                                        startIcon={<DeleteIcon/>}
+                        <AlertMessage alertHook={alertHook} />
+                        <br />
+                        {/*Post List*/}
+                        {accountHook.isTutor() && tutorPost.slice((page - 1) * 10, page * 10).map((post, idx) =>
+                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
+                                <Grid item xs={12} md={11}>
+                                    <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
+                                        <PostLayout post={post} idx={idx} />
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12} md={1}>
+                                    <Button variant="contained" color="primary" className={classes.deleteButton}
+                                        startIcon={<DeleteIcon />}
                                         onClick={() => handleDeleteClick(post._id)}>
-                                    DELETE
+                                        DELETE
                                 </Button>
+                                </Grid>
+                                <br />
+                                <br />
+                                <br />
                             </Grid>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </Grid>
-                    )}
+                        )}
 
-                    {accountHook.isStudent() && studentFav.map((post, idx) =>
-                        <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center"  key={post._id}>
-                            <Grid item xs={12} md={11}>
-                                <Link to={`viewPost/${post._id}`} style={{textDecoration: 'none'}}>
-                                    <PostLayout post={post} idx={idx}/>
-                                </Link>
+                        {accountHook.isStudent() && studentFav.slice((page - 1) * 10, page * 10).map((post, idx) =>
+                            <Grid container spacing={2} direction="row" justify="space-evenly" alignItems="center" key={post._id}>
+                                <Grid item xs={12} md={11}>
+                                    <Link to={`viewPost/${post._id}`} style={{ textDecoration: 'none' }}>
+                                        <PostLayout post={post} idx={idx} />
+                                    </Link>
+                                </Grid>
+                                <br />
+                                <br />
+                                <br />
                             </Grid>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </Grid>
-                    )}
+                        )}
+                        {accountHook.isLogin() ?
+                            <Pagination page={page} count={accountHook.isStudent() ? Math.ceil((studentFav.length) / 10) : accountHook.isTutor() ? Math.ceil((tutorPost.length) / 10) : <br />} showFirstButton showLastButton onChange={handleChange}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            /> : <br />}
+                    </Grid>
                 </Grid>
-            </Grid>
             }
             {/*New Avatar Dialog*/}
             <NewAvatarDialog
@@ -265,12 +277,12 @@ export default function AccountPage({accountHook}) {
     );
 };
 
-const NewAvatarDialog = ({isDialogOpen, setIsDialogOpen, accountHook}) => {
+const NewAvatarDialog = ({ isDialogOpen, setIsDialogOpen, accountHook }) => {
     const [avatar, setAvatar] = useState("");
     const alertHook = useAlert();
 
     const handleSubmit = () => {
-        const updateInfo = {avatar: avatar};
+        const updateInfo = { avatar: avatar };
 
         // call twice to update account page avatar
         return accountHook.updateAccount(updateInfo).then(() => {
@@ -278,8 +290,8 @@ const NewAvatarDialog = ({isDialogOpen, setIsDialogOpen, accountHook}) => {
                 alertHook.switchToSuccess("Update Avatar is successful");
                 setTimeout(function () {
                     setIsDialogOpen(false);
-                        alertHook.switchToIdle(null);
-                        setAvatar("");
+                    alertHook.switchToIdle(null);
+                    setAvatar("");
                 }, 1000)
             }).catch((err) => {
                 alertHook.switchToFailure(err.message);
