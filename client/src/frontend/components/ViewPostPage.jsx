@@ -228,8 +228,8 @@ export default function ViewPostPage({ accountHook }) {
             {/*Map & Address*/}
             <Grid item xs={12} md={12} className={classes.mapDiv}>
 
-              <Avatar variant="square" className={classes.map} alt="map"
-                      src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
+              <Avatar variant="square" className={classes.map} alt="M"
+                      src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=1600x1200&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
 
               <Chip color='secondary' icon={<BusinessIcon />} label={post.address} className={classes.addressLabel} />
 
