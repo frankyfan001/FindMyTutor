@@ -43,7 +43,6 @@ export default function usePosts() {
   const getFilteredPosts = async (filter) => {
     console.log(`filter: `);
     console.log(filter);
-    // console.log("\n");
     if (!filter.filterKey || !Object.keys(filter).includes("filterKey")) {
       getPosts();
     } else {
@@ -71,6 +70,8 @@ export default function usePosts() {
   }, []);
 
   useEffect(() => {
+    console.log("filter value");
+    console.log(filter.filterValue);
     if (filter.filterKey && filter.filterValue) {
       console.log("get filtered posts");
       console.log(filter);
@@ -95,6 +96,11 @@ function useFilter() {
         ...filter,
         filterValue: searchValue.trim(),
       });
+    } else {
+      setFilter({
+        ...filter,
+        filterValue: null,
+      })
     }
   };
 

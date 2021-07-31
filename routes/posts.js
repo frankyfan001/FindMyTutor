@@ -440,7 +440,6 @@ router.post('/filter', function (req, res, next) {
   const filter = req.body;
   let filterKey = filter.filterKey;
   const filterValue = filter.filterValue;
-
   if (filterKey === "thumbup") {
     Post.find({ thumbUp: { $gte: filterValue } }).populate('account_ref').exec().then((result) => {
       if (result) {
@@ -460,8 +459,28 @@ router.post('/filter', function (req, res, next) {
         error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`
       });
     })
+  } else if (filterKey === "tutor") {
+    Post.find().populate('account_ref').exec().then((result) => {
+      if (result) {
+        // console.log(result);
+        const filteredResult = result.filter((post) => {
+          console.log(post.account_ref.username);
+          return post.account_ref.username.includes(filterValue);
+        });
+        res.send({
+          success: true,
+          result: filteredResult
+        });
+      } else {
+        res.send({
+          success: false,
+          error: `Fail to filter the posts with ${filterkey} : ${filterValue}.`,
+        });
+      }
+    })
   } else {
     let query = {};
+
     query[filterKey] = {
       "$regex": filterValue,
       "$options": "i"

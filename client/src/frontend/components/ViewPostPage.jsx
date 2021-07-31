@@ -32,6 +32,8 @@ import AlertMessage from "./AlertMessage";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import usePages from '../hooks/usePages';
+import { Pagination } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -373,18 +375,27 @@ export default function ViewPostPage({ accountHook }) {
 
 const CommentList = ({ comments }) => {
   const classes = useStyles();
-
+  const { page, handleChange } = usePages();
   return (
     <Grid container direction="column" spacing={0} className={classes.commentListRoot}>
       <Grid item>
         <Grid container alignItems="stretch">
-          {comments.map((comment, idx) => (
+          {comments.slice((page-1)*10, page*10).map((comment, idx) => (
             <Grid item key={idx.toString()} xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <br />
               <Comment comment={comment} />
             </Grid>
           ))}
         </Grid>
+      </Grid>
+      <Grid item>
+        <Pagination page={page} count={Math.ceil((comments.length)/10)} showFirstButton showLastButton onChange={handleChange}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        />
       </Grid>
     </Grid>
   );
