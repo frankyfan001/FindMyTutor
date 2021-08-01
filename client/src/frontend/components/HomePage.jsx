@@ -72,7 +72,7 @@ export default function HomePage({accountHook, postsHook}) {
             </Grid>
             <Grid item xs={12} md={12}>
               <Paper variant="outlined">
-              <SearchInput handleSearch={postsHook.handleSearch} />
+              <SearchInput value={postsHook.value} handleSearch={postsHook.handleSearch} />
               </Paper>
             </Grid>
           </Grid>
@@ -99,44 +99,4 @@ export default function HomePage({accountHook, postsHook}) {
       </Grid>
     </div>
   );
-};
-
-const usePostsCards = () => {
-  const filters = ['tutor', 'school', 'thumbup', 'course'];
-  const { posts } = usePosts();
-  const [filter, setFilter] = useState('');
-  // const [filteredPosts, setFilteredPosts] = useState(posts);
-  const [filteredPosts, setFilteredPosts] = useState(mockPosts);
-
-  // Click filter tree item
-  const handleFilterClick = (e) => {
-    e.preventDefault();
-    const item = e.target.innerText.toLowerCase().trim();
-    setFilter(item);
-  };
-
-  // filter posts based on filter tree selection
-  const handleSearch = (newValue) => {
-    const valueProcessed = newValue.trim().toLowerCase();
-    const newCards = mockPosts.filter((card) => {
-      console.log(filter);
-      if (filter && filters.includes(filter)) {
-        return card[filter].trim().toLowerCase().includes(valueProcessed);
-      }
-      console.log(Object.values(card));
-      return Object.values(card).some((val) => {
-        console.log(val);
-        return val.toString().trim().toLowerCase().includes(valueProcessed);
-      });
-    });
-    setFilteredPosts(newCards);
-  };
-
-  useEffect(() => {
-    setFilteredPosts(posts);
-  }, [posts]);
-
-  return {
-    posts, filter, filteredPosts, handleClick: handleFilterClick, handleSearch,
-  };
 };
