@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import api from "../APIs/api";
+import { useSearch } from "../components/Search";
 
 export default function usePosts() {
   // State: posts
@@ -37,14 +38,18 @@ export default function usePosts() {
     }
   };
 
-  const { filter, handleSearch, handleFilterSelect } = useFilter();
+  // TODO: Jerry - filter
+  const { filter, handleSearch, handleFilterSelect, value } = useFilter();
   // Get filtered posts.
   const getFilteredPosts = async (filter) => {
-    console.log(`filter: `);
-    console.log(filter);
     if (!filter.filterKey || !Object.keys(filter).includes("filterKey")) {
       getPosts();
     } else {
+      console.log()
+      if (filter.filterKey === "thumbup" && Number.isNaN(parseInt(filter.filterValue, 10))) {
+        setPosts([]);
+        return [];
+      }
       const res = await fetch(api.baseURL + "/posts/filter", {
         method: "POST",
         headers: api.headers,
@@ -53,8 +58,6 @@ export default function usePosts() {
       const output = await res.json();
 
       if (output.success) {
-        console.log("filtered post result");
-        console.log(output.result);
         setPosts(output.result);
         return output.result;
       } else {
@@ -69,18 +72,14 @@ export default function usePosts() {
   }, []);
 
   useEffect(() => {
-    console.log("filter value");
-    console.log(filter.filterValue);
     if (filter.filterKey && filter.filterValue) {
-      console.log("get filtered posts");
-      console.log(filter);
       getFilteredPosts(filter);
     } else {
       getPosts();
     }
   }, [filter]);
 
-  return { posts, getPosts, addPost, handleSearch, handleFilterSelect };
+  return { posts, getPosts, addPost, handleSearch, handleFilterSelect, value };
 }
 
 function useFilter() {
@@ -88,8 +87,13 @@ function useFilter() {
     filterKey: null,
     filterValue: null,
   });
+  const { value, handleSearchInputChange } = useSearch();
 
-  const handleSearch = (searchValue) => {
+  const handleSearch = (event) => {
+    console.log("handling search");
+    const searchValue = event.target.value;
+    console.log(searchValue);
+    handleSearchInputChange(searchValue);
     if (searchValue) {
       setFilter({
         ...filter,
@@ -110,13 +114,22 @@ function useFilter() {
     let text = event.target.outerText;
     // text[0] = text[0].toLowerCase();
     event.preventDefault();
-    if (nodeValue > 0 && text) {
-      setFilter({
-        ...filter,
-        filterKey: text.toLowerCase(),
-      });
+    if (nodeValue > 3 && text) {
+      if (text.toLowerCase() !== filter.filterKey) {
+        handleSearchInputChange("");
+        setFilter({
+          ...filter,
+          filterKey: text.toLowerCase(),
+          filterValue: null,
+        });
+      } else {
+        setFilter({
+          ...filter,
+          filterKey: text.toLowerCase(),
+        });
+      }
     }
   };
 
-  return { filter, setFilter, handleSearch, handleFilterSelect };
+  return { filter, setFilter, handleSearch, handleFilterSelect, value };
 }

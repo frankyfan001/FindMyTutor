@@ -13,11 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SearchInput = ({ handleSearch }) => {
+export const SearchInput = ({ value, handleSearch }) => {
   const classes = useStyles();
 
-  const [value, setValue] = useState('');
-
+  console.log("searching")
   console.log(value);
 
   return (
@@ -27,12 +26,7 @@ export const SearchInput = ({ handleSearch }) => {
         label="Search"
         variant="outlined"
         value={value}
-        onChange={(e) => {
-          e.preventDefault();
-          setValue(e.target.value);
-          handleSearch(e.target.value);
-        }}
-        // onChange={handleSearch}
+        onChange={(e) => handleSearch(e)}
         InputProps={{
           endAdornment: (
             <InputAdornment>
@@ -46,3 +40,12 @@ export const SearchInput = ({ handleSearch }) => {
     </form>
   );
 };
+
+export const useSearch = () => {
+    const [value, setValue] = useState('');
+    const handleSearchInputChange = (value) => {
+          setValue(value);
+    }
+
+    return {value, handleSearchInputChange}
+}
