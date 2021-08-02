@@ -17,6 +17,7 @@ import NewPostPage from './components/NewPostPage';
 import HomePage from "./components/HomePage";
 import usePosts from "./hooks/usePosts";
 import AccountPage from "./components/AccountPage";
+import OnlineTutoringPage from "./components/OnlineTutoringPage";
 
 function App() {
   const accountHook = useAccount();
@@ -39,7 +40,6 @@ function App() {
           <Route path="/viewPost/:postId" >
             <ViewPostPage accountHook={accountHook} />
           </Route>
-
           <Route path="/register">
             <RegisterPage accountHook={accountHook} />
           </Route>
@@ -50,6 +50,9 @@ function App() {
           </Route>
           <Route path="/account">
             <AccountPage accountHook={accountHook}/>
+          </Route>
+          <Route path="/onlineTutoring">
+            <OnlineTutoringPage accountHook={accountHook}/>
           </Route>
           <Route path="/team">
             <TeamPage />

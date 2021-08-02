@@ -3,13 +3,10 @@ import {
   Button,
   Grid, makeStyles, Paper,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
-import { mockPosts } from './mocks/mockPosts';
 
 import FilterTreeView from './FilterTree';
-import usePosts from '../hooks/usePosts';
 import PostList from './PostList';
 import { SearchInput } from './Search';
 import Banner from "./Banner";
@@ -29,7 +26,7 @@ const useStyles = makeStyles(() => ({
     maxWidth: '390px',
   },
 }));
-  
+
 export default function HomePage({accountHook, postsHook}) {
   const classes = useStyles();
 
@@ -67,12 +64,12 @@ export default function HomePage({accountHook, postsHook}) {
           <Grid container spacing={0}>
             <Grid item xs={12} md={12}>
               <Paper variant="outlined">
-              <FilterTreeView onNodeSelect={postsHook.handleFilterSelect} />
+                <FilterTreeView onNodeSelect={postsHook.handleFilterSelect} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={12}>
               <Paper variant="outlined">
-              <SearchInput value={postsHook.value} handleSearch={postsHook.handleSearch} />
+                <SearchInput value={postsHook.value} handleSearch={postsHook.handleSearch} />
               </Paper>
             </Grid>
           </Grid>
