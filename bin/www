@@ -21,6 +21,36 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+/**
+ *  Socket for video chat.
+ */
+// derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
+var io = require("socket.io")(server, 
+  { cors: {
+        origin: "*",
+        methods: [ "GET", "POST" ]
+    }
+  });
+
+io.on("connection", function (socket) {
+  socket.emit("me", socket.id);
+  console.log(socket.id);
+
+  socket.on("disconnect", function () {
+    socket.broadcast.emit("callEnded")
+  });
+
+  socket.on("makeCall", function ({callee, signalData, caller, name}) {
+    io.to(callee).emit("makeCall", {signal: signalData, caller, name});
+  });
+
+  socket.on("answerCall", function (data) {
+    io.to(data.callee).emit("callAccepted", data.signal)
+  });
+});
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */
