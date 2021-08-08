@@ -28,13 +28,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// Serving static files of frontend UI.
-app.use(express.static("client/build"));
-
-// Serving routes.
+// Serve routes for backend.
 app.use('/accounts', accountsRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+
+// Add middlewares for frontend.
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static("public"));
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

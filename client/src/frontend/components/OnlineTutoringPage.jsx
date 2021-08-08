@@ -18,15 +18,15 @@ export default function OnlineTutoringPage() {
 
   return (
     <ContextProvider>
-    <div>
-    <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography variant="h4" align="center">Online Tutoring</Typography>
-    </AppBar>
-    <VideoPlayer />
-    <Controls>
-      <Notifs />
-    </Controls>
-    </div>
+      <div>
+        <AppBar className={classes.appBar} position="static" color="inherit">
+          <Typography variant="h4" align="center">Online Tutoring</Typography>
+        </AppBar>
+        <VideoPlayer />
+        <Controls>
+          <Notifs />
+        </Controls>
+      </div>
     </ContextProvider>
 
   );
