@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: '50%',
     backgroundImage:
-      'url(https://png.pngtree.com/thumb_back/fh260/background/20190813/pngtree-horizontal-vector-halloween-banner-background-with-grunge-border-image_297712.jpg)',
+      'url(https://img.freepik.com/free-vector/abstract-orange-watercolor-background-banner_41066-1947.jpg?size=626&ext=jpg)',
     background: 'lightblue',
   },
   primaryAction: {
