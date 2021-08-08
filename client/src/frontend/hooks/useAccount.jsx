@@ -47,6 +47,10 @@ export default function useAccount() {
 
     if (output.success) {
       setAccount(output.result);
+      // store user in localStorage
+      console.log("before setting item");
+      console.log(output.result);
+      sessionStorage.setItem('user', JSON.stringify(output.result));
       return output.result;
     } else {
       throw new Error(output.error);
@@ -55,6 +59,7 @@ export default function useAccount() {
 
   const logout = () => {
     setAccount(null);
+    sessionStorage.removeItem("user");
   };
 
   // Update a account.
@@ -122,6 +127,15 @@ export default function useAccount() {
   const isFavoritePost = (postId) => {
     return favorites.filter((fav) => fav._id === postId).length !== 0;
   };
+
+  useEffect(() => {
+    const loggedInUser = sessionStorage.getItem("user");
+    console.log("login user: ");
+    console.log(loggedInUser);
+    if (loggedInUser) {
+      setAccount(JSON.parse(loggedInUser));
+    }
+  }, []);
 
   useEffect(() => {
     if (account) {
