@@ -1,15 +1,19 @@
 /* eslint-disable */
 import { makeStyles, AppBar, Typography} from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import VideoPlayer from './VideoPlayer';
 import Controls from './Controls';
 import Notifs from './Notifs';
 import {ContextProvider} from '../SocketContext';
 
 
-const useStyles = makeStyles(() => ({
-  root: {
-
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'center',
   },
 }));
 
@@ -18,16 +22,15 @@ export default function OnlineTutoringPage() {
 
   return (
     <ContextProvider>
-      <div>
-        <AppBar className={classes.appBar} position="static" color="inherit">
-          <Typography variant="h4" align="center">Online Tutoring</Typography>
-        </AppBar>
+      <div className={classes.wrapper}>
+        <br />
+          <Typography variant="h3" align="center">Online Tutoring</Typography>
+        <br />
         <VideoPlayer />
         <Controls>
           <Notifs />
         </Controls>
       </div>
     </ContextProvider>
-
   );
 };

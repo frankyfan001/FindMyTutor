@@ -18,6 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DuoIcon from "@material-ui/icons/Duo";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useLocation } from 'react-router-dom';
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -208,12 +209,12 @@ export default function NavBar({title, accountHook}) {
 
       {/*Online Tutoring Button*/}
       {location.pathname === "/onlineTutoring" ?
-        <RouterLink to="/">
+        <Link href="/">
           <ExitToAppIcon className={matches ? classes.exitButtonButtonGE700 : classes.exitButtonLT700} />
-        </RouterLink> :
-        <RouterLink to="/onlineTutoring">
+        </Link> :
+        <Link href="/onlineTutoring">
           <DuoIcon className={matches ? classes.onlineTutoringButtonGE700 : classes.onlineTutoringButtonLT700} />
-        </RouterLink>
+        </Link>
       }
 
     </div>
