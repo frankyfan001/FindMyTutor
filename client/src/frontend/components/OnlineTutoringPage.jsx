@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { makeStyles, AppBar, Typography} from '@material-ui/core';
+import { makeStyles, Typography} from '@material-ui/core';
 import React from 'react';
 import VideoPlayer from './VideoPlayer';
 import Controls from './Controls';
@@ -7,8 +7,7 @@ import Notifs from './Notifs';
 import {ContextProvider} from '../SocketContext';
 import OnlineTutoringFAQ from "./OnlineTutoringFAQ";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -31,8 +30,8 @@ export default function OnlineTutoringPage() {
         <Controls>
           <Notifs />
         </Controls>
+        <OnlineTutoringFAQ />
       </div>
-      <OnlineTutoringFAQ />
     </ContextProvider>
   );
 };

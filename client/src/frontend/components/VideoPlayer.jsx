@@ -12,16 +12,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
-    width: '45%',
-    minWidth: '45%',
+    width: '40%',
+    minWidth: '40%',
     borderRadius: '0.5rem',
     padding: '10px',
     border: '2px solid black',
     margin: '10px',
 
     [theme.breakpoints.down('xs')]: {
-      width: '80%',
-      minWidth: '80%',
+      width: '74%',
+      minWidth: '74%',
     },
   },
 }));
