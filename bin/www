@@ -21,11 +21,10 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-
+// derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
 /**
  *  Socket for video chat.
  */
-// derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
 var io = require("socket.io")(server, 
   { cors: {
         origin: "*",

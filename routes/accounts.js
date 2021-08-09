@@ -5,35 +5,6 @@ const Account = require('../models/account');
 
 /* Register a new account. */
 router.post('/register', function(req, res, next) {
-  const input = {
-    type: "tutor",
-    username: "frankyfan",
-    password: "123456",
-    fname: "Franky",
-    lname: "Fan",
-    avatar: "https://i.redd.it/biw2bktiuur41.jpg"
-  };
-  const output = {
-    success: true,
-    result: {
-      _id: "60e1090f824db57bc7fae1e3",
-      type: "tutor",
-      username: "frankyfan",
-      password: "123456",
-      fname: "Franky",
-      lname: "Fan",
-      avatar: "https://i.redd.it/biw2bktiuur41.jpg",
-      createdAt: "2021-07-04T01:04:15.548Z",
-      updatedAt: "2021-07-04T01:04:15.548Z",
-      __v: 0
-    }
-  };
-  const output1 = {
-    success: false,
-    error: "Username has already been registered."
-  };
-  ///////////////////////////// Above is examples of input and output /////////////////////////////
-
   const newAccount = req.body;
 
   // Registration failed.
@@ -96,32 +67,6 @@ router.post('/register', function(req, res, next) {
 
 /* Login an account. */
 router.post('/login', function(req, res, next) {
-  const input = {
-    type: "tutor",
-    username: "frankyfan",
-    password: "123456"
-  };
-  const output = {
-    success: true,
-    result: {
-      _id: "60e1090f824db57bc7fae1e3",
-      type: "tutor",
-      username: "frankyfan",
-      password: "123456",
-      fname: "Franky",
-      lname: "Fan",
-      avatar: "https://i.redd.it/biw2bktiuur41.jpg",
-      createdAt: "2021-07-04T01:04:15.548Z",
-      updatedAt: "2021-07-04T01:04:15.548Z",
-      __v: 0
-    }
-  };
-  const output1 = {
-    success: false,
-    error: "Username/Password is incorrect as a tutor."
-  };
-  ///////////////////////////// Above is examples of input and output /////////////////////////////
-
   const account = req.body;
 
   // Login failed.
@@ -141,10 +86,10 @@ router.post('/login', function(req, res, next) {
     return;
   }
 
-  // Login succeeded.
   Account.findOne(account)
     .then((result) => {
       if (result) {
+        // Login succeeded.
         res.send({
           success: true,
           result: result
@@ -164,36 +109,37 @@ router.post('/login', function(req, res, next) {
     });
 });
 
-/* Update a post. */
+/* Update an account. */
 router.put('/:accountId', function(req, res, next) {
   const accountId = req.params.accountId;
   const updatedInfo = req.body;
+
   Account.findByIdAndUpdate(accountId, updatedInfo)
-      .then((result) => {
-        if (result) {
-          res.send({
-            success: true,
-            result: result
-          });
-        } else {
-          res.send({
-            success: false,
-            error: `Updating the account with id ${accountId} failed.`
-          });
-        }
-      })
-      .catch((err) => {
+    .then((result) => {
+      if (result) {
+        res.send({
+          success: true,
+          result: result
+        });
+      } else {
         res.send({
           success: false,
           error: `Updating the account with id ${accountId} failed.`
         });
+      }
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+        error: `Updating the account with id ${accountId} failed.`
       });
+    });
 });
 
-// add a post to favorites
-// return populated favorite array
+/* Get favorites of an account. */
 router.get('/:accountId/favorites', function (req, res, next) {
   const accountId = req.params.accountId;
+
   Account.findById(accountId)
       .populate({
         path: 'favorites',
@@ -213,16 +159,16 @@ router.get('/:accountId/favorites', function (req, res, next) {
       .catch((err) => {
         res.send({
           success: false,
-          error: `Getting the comments of the post with id ${postId} failed.`
+          error: `Getting the favorites of the account with id ${accountId} failed.`
         });
       });
 });
 
-// add a post to favorites
-// return updated favorite array
+/* Add a favorite to an account. */
 router.put('/:accountId/favorites/:postId', function (req, res, next) {
   const accountId = req.params.accountId;
   const postId = req.params.postId;
+
   Account.findById(accountId).then((account) => {
     if (!account.favorites) {
       account.favorites = [];
@@ -258,17 +204,17 @@ router.put('/:accountId/favorites/:postId', function (req, res, next) {
   })
 });
 
-// remove a post to favorites
-// return updated favorite array
+/* Remove a favorite from an account. */
 router.delete('/:accountId/favorites/:postId', function (req, res, next) {
   const accountId = req.params.accountId;
   const postId = req.params.postId;
+
   Account.findById(accountId).then((account) => {
     if (!account.favorites) {
       account.favorites = [];
     }
     if (account.favorites.includes(postId)) {
-      account.favorites = account.favorites.filter((id) => id != postId);
+      account.favorites = account.favorites.filter((id) => id !== postId);
     }
     Account.findByIdAndUpdate(accountId, {favorites: account.favorites})
         .then((result) => {
