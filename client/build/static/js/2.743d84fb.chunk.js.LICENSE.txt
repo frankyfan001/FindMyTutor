@@ -11,24 +11,6 @@ object-assign
  * @license  MIT
  */
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-
-/*! Case - v1.6.2 - 2020-03-24
-* Copyright (c) 2020 Nathan Bubna; Licensed MIT, GPL */
-
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /*! queue-microtask. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -86,18 +68,4 @@ and limitations under the License.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-/**!
- * Spectra.js
- *
- * Wrapping a value with Spectra() returns a Spectra object.
- *
- * The object's color value is as follows:
- * {
- *   r: 0 to 255 [int], // Red
- *   g: 0 to 255 [int], // Green
- *   b: 0 to 255 [int], // Blue
- *   a: 0 to 1 [float] // Alpha
- * }
  */

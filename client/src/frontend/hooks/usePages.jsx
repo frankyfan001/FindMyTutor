@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React, { useState } from "react";
-
 
 export default function usePages() {
     const [page, setPage] = useState(1);
@@ -7,5 +7,5 @@ export default function usePages() {
         setPage(value);
     }
 
-    return {page, handleChange};
+    return { page, handleChange };
 }

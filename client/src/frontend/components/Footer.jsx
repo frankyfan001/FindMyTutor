@@ -6,7 +6,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
-
 import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';

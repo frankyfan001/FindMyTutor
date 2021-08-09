@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Avatar,
     Button,
@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import useTutorPosts from "../hooks/useTutorPosts";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import { SchoolOutlined, ThumbDown } from "@material-ui/icons";
+import { SchoolOutlined } from "@material-ui/icons";
 import PersonIcon from '@material-ui/icons/Person';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -26,7 +26,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import usePages from "../hooks/usePages";
 import { Pagination } from '@material-ui/lab';
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -305,20 +304,6 @@ const NewAvatarDialog = ({ isDialogOpen, setIsDialogOpen, accountHook }) => {
                 alertHook.switchToFailure(err.message);
             })
         });
-
-        // need to submit twice bug
-        // return accountHook.updateAccount(updateInfo).then((result) => {
-        //     alertHook.switchToSuccess("Update Avatar is successful");
-        //     setTimeout(function () {
-        //         setIsDialogOpen(false);
-        //         if (!alertHook.isIdle()) {
-        //             alertHook.switchToIdle(null);
-        //             setAvatar("");
-        //         }
-        //     }, 1000)
-        // }).catch((err) => {
-        //     alertHook.switchToFailure(err.message);
-        // })
     }
 
     const handleCancel = () => {

@@ -4,7 +4,7 @@ import React from 'react';
 import VideoPlayer from './VideoPlayer';
 import Controls from './Controls';
 import Notifs from './Notifs';
-import {ContextProvider} from '../SocketContext';
+import {ContextProvider} from '../hooks/SocketContext';
 import OnlineTutoringFAQ from "./OnlineTutoringFAQ";
 
 const useStyles = makeStyles(() => ({

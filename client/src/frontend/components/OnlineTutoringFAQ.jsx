@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {ExpandMoreOutlined} from "@material-ui/icons";

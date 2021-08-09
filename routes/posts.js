@@ -199,9 +199,7 @@ router.post('/filter', function (req, res, next) {
   } else if (filterKey === "tutor") {
     Post.find().populate('account_ref').exec().then((result) => {
       if (result) {
-        // console.log(result);
         const filteredResult = result.filter((post) => {
-          console.log(post.account_ref.username);
           return post.account_ref.username.includes(filterValue);
         });
         res.send({
@@ -222,7 +220,6 @@ router.post('/filter', function (req, res, next) {
       "$regex": filterValue,
       "$options": "i"
     };
-    console.log(query);
     Post.find(query).populate('account_ref').exec().then((result) => {
       if (result) {
         res.send({

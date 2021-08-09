@@ -69,10 +69,9 @@ export default function ContactPage(props) {
         e.target,
         'user_0fYIpO4nQwwepA9mcp1ke'
       ).then(res => {
-          console.log(res);
         }
       ).catch(err => {
-          console.log(err);
+          console.error(err);
         }
       );
 

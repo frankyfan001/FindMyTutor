@@ -1,9 +1,9 @@
+/* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-
-import React, {createContext, useState, useRef, useEffect} from 'react';
-import {io} from 'socket.io-client';
+import React, { createContext, useState, useRef, useEffect } from 'react';
+import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
-import api from './APIs/api';
+import api from '../APIs/api';
 
 const SocketContext = createContext();
 const socket = io(api.baseURL);
@@ -87,4 +87,4 @@ const ContextProvider = ({children}) => {
   );
 };
 
-export {ContextProvider, SocketContext};
+export { ContextProvider, SocketContext };

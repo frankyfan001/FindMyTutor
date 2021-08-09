@@ -33,8 +33,9 @@ var io = require("socket.io")(server,
   });
 
 io.on("connection", function (socket) {
+  console.log("Online Tutoring ID: " + socket.id);
+
   socket.emit("me", socket.id);
-  console.log(socket.id);
 
   socket.on("disconnect", function () {
     socket.broadcast.emit("callEnded")

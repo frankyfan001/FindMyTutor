@@ -38,14 +38,12 @@ export default function usePosts() {
     }
   };
 
-  // TODO: Jerry - filter
-  const { filter, handleSearch, handleFilterSelect, value } = useFilter();
   // Get filtered posts.
+  const { filter, handleSearch, handleFilterSelect, value } = useFilter();
   const getFilteredPosts = async (filter) => {
     if (!filter.filterKey || !Object.keys(filter).includes("filterKey")) {
-      getPosts();
+      getPosts().then(r => {});
     } else {
-      console.log()
       if (filter.filterKey === "thumbup" && Number.isNaN(parseInt(filter.filterValue, 10))) {
         setPosts([]);
         return [];
@@ -68,14 +66,10 @@ export default function usePosts() {
 
   // Effect: fetch posts.
   useEffect(() => {
-    getPosts();
-  }, []);
-
-  useEffect(() => {
     if (filter.filterKey && filter.filterValue) {
-      getFilteredPosts(filter);
+      getFilteredPosts(filter).then(r => {});
     } else {
-      getPosts();
+      getPosts().then(r => {});
     }
   }, [filter]);
 
@@ -90,9 +84,7 @@ function useFilter() {
   const { value, handleSearchInputChange } = useSearch();
 
   const handleSearch = (event) => {
-    console.log("handling search");
     const searchValue = event.target.value;
-    console.log(searchValue);
     handleSearchInputChange(searchValue);
     if (searchValue) {
       setFilter({
@@ -108,11 +100,7 @@ function useFilter() {
   };
 
   const handleFilterSelect = (event, nodeValue) => {
-    console.log("filter selected: ");
-    console.log(event.target.outerText);
-    console.log(nodeValue);
     let text = event.target.outerText;
-    // text[0] = text[0].toLowerCase();
     event.preventDefault();
     if (nodeValue > 3 && text) {
       if (text.toLowerCase() !== filter.filterKey) {

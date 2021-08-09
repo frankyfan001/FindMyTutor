@@ -214,7 +214,7 @@ router.delete('/:accountId/favorites/:postId', function (req, res, next) {
       account.favorites = [];
     }
     if (account.favorites.includes(postId)) {
-      account.favorites = account.favorites.filter((id) => id !== postId);
+      account.favorites = account.favorites.filter((id) => id != postId);
     }
     Account.findByIdAndUpdate(accountId, {favorites: account.favorites})
         .then((result) => {

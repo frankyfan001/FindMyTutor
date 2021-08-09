@@ -5,7 +5,6 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Banners from "react-banners";
 import {Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

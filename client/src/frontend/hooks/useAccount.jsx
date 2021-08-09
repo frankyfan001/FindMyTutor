@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import api from '../APIs/api';
 
 export default function useAccount() {
@@ -48,8 +48,6 @@ export default function useAccount() {
     if (output.success) {
       setAccount(output.result);
       // store user in localStorage
-      console.log("before setting item");
-      console.log(output.result);
       sessionStorage.setItem('user', JSON.stringify(output.result));
       return output.result;
     } else {
@@ -130,8 +128,6 @@ export default function useAccount() {
 
   useEffect(() => {
     const loggedInUser = sessionStorage.getItem("user");
-    console.log("login user: ");
-    console.log(loggedInUser);
     if (loggedInUser) {
       setAccount(JSON.parse(loggedInUser));
     }
@@ -143,7 +139,8 @@ export default function useAccount() {
     }
   }, [account]);
 
-
-
-  return { account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,favorites, addFavoritesPost, deleteFavoritesPost, isFavoritePost};
+  return {
+    account, isLogin, isTutor, isStudent, register, login, logout, updateAccount,
+    favorites, addFavoritesPost, deleteFavoritesPost, isFavoritePost
+  };
 }

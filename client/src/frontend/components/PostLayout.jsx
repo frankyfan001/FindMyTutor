@@ -5,7 +5,6 @@ import {
 import React from 'react';
 import Button from "@material-ui/core/Button";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(() => ({
   root: {

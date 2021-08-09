@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
-
 import FilterTreeView from './FilterTree';
 import PostList from './PostList';
 import { SearchInput } from './Search';
@@ -36,8 +35,6 @@ export default function HomePage({accountHook, postsHook}) {
   }, []);
 
   const alertHook = useAlert();
-
-  // filter posts based on filter tree selection
 
   const history = useHistory();
 

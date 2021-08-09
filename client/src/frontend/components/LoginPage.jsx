@@ -1,7 +1,4 @@
 /* eslint-disable */
-
-// Thanks to the example and useful tool from material-ui
-// https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-in/SignIn.js
 import {
   Avatar,
   Button,
@@ -10,16 +7,14 @@ import {
   CssBaseline, FormControl,
   FormControlLabel,
   Grid,
-  Link,
   makeStyles, Radio, RadioGroup,
   TextField,
   Typography,
 } from '@material-ui/core';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import {useHistory, useLocation} from 'react-router';
-import {Alert} from "@material-ui/lab";
+import { useHistory, useLocation } from 'react-router';
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
 
@@ -35,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -49,8 +44,8 @@ function useQuery() {
 }
 
 export default function LoginPage({ accountHook,
-                            rememberUsername, setRememberUsername,
-                            rememberPassword, setRememberPassword }) {
+                                    rememberUsername, setRememberUsername,
+                                    rememberPassword, setRememberPassword }) {
   const classes = useStyles();
 
   const query = useQuery();
@@ -154,11 +149,6 @@ export default function LoginPage({ accountHook,
             Sign In
           </Button>
           <Grid container justify="flex-end">
-            {/*<Grid item xs>*/}
-            {/*  <Link href="/forgot" variant="body2">*/}
-            {/*    Forgot password?*/}
-            {/*  </Link>*/}
-            {/*</Grid>*/}
             <Grid item>
               <RouterLink to="/register">
                 Don't have an account? Sign Up

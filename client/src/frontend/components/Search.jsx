@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -15,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const SearchInput = ({ value, handleSearch }) => {
   const classes = useStyles();
-
-  console.log("searching")
-  console.log(value);
 
   return (
     <form className={classes.root} noValidate autoComplete="off">

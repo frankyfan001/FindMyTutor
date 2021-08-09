@@ -1,7 +1,8 @@
+/* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-import React, {useContext} from 'react';
-import {Grid, Typography, Paper, makeStyles} from '@material-ui/core';
-import {SocketContext} from '../SocketContext';
+import React, { useContext } from 'react';
+import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
+import { SocketContext } from '../hooks/SocketContext';
 
 const useStyles = makeStyles((theme) => ({
   video: {

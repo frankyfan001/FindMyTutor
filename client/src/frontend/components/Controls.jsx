@@ -1,12 +1,11 @@
+/* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-
 import React, { useState, useContext } from 'react';
 import { Button, TextField, Typography, Grid, Container, Paper } from '@material-ui/core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Assignment, Phone, PhoneDisabled } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { SocketContext } from '../SocketContext';
+import { SocketContext } from '../hooks/SocketContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
