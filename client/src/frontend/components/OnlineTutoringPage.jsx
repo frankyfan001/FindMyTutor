@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer';
 import Controls from './Controls';
 import Notifs from './Notifs';
 import {ContextProvider} from '../SocketContext';
+import OnlineTutoringFAQ from "./OnlineTutoringFAQ";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,7 @@ export default function OnlineTutoringPage() {
           <Notifs />
         </Controls>
       </div>
+      <OnlineTutoringFAQ />
     </ContextProvider>
   );
 };
