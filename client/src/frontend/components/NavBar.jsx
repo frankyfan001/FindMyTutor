@@ -15,6 +15,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DuoIcon from "@material-ui/icons/Duo";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useLocation } from 'react-router-dom';
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -58,10 +62,56 @@ const useStyles = makeStyles(() => ({
   accountType: {
     fontWeight: 'bold'
   },
+  onlineTutoringButtonGE700: {
+    color: '#8ce68c',
+    transform: 'scale(3)',
+    position: 'fixed',
+    bottom: '5%',
+    right: '3%',
+    '&:hover': {
+      color: '#59e759',
+      transform: 'scale(4)',
+    },
+  },
+  onlineTutoringButtonLT700: {
+    color: '#8ce68c',
+    transform: 'scale(1.4)',
+    position: 'fixed',
+    bottom: '3%',
+    right: '2%',
+    '&:hover': {
+      color: '#59e759',
+      transform: 'scale(2)',
+    },
+  },
+  exitButtonButtonGE700: {
+    color: '#ec7475',
+    transform: 'scale(3)',
+    position: 'fixed',
+    bottom: '5%',
+    right: '3%',
+    '&:hover': {
+      color: '#f60a0b',
+      transform: 'scale(4)',
+    },
+  },
+  exitButtonLT700: {
+    color: '#ec7475',
+    transform: 'scale(1.4)',
+    position: 'fixed',
+    bottom: '3%',
+    right: '2%',
+    '&:hover': {
+      color: '#f60a0b',
+      transform: 'scale(2)',
+    },
+  },
 }));
 
 export default function NavBar({title, accountHook}) {
   const classes = useStyles();
+  const matches = useMediaQuery('(min-width:700px)');
+  const location = useLocation();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -108,7 +158,7 @@ export default function NavBar({title, accountHook}) {
                   {
                     accountHook.account.avatar ?
                       <Avatar alt={accountHook.account.username[0].toUpperCase()} src={accountHook.account.avatar} />
-                    :
+                      :
                       <AccountCircle />
                   }
                 </IconButton>
@@ -135,7 +185,7 @@ export default function NavBar({title, accountHook}) {
                   </StyledMenuItem>
                 </StyledMenu>
               </>
-            :
+              :
               <>
                 <RouterLink to="/login?type=tutor" style={{ textDecoration: 'none' }}>
                   <Button size="small" aria-label="login" className={classes.loginButton}>
@@ -156,6 +206,17 @@ export default function NavBar({title, accountHook}) {
       <br />
       <br />
       <br />
+
+      {/*Online Tutoring Button*/}
+      {location.pathname === "/onlineTutoring" ?
+        <Link href="/">
+          <ExitToAppIcon className={matches ? classes.exitButtonButtonGE700 : classes.exitButtonLT700} />
+        </Link> :
+        <Link href="/onlineTutoring">
+          <DuoIcon className={matches ? classes.onlineTutoringButtonGE700 : classes.onlineTutoringButtonLT700} />
+        </Link>
+      }
+
     </div>
   );
 }

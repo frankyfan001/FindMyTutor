@@ -1,5 +1,4 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,7 +38,6 @@ const useTreeItemStyles = makeStyles((theme) => ({
   group: {
     marginLeft: 0,
     '& $content': {
-    //   paddingLeft: theme.spacing(2),
     },
   },
   expanded: {},
@@ -54,7 +52,6 @@ const useTreeItemStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5, 0),
   },
   labelIcon: {
-    // marginRight: theme.spacing(1),
   },
   labelText: {
     fontWeight: 'inherit',

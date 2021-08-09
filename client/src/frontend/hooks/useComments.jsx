@@ -41,7 +41,7 @@ export default function useComments() {
   // Effect: fetch comments.
   const { postId } = useParams();
   useEffect(() => {
-    getComments(postId);
+    getComments(postId).then(r => {});
   }, []);
 
   return { comments, getComments, addComment };

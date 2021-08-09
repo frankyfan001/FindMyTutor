@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {
-  Grid, makeStyles,
+  Grid,
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import React from 'react';
@@ -8,12 +8,8 @@ import { Link } from "react-router-dom";
 import PostLayout from "./PostLayout";
 import usePages from "../hooks/usePages";
 
-
 export default function PostList({ postsHook }) {
-  console.log("In post list: ");
-  console.log(postsHook);
   const { page, handleChange } = usePages();
-  console.log(page);
   return (
     <>
       <br />

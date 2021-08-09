@@ -10,10 +10,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import {useHistory, useParams} from 'react-router';
-import { Link } from 'react-router-dom';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import {
-  Bookmark, SchoolOutlined, ThumbDown,
+  SchoolOutlined, ThumbDown,
 } from '@material-ui/icons';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
@@ -390,7 +389,6 @@ export default function ViewPostPage({ accountHook }) {
     </>
   );
 };
-
 
 const CommentList = ({ comments }) => {
   const classes = useStyles();

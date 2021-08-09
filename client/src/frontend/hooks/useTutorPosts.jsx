@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import api from '../APIs/api';
-import useAccount from "./useAccount";
 
 export default function useTutorPosts({accountHook}) {
   // State: tutor posts

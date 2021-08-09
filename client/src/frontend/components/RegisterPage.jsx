@@ -14,13 +14,8 @@ import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import {useHistory, useLocation} from 'react-router';
 import {FormControl, Radio, RadioGroup} from "@material-ui/core";
-import { useParams } from "react-router-dom";
-import {Alert} from "@material-ui/lab";
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
-
-// Thanks to material-ui example:
-// https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
 
 const useStyles = makeStyles((theme) => ({
   paper: {
