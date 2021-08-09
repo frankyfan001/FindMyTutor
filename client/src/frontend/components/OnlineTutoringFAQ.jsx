@@ -15,12 +15,12 @@ export default function OnlineTutoringFAQ() {
         <div style={{margin: 50, zIndex: 0}}>
             <Accordion expanded={current===0} onChange={changeState(0)}>
                 <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
-                    <Typography align="left">
-                        <h3><b>How to use Online Tutoring service?</b></h3>
+                    <Typography variant="subtitle1" align="left">
+                        <b>How to use Online Tutoring service?</b>
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="p" style={{ wordWrap: "break-word" }} align="left">
+                    <Typography style={{ wordWrap: "break-word" }} align="left">
                         <b>For Callee:</b> copy your Online Tutoring ID and send it to your caller. <b>For Caller:</b> input your callee's Online Tutoring ID and call.
                     </Typography>
                 </AccordionDetails>
@@ -28,12 +28,12 @@ export default function OnlineTutoringFAQ() {
 
             <Accordion expanded={current===1} onChange={changeState(1)}>
                 <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
-                    <Typography  align="left">
-                       <h3><b> Can't see your video?</b></h3>
+                    <Typography variant="subtitle1" align="left">
+                       <b> Can't see your video?</b>
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography  variant="p" style={{ wordWrap: "break-word" }} align="left">
+                    <Typography style={{ wordWrap: "break-word" }} align="left">
                         Please make sure to check accessibility of your browser to allow FindMyTutor to access your camera and microphones.
                     </Typography>
                 </AccordionDetails>
