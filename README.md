@@ -10,7 +10,7 @@ Team members:
 * u3j1b - Kehong Liu
 * p2k2b - Chengzhi Fan
 
-# Project Task Requirements
+<!-- # Project Task Requirements
 
 Minimal Requirements:
 * User login
@@ -26,7 +26,50 @@ Standard Requirements:
 
 Stretch Requirements:
 * Filtering posts by specified criteria, such as course number.
-* Providing a sharing system of study resources
+* Providing a sharing system of study resources -->
+
+## Features
+
+### Minimal requirements
+
+- [x] Tutor
+  - [x] Can register and log in
+  - [x] Can create a post to contact with students
+  - [x] Can view a list of posts created by all the users
+  - [x] Can view a specific post created by himself/herself or other user
+
+- [x] Student
+  - [x] Can register and log in
+  - [x] Can create a post to contact with tutors
+  - [x] Can view student's homepage
+  - [x] Can view the posts created by other users and himself/herself
+  - [x] Can view a specific post created by other users and himself/herself
+
+### Standard requirements
+
+- [x] Tutor
+    - [x] Can add specific information to posts (time, location, date, salary, course, school...)
+    - [x] Can delete a post as well as all of its comments
+    - [x] Can see the other users' comments under the posts 
+
+- [x] Student
+  - [x] Can like posts (duplicate likes not allowed)
+  - [x] Can view all favourite posts 
+  - [x] Can create comments for posts (with like/dislike)
+  - [x] Can delete post created by himself/herself and all comments 
+ 
+### Stretch requirements
+
+- [x] Tutor
+  - [x] Can setup a online tutoring session and be able to contact students in a video meeting look like zoom
+  - [x] Can upload, view and edit account information (avatar, username, password)
+  - [x] Session persistance (refreshing the tab won't log the user out, only log out manually or close the browser will do so) 
+
+- [x]  Student
+  - [x] Can upload, view and edit account information (avatar, username, password)
+  - [x] Can filter posts based on various categories (infos provided by tutors)
+  - [x] Session persistance (refreshing the tab won't log the user out, only log out manually or close the browser will do so) 
+  - [x] Can participate/setup online tutoring session to be able to contact tutors in a video meeting look like zoom
 
 # Task Breakdown
 
@@ -46,3 +89,9 @@ Stretch Requirements:
 
 ![Image of prototypes](Project%20Requirements/prototypes.png)
 
+
+## Contributions
+
+- Jerry Liu
+
+> Jerry is the frontend developer of the team, mainly in charge of building frontend component structure, dataflow, and implementing styling, responsive and session persistance.
