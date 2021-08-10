@@ -95,3 +95,13 @@ Stretch Requirements:
 - Jerry Liu
 
 > Jerry is the frontend developer of the team, mainly in charge of building frontend component structure, dataflow, and implementing styling, responsive and session persistance.
+
+## Tech Stack 
+Unit 1 – HTML, CSS, JS; UNIT 2 – React
+We used Javascript and React to develop our front end. Although we did not directly use HTML in the code base for our front end, JSX, which has very similar syntax to HTML is heavily used. We also used CSS grid to format and style our front end.
+Unit 3 – MongoDB
+We used a NoSQL database, MongoDB to store data about the users, posts, and comments in our application. MongoDB allows data to be stored as JSON objects, which are easier for communicating between the application and the database since the application (both front and back end) are written in JS. Mongoose framework is also used to connect back end to MongoDB.
+Unit 4 – Express
+The back end of our application is implemented using Express. The back end has several restful API endpoints to support CRUD operations, such as create/delete/update posts. The front end interacts with the back end by sending HTTP requests. We handle errors by returning an error JSON object.
+Unit 5 - Release Engineering
+We used Github Actions for our CI pipeline. On every push to the project milestone branch, it is automatically deployed to Heroku. Heroku is chosen as the deployment platform due to its simplicity and ease to connect with Github Actions through an simple yml file.
