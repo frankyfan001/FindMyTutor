@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, {useState} from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -28,25 +28,25 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NavBar title="Find My Tutor" accountHook={accountHook} />
+        <NavBar title="Find My Tutor" accountHook={accountHook}/>
 
         <Switch>
           <Route exact path="/">
-            <HomePage accountHook={accountHook} postsHook={postsHook} />
+            <HomePage accountHook={accountHook} postsHook={postsHook}/>
           </Route>
           <Route path="/newPost">
-            <NewPostPage accountHook={accountHook} postsHook={postsHook} />
+            <NewPostPage accountHook={accountHook} postsHook={postsHook}/>
           </Route>
-          <Route path="/viewPost/:postId" >
-            <ViewPostPage accountHook={accountHook} />
+          <Route path="/viewPost/:postId">
+            <ViewPostPage accountHook={accountHook}/>
           </Route>
           <Route path="/register">
-            <RegisterPage accountHook={accountHook} />
+            <RegisterPage accountHook={accountHook}/>
           </Route>
           <Route path="/login">
             <LoginPage accountHook={accountHook}
                        rememberUsername={rememberUsername} setRememberUsername={setRememberUsername}
-                       rememberPassword={rememberPassword} setRememberPassword={setRememberPassword} />
+                       rememberPassword={rememberPassword} setRememberPassword={setRememberPassword}/>
           </Route>
           <Route path="/account">
             <AccountPage accountHook={accountHook}/>
@@ -55,17 +55,17 @@ function App() {
             <OnlineTutoringPage accountHook={accountHook}/>
           </Route>
           <Route path="/team">
-            <TeamPage />
+            <TeamPage/>
           </Route>
           <Route path="/about">
-            <AboutPage />
+            <AboutPage/>
           </Route>
           <Route path="/contact">
-            <ContactPage />
+            <ContactPage/>
           </Route>
         </Switch>
 
-        <Footer />
+        <Footer/>
       </div>
     </Router>
   );
