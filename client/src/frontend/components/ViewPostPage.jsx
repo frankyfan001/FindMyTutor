@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Avatar,
   Button, ButtonGroup,
@@ -32,7 +32,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import usePages from '../hooks/usePages';
-import { Pagination } from '@material-ui/lab';
+import {Pagination} from '@material-ui/lab';
 import BusinessIcon from "@material-ui/icons/Business";
 
 const useStyles = makeStyles((theme) => ({
@@ -170,7 +170,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ViewPostPage({ accountHook }) {
+export default function ViewPostPage({accountHook}) {
   const classes = useStyles();
 
   const alertHook = useAlert();
@@ -204,14 +204,16 @@ export default function ViewPostPage({ accountHook }) {
   };
 
   const handleAddFavorites = (postId) => {
-    if(accountHook.isLogin() && accountHook.isStudent()) {
-      accountHook.addFavoritesPost(postId).then(() => {});
+    if (accountHook.isLogin() && accountHook.isStudent()) {
+      accountHook.addFavoritesPost(postId).then(() => {
+      });
     }
   }
 
   const handleDeleteFavorites = (postId) => {
-    if(accountHook.isLogin() && accountHook.isStudent()) {
-      accountHook.deleteFavoritesPost(postId).then(() => {});
+    if (accountHook.isLogin() && accountHook.isStudent()) {
+      accountHook.deleteFavoritesPost(postId).then(() => {
+      });
     }
   }
 
@@ -228,19 +230,20 @@ export default function ViewPostPage({ accountHook }) {
             <Grid item xs={12} md={12} className={classes.mapDiv}>
 
               <Avatar variant="square" className={classes.map} alt="M"
-                      src={"https://maps.googleapis.com/maps/api/staticmap?center="+postHook.post.address.replace(" ", "+")+"&zoom=13&size=1600x1200&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+postHook.post.address.replace(" ", "+")+"&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"} />
+                      src={"https://maps.googleapis.com/maps/api/staticmap?center=" + postHook.post.address.replace(" ", "+") + "&zoom=13&size=1600x1200&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + postHook.post.address.replace(" ", "+") + "&key=AIzaSyD7poePjVcrrIFmhznTp0BM_ujnqKYeiew"}/>
 
-              <Chip color='secondary' icon={<BusinessIcon />} label={post.address} className={classes.addressLabel} />
+              <Chip color='secondary' icon={<BusinessIcon/>} label={post.address} className={classes.addressLabel}/>
 
             </Grid>
 
             {/*New Favorites icon*/}
             {account && account.type === "student" && studentFavorites &&
-              <Grid item xs={12} md={12} align="right" className={classes.favoritesIconDiv}>
-                <IconButton color="secondary" onClick={() => accountHook.isFavoritePost(post._id) ? handleDeleteFavorites(post._id) : handleAddFavorites(post._id)}>
-                  {accountHook.isFavoritePost(post._id) ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
-                </IconButton>
-              </Grid>
+            <Grid item xs={12} md={12} align="right" className={classes.favoritesIconDiv}>
+              <IconButton color="secondary"
+                          onClick={() => accountHook.isFavoritePost(post._id) ? handleDeleteFavorites(post._id) : handleAddFavorites(post._id)}>
+                {accountHook.isFavoritePost(post._id) ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
+              </IconButton>
+            </Grid>
             }
 
             {/*Account Info*/}
@@ -249,7 +252,8 @@ export default function ViewPostPage({ accountHook }) {
 
                 {/*Avatar*/}
                 <Grid item xs={12} md={12}>
-                  <Avatar variant="square" className={classes.avatar} alt={post.account_ref.username[0].toUpperCase()} src={post.account_ref.avatar} />
+                  <Avatar variant="square" className={classes.avatar} alt={post.account_ref.username[0].toUpperCase()}
+                          src={post.account_ref.avatar}/>
                 </Grid>
 
                 {/*Username*/}
@@ -262,7 +266,7 @@ export default function ViewPostPage({ accountHook }) {
                 {/*Date*/}
                 <Grid item xs={12} md={12}>
                   <Typography variant="subtitle1" className={classes.date}>
-                    {post.createdAt.substring(0,10)}
+                    {post.createdAt.substring(0, 10)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -282,7 +286,8 @@ export default function ViewPostPage({ accountHook }) {
 
                     {post.availableDays.map((available, idx) => (
                       <Grid item key={idx}>
-                        <Chip label={content.days[idx]} className={available ? classes.available : classes.unavailable}/>
+                        <Chip label={content.days[idx]}
+                              className={available ? classes.available : classes.unavailable}/>
                       </Grid>
                     ))}
                   </Grid>
@@ -297,11 +302,13 @@ export default function ViewPostPage({ accountHook }) {
                       <Grid container spacing={2}>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<SchoolOutlined />} label={post.school} className={classes.label} />
+                          <Chip color='secondary' icon={<SchoolOutlined/>} label={post.school}
+                                className={classes.label}/>
                         </Grid>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<ImportContactsIcon />} label={post.course} className={classes.label} />
+                          <Chip color='secondary' icon={<ImportContactsIcon/>} label={post.course}
+                                className={classes.label}/>
                         </Grid>
 
                       </Grid>
@@ -312,11 +319,13 @@ export default function ViewPostPage({ accountHook }) {
                       <Grid container spacing={2}>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<MonetizationOnIcon />} label={"$" + post.wage + " / hour"} className={classes.label} />
+                          <Chip color='secondary' icon={<MonetizationOnIcon/>} label={"$" + post.wage + " / hour"}
+                                className={classes.label}/>
                         </Grid>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<ContactPhoneIcon />} label={post.contact} className={classes.label} />
+                          <Chip color='secondary' icon={<ContactPhoneIcon/>} label={post.contact}
+                                className={classes.label}/>
                         </Grid>
 
                       </Grid>
@@ -327,11 +336,11 @@ export default function ViewPostPage({ accountHook }) {
                       <Grid container spacing={2}>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<ThumbUpIcon />} label={post.thumbUp} className={classes.label} />
+                          <Chip color='secondary' icon={<ThumbUpIcon/>} label={post.thumbUp} className={classes.label}/>
                         </Grid>
 
                         <Grid item xs={12} md={12}>
-                          <Chip color='secondary' icon={<ThumbDown />} label={post.thumbDown} className={classes.label} />
+                          <Chip color='secondary' icon={<ThumbDown/>} label={post.thumbDown} className={classes.label}/>
                         </Grid>
 
                       </Grid>
@@ -358,7 +367,7 @@ export default function ViewPostPage({ accountHook }) {
 
         {/*New Comment Button*/}
         <Grid item xs={12} md={12} align="right">
-          <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon />}
+          <Button variant="contained" color="primary" className={classes.button} startIcon={<AddIcon/>}
                   onClick={handleNewCommentButton}>
             NEW COMMENT
           </Button>
@@ -367,7 +376,7 @@ export default function ViewPostPage({ accountHook }) {
         {/*Show the alert message when user is not a login student.*/}
         <Grid item xs={12} md={12} align="right">
           <div className={classes.alertMessageDiv}>
-            <AlertMessage alertHook={alertHook} />
+            <AlertMessage alertHook={alertHook}/>
           </div>
         </Grid>
 
@@ -390,66 +399,68 @@ export default function ViewPostPage({ accountHook }) {
   );
 };
 
-const CommentList = ({ comments }) => {
+const CommentList = ({comments}) => {
   const classes = useStyles();
-  const { page, handleChange } = usePages();
+  const {page, handleChange} = usePages();
   return (
     <Grid container direction="column" spacing={0} className={classes.commentListRoot}>
       <Grid item>
         <Grid container alignItems="stretch">
-          {comments.slice((page-1)*10, page*10).map((comment, idx) => (
-            <Grid item key={idx.toString()} xs={12} style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <br />
-              <Comment comment={comment} />
+          {comments.slice((page - 1) * 10, page * 10).map((comment, idx) => (
+            <Grid item key={idx.toString()} xs={12} style={{paddingLeft: 0, paddingRight: 0}}>
+              <br/>
+              <Comment comment={comment}/>
             </Grid>
           ))}
         </Grid>
       </Grid>
       <Grid item>
-        <Pagination page={page} count={Math.ceil((comments.length)/10)} showFirstButton showLastButton onChange={handleChange}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        <Pagination page={page} count={Math.ceil((comments.length) / 10)} showFirstButton showLastButton
+                    onChange={handleChange}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
         />
       </Grid>
     </Grid>
   );
 };
 
-const Comment = ({ comment }) => {
+const Comment = ({comment}) => {
   const classes = useStyles();
 
   return (
     <Grid container wrap="nowrap" spacing={0} alignContent="space-between">
       <Grid item xs={2} align="center">
-        <Avatar alt={comment.account_ref.username[0].toUpperCase()} src={comment.account_ref.avatar} className={classes.commentAvatar} />
+        <Avatar alt={comment.account_ref.username[0].toUpperCase()} src={comment.account_ref.avatar}
+                className={classes.commentAvatar}/>
       </Grid>
       <Grid item xs={8}>
-        <h4 style={{ margin: 0, textAlign: 'left' }}>
+        <h4 style={{margin: 0, textAlign: 'left'}}>
           {comment.account_ref.username}
         </h4>
-        <Typography style={{ textAlign: 'left' }}>
+        <Typography style={{textAlign: 'left'}}>
           {comment.description}
         </Typography>
-        <br />
-        <Typography variant="caption" display="block" gutterBottom style={{ textAlign: 'left', color: 'grey' }}>
-          { 'posted at ' + comment.createdAt.substring(0,10) }
+        <br/>
+        <Typography variant="caption" display="block" gutterBottom style={{textAlign: 'left', color: 'grey'}}>
+          {'posted at ' + comment.createdAt.substring(0, 10)}
         </Typography>
       </Grid>
       <Grid item xs={2} align="right">
-        { comment.isThumbUp ?
-          <ThumbUpIcon className={classes.thumbUp} /> :
-          <ThumbDown className={classes.thumbDown} />}
+        {comment.isThumbUp ?
+          <ThumbUpIcon className={classes.thumbUp}/> :
+          <ThumbDown className={classes.thumbDown}/>}
       </Grid>
     </Grid>
   );
 };
 
-const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook, commentsHook }) => {
+const NewCommentDialog = ({isDialogOpen, setIsDialogOpen, accountHook, postHook, commentsHook}) => {
   const classes = useStyles();
-  const { postId } = useParams();
+  const {postId} = useParams();
 
   const alertHook = useAlert();
 
@@ -514,13 +525,17 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
         <ButtonGroup>
           <Button variant={isThumbUp ? "contained" : "outlined"}
                   className={isThumbUp ? classes.thumbUpSelected : classes.unselected}
-                  onClick={() => {setIsThumbUp(true)}}>
-            <ThumbUpIcon />
+                  onClick={() => {
+                    setIsThumbUp(true)
+                  }}>
+            <ThumbUpIcon/>
           </Button>
           <Button variant={isThumbUp ? "outlined" : "contained"}
                   className={isThumbUp ? classes.unselected : classes.thumbDownSelected}
-                  onClick={() => {setIsThumbUp(false)}}>
-            <ThumbDown />
+                  onClick={() => {
+                    setIsThumbUp(false)
+                  }}>
+            <ThumbDown/>
           </Button>
         </ButtonGroup>
         <TextField
@@ -541,14 +556,14 @@ const NewCommentDialog = ({ isDialogOpen, setIsDialogOpen, accountHook, postHook
         />
 
         {/*Show the alert message when adding a comment failed.*/}
-        <AlertMessage alertHook={alertHook} />
+        <AlertMessage alertHook={alertHook}/>
 
       </DialogContent>
       <DialogActions>
         <Button color="primary" onClick={handleCancel}>
           CANCEL
         </Button>
-        <Button color="primary" onClick={handleSubmit} >
+        <Button color="primary" onClick={handleSubmit}>
           SUBMIT
         </Button>
       </DialogActions>

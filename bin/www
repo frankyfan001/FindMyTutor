@@ -25,10 +25,11 @@ var server = http.createServer(app);
 /**
  *  Socket for video chat.
  */
-var io = require("socket.io")(server, 
-  { cors: {
-        origin: "*",
-        methods: [ "GET", "POST" ]
+var io = require("socket.io")(server,
+  {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
     }
   });
 

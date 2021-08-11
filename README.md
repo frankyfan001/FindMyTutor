@@ -1,47 +1,45 @@
 # Find My Tutor
 
-
 ## https://find-my-tutor-ubc.herokuapp.com
 
 ![Logo of Find My Tutor](./client/public/logo192.png)
 
-
 ## Description
 
-- Find my Tutor is a free, peer-to-peer tutoring platform connecting tutors of all different domains with their respective students. Tutors are encouraged to post their specialties and contact information, making tutoring services more accessible for students of all backgrounds. Students can choose to contact tutors directly for tutoring services and rate their experiences with respective tutors, promoting transparency in the tutoring industry.
-
+- Find my Tutor is a free, peer-to-peer tutoring platform connecting tutors of all different domains with their respective students.
+  Tutors are encouraged to post their specialties and contact information, making tutoring services more accessible for students of all backgrounds.
+  Students can choose to contact tutors directly for tutoring services and rate their experiences with respective tutors, promoting transparency in the tutoring industry.
 
 ## Goals
 
 - ### Minimal Requirements
-  - [x] Tutors
-    - [x] Can register and log in as a tutor
-    - [x] Can create a tutor post of tutoring service
-    - [x] Can view a list of posts created by all tutors 
-    - [x] Can view a specific post with details and comments
-  - [x] Students
-    - [x] Can register and log in as a student
-    - [x] Can create a student comment on a tutor post
-    - [x] Can view a list of posts created by all tutors
-    - [x] Can view a specific post with details and comments
-    - [x] Can save a post to their favorite collection
-  
-- ### Standard Requirements
-  - [x] Tutors in account page
-    - [x] Can view and edit their own personal information
-    - [x] Can view all posts they have created previously
-    - [x] Can delete a post created by themselves
-  - [x] Students in account page
-    - [x] Can view and edit their own personal information
-    - [x] Can view all posts saved to their favorite collection
-  
-- ### Stretch Requirements
-  - [x] Tutors and students
-    - [x] have session persistence so that refreshing the webpage does not log users out
-    - [x] Can filter posts by various categories in the home page
-    - [x] Can view a static Google map to show the offline tutoring location in a post page
-    - [x] Can establish an online tutoring service that allow users to have an 1-on-1 video meeting
+    - [x] Tutors
+        - [x] Can register and log in as a tutor
+        - [x] Can create a tutor post of tutoring service
+        - [x] Can view a list of posts created by all tutors
+        - [x] Can view a specific post with details and comments
+    - [x] Students
+        - [x] Can register and log in as a student
+        - [x] Can create a student comment on a tutor post
+        - [x] Can view a list of posts created by all tutors
+        - [x] Can view a specific post with details and comments
+        - [x] Can save a post to their favorite collection
 
+- ### Standard Requirements
+    - [x] Tutors in account page
+        - [x] Can view and edit their own personal information
+        - [x] Can view all posts they have created previously
+        - [x] Can delete a post created by themselves
+    - [x] Students in account page
+        - [x] Can view and edit their own personal information
+        - [x] Can view all posts saved to their favorite collection
+
+- ### Stretch Requirements
+    - [x] Tutors and students
+        - [x] have session persistence so that refreshing the webpage does not log users out
+        - [x] Can filter posts by various categories in the home page
+        - [x] Can view a static Google map to show the offline tutoring location in a post page
+        - [x] Can establish an online tutoring service that allow users to have an 1-on-1 video meeting
 
 ## Tech Stack
 
@@ -74,8 +72,7 @@
   On every push to the project milestone branch, the pushed code will be released into production and be automatically deployed to Heroku.
   Heroku is chosen as our deployment platform due to its simplicity and ease to connect with GitHub Actions through a yml file.
   Also, Heroku provides us an insight into user behaviours through its handy tools measuring metrics such as response times and volumes.
-
-
+  
 ## Above and Beyond Features
 
 - ### Fully Accessible
@@ -89,16 +86,17 @@
   
 - ### External APIs
 
-  Under contact-us page on Find My Tutor, we provided an email service that serves users to contact our team directly for prompt responses. This email service is using external EmailJS API.
-  Under each tutor post page, we provided a static map to show the tutor’s offline tutoring location. This map is rendered using external Google map API.
+  Under contact-us page on Find My Tutor, we provided an email service that serves users to contact our team directly for prompt responses.
+  This email service is using external EmailJS API.
+  Under each tutor post page, we provided a static map to show the tutor’s offline tutoring location.
+  This map is rendered using external Google map API.
 
 - ### Online Tutoring Service
 
   Find My Tutor provides an online tutoring service that allow users to make video calls.
   This feature is introduced to avoid firewall blocking for some video chat apps in specific countries.
-  It provides an interface for tutors and students to have an 1-on-1 video meeting, without downloading any external software.  
-
-
+  It provides an interface for tutors and students to have an 1-on-1 video meeting, without downloading any external software.
+  
 ## Next Steps
 
 - ### Testing of Frontend and Backend
@@ -116,8 +114,7 @@
 
   It would be helpful for users to access a sharing system of study resources.
   In the future, we may consider implementing this feature that allows users to share study resources by uploading and downloading digital documents on Find My Tutor.
-
-
+  
 ## Contributions
 
 - > ### Deyu (Jerry) Liu
@@ -133,7 +130,7 @@
   > He mainly worked on setting up Google map display for the post page, designing the database schema, setting up deployment and CI pipeline, and developing the online tutoring functionality.
 
 - > ### Chengzhi (Franky) Fan
-  > Chengzhi is the full stack developer and the project manager in the team. 
+  > Chengzhi is the full stack developer and the project manager in the team.
   > He set up the scaffolding for the project including the frontend UI design, the backend RESTful API, and the database schemas.
   > He clearly set the requirements for the team and decided technologies used in the application.
   > He contributed both frontend and backend development and participated in solving project challenges.

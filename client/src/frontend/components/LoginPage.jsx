@@ -11,10 +11,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Link as RouterLink } from 'react-router-dom';
-import { useHistory, useLocation } from 'react-router';
+import {Link as RouterLink} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router';
 import useAlert from "../hooks/useAlert";
 import AlertMessage from "./AlertMessage";
 
@@ -43,9 +43,11 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export default function LoginPage({ accountHook,
+export default function LoginPage({
+                                    accountHook,
                                     rememberUsername, setRememberUsername,
-                                    rememberPassword, setRememberPassword }) {
+                                    rememberPassword, setRememberPassword
+                                  }) {
   const classes = useStyles();
 
   const query = useQuery();
@@ -91,20 +93,20 @@ export default function LoginPage({ accountHook,
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      <CssBaseline/>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlinedIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <FormControl component="fieldset">
           <RadioGroup aria-label="type" name="type" value={type} onChange={e => setType(e.target.value)}>
-            <FormControlLabel value="tutor" control={<Radio />} label="Tutor" />
-            <FormControlLabel value="student" control={<Radio />} label="Student" />
+            <FormControlLabel value="tutor" control={<Radio/>} label="Tutor"/>
+            <FormControlLabel value="student" control={<Radio/>} label="Student"/>
           </RadioGroup>
         </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
@@ -118,7 +120,9 @@ export default function LoginPage({ accountHook,
             name="username"
             autoComplete="username"
             value={username}
-            onChange={(e) => {setUsername(e.target.value)}}
+            onChange={(e) => {
+              setUsername(e.target.value)
+            }}
             autoFocus
           />
           <TextField
@@ -132,12 +136,16 @@ export default function LoginPage({ accountHook,
             id="password"
             autoComplete="current-password"
             value={password}
-            onChange={(e) => {setPassword(e.target.value)}}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" checked={checked} onChange={() => {setChecked(!checked)}} />}
+            control={<Checkbox value="remember" color="primary" checked={checked} onChange={() => {
+              setChecked(!checked)
+            }}/>}
             label="Remember me"
-            style={{ float: 'left' }}
+            style={{float: 'left'}}
           />
           <Button
             type="submit"
@@ -157,8 +165,8 @@ export default function LoginPage({ accountHook,
           </Grid>
         </form>
       </div>
-      <br />
-      <AlertMessage alertHook={alertHook} />
+      <br/>
+      <AlertMessage alertHook={alertHook}/>
     </Container>
   );
 };

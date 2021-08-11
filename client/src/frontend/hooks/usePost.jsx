@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router";
+import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router";
 import api from '../APIs/api';
 
 export default function usePost() {
@@ -41,10 +41,11 @@ export default function usePost() {
   };
 
   // Effect: fetch a post and its map info.
-  const { postId } = useParams();
+  const {postId} = useParams();
   useEffect(() => {
-    getPost(postId).catch((err) => {});
+    getPost(postId).catch((err) => {
+    });
   }, []);
 
-  return { post, map, getPost, updatePost };
+  return {post, map, getPost, updatePost};
 }

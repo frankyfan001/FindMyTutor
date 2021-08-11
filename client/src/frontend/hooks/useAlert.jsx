@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import {useState} from 'react';
 
 export default function useAlert() {
   const contactStatus = {
@@ -41,5 +41,5 @@ export default function useAlert() {
     setMessage(msg);
   };
 
-  return { alert, message, isIdle, isSuccess, isFailure, switchToIdle, switchToSuccess, switchToFailure };
+  return {alert, message, isIdle, isSuccess, isFailure, switchToIdle, switchToSuccess, switchToFailure};
 }

@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function PostLayout({ post, idx }) {
+export default function PostLayout({post, idx}) {
   const classes = useStyles();
 
   return (
@@ -60,7 +60,7 @@ export default function PostLayout({ post, idx }) {
           {/*Avatar*/}
           <Grid item xs={12} md={1}>
             <IconButton>
-              <Avatar alt={post.account_ref.username[0].toUpperCase()} src={post.account_ref.avatar} />
+              <Avatar alt={post.account_ref.username[0].toUpperCase()} src={post.account_ref.avatar}/>
             </IconButton>
           </Grid>
 
@@ -70,13 +70,13 @@ export default function PostLayout({ post, idx }) {
               <Grid item xs={12} md={12}>
                 <Button size="small">
                   <Typography className={classes.usernameButton}>
-                    { post.account_ref.username }
+                    {post.account_ref.username}
                   </Typography>
                 </Button>
               </Grid>
               <Grid item xs={12} md={12}>
                 <Button size="small" className={classes.dateButton}>
-                  { post.createdAt.substring(0,10) }
+                  {post.createdAt.substring(0, 10)}
                 </Button>
               </Grid>
             </Grid>
@@ -100,9 +100,9 @@ export default function PostLayout({ post, idx }) {
 
           {/*Description*/}
           <Grid item xs={12} md={6} align="left">
-              <Typography variant="button" align="left" color="textPrimary" className={classes.description}>
-                  {post.description}
-              </Typography>
+            <Typography variant="button" align="left" color="textPrimary" className={classes.description}>
+              {post.description}
+            </Typography>
           </Grid>
 
           {/*Wage & Likes*/}
@@ -114,7 +114,7 @@ export default function PostLayout({ post, idx }) {
                 </Button>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Button size="small" className={classes.thumbUpButton} startIcon={<ThumbUpIcon />}>
+                <Button size="small" className={classes.thumbUpButton} startIcon={<ThumbUpIcon/>}>
                   {post.thumbUp}
                 </Button>
               </Grid>
@@ -122,7 +122,7 @@ export default function PostLayout({ post, idx }) {
           </Grid>
         </Grid>
       </div>
-      <br />
+      <br/>
     </>
   );
 }

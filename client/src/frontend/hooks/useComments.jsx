@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router";
+import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router";
 import api from '../APIs/api';
 
 export default function useComments() {
@@ -39,10 +39,11 @@ export default function useComments() {
   };
 
   // Effect: fetch comments.
-  const { postId } = useParams();
+  const {postId} = useParams();
   useEffect(() => {
-    getComments(postId).then(r => {});
+    getComments(postId).then(r => {
+    });
   }, []);
 
-  return { comments, getComments, addComment };
+  return {comments, getComments, addComment};
 }

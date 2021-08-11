@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import api from '../APIs/api';
 
 export default function useTutorPosts({accountHook}) {
@@ -39,9 +39,10 @@ export default function useTutorPosts({accountHook}) {
   // Effect: fetch posts.
   useEffect(() => {
     if (tutorAccountHook.account) {
-      getTutorPosts(tutorAccountHook.account._id).catch((err) => {});
+      getTutorPosts(tutorAccountHook.account._id).catch((err) => {
+      });
     }
   }, [tutorAccountHook.account]);
 
-  return { tutorPosts, getTutorPosts, deletePost};
+  return {tutorPosts, getTutorPosts, deletePost};
 }

@@ -1,11 +1,11 @@
 /* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-import React, { useState, useContext } from 'react';
-import { Button, TextField, Typography, Grid, Container, Paper } from '@material-ui/core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Assignment, Phone, PhoneDisabled } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
-import { SocketContext } from '../hooks/SocketContext';
+import React, {useState, useContext} from 'react';
+import {Button, TextField, Typography, Grid, Container, Paper} from '@material-ui/core';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {Assignment, Phone, PhoneDisabled} from '@material-ui/icons';
+import {makeStyles} from '@material-ui/core/styles';
+import {SocketContext} from '../hooks/SocketContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Controls = ({ children }) => {
-  const { me, accept, name, setName, end, endCall, makeCall } = useContext(SocketContext);
+const Controls = ({children}) => {
+  const {me, accept, name, setName, end, endCall, makeCall} = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState('');
   const classes = useStyles();
 
@@ -59,22 +59,24 @@ const Controls = ({ children }) => {
           <Grid container className={classes.gridContainer}>
             <Grid item xs={12} md={6} className={classes.padding}>
               <Typography gutterBottom variant="h6" align="left">Account Info</Typography>
-              <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth />
+              <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth/>
               <CopyToClipboard text={me} className={classes.margin}>
-                <Button variant="contained" color="primary" fullWidth startIcon={<Assignment fontSize="large" />}>
+                <Button variant="contained" color="primary" fullWidth startIcon={<Assignment fontSize="large"/>}>
                   Copy Your ID
                 </Button>
               </CopyToClipboard>
             </Grid>
             <Grid item xs={12} md={6} className={classes.padding}>
               <Typography gutterBottom variant="h6" align="left">Make a call</Typography>
-              <TextField label="ID to call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
+              <TextField label="ID to call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth/>
               {accept && !end ? (
-                <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />} fullWidth onClick={endCall} className={classes.hangup}>
+                <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large"/>} fullWidth
+                        onClick={endCall} className={classes.hangup}>
                   Hang Up
                 </Button>
               ) : (
-                <Button variant="contained" color="primary" startIcon={<Phone fontSize="large" />} fullWidth onClick={() => makeCall(idToCall)} className={classes.margin}>
+                <Button variant="contained" color="primary" startIcon={<Phone fontSize="large"/>} fullWidth
+                        onClick={() => makeCall(idToCall)} className={classes.margin}>
                   Call
                 </Button>
               )}

@@ -5,7 +5,7 @@ const Comment = require('../models/comment');
 const Account = require("../models/account");
 
 /* Get a post's all comments with its account info. */
-router.get('/:postId', function(req, res, next) {
+router.get('/:postId', function (req, res, next) {
   const postId = req.params.postId;
 
   Comment.find({post_ref: postId})
@@ -27,7 +27,7 @@ router.get('/:postId', function(req, res, next) {
 });
 
 /* Add a new comment. */
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   const newComment = req.body;
 
   if (newComment.description === "") {

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -92,28 +92,36 @@ export default function ContactPage(props) {
             <Container>
               <Box mb={4}>
                 <Typography variant="h4" component="h2" gutterBottom={true}>{content['header']}</Typography>
-                <Typography variant="subtitle1" color="textSecondary" paragraph={true}>{content['description']}</Typography>
+                <Typography variant="subtitle1" color="textSecondary"
+                            paragraph={true}>{content['description']}</Typography>
               </Box>
 
               <form onSubmit={onSubmit}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <TextField variant="outlined" required fullWidth autoComplete="fname" name="firstName" id="firstName" label="First Name" autoFocus/>
+                    <TextField variant="outlined" required fullWidth autoComplete="fname" name="firstName"
+                               id="firstName" label="First Name" autoFocus/>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <TextField variant="outlined" required fullWidth autoComplete="lname" name="lastName" id="lastName" label="Last Name" />
+                    <TextField variant="outlined" required fullWidth autoComplete="lname" name="lastName" id="lastName"
+                               label="Last Name"/>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField variant="outlined" required fullWidth autoComplete="email" name="email" id="email" label="Email Address" />
+                    <TextField variant="outlined" required fullWidth autoComplete="email" name="email" id="email"
+                               label="Email Address"/>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField variant="outlined" fullWidth autoComplete="company" name="company" id="company" label="Company" />
+                    <TextField variant="outlined" fullWidth autoComplete="company" name="company" id="company"
+                               label="Company"/>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField variant="outlined" required multiline rows={5} fullWidth autoComplete="message" name="message" id="message" label="Message" />
+                    <TextField variant="outlined" required multiline rows={5} fullWidth autoComplete="message"
+                               name="message" id="message" label="Message"/>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControlLabel control={<Checkbox checked={checked} onChange={() => {setChecked(!checked)}} name="terms" color="primary" />} label={content['terms']} />
+                    <FormControlLabel control={<Checkbox checked={checked} onChange={() => {
+                      setChecked(!checked)
+                    }} name="terms" color="primary"/>} label={content['terms']}/>
                   </Grid>
                 </Grid>
                 <Box mt={2}>
@@ -122,15 +130,15 @@ export default function ContactPage(props) {
                   </Button>
                 </Box>
               </form>
-              <br />
-              <AlertMessage alertHook={alertHook} />
+              <br/>
+              <AlertMessage alertHook={alertHook}/>
             </Container>
           </Box>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Box pt={10} display="flex" height={768}>
-            <img className={classes.fullHeightImage} src={content['image']} alt="" />
+            <img className={classes.fullHeightImage} src={content['image']} alt=""/>
           </Box>
         </Grid>
       </Grid>
