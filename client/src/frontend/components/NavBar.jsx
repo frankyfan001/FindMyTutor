@@ -3,12 +3,12 @@ import React from 'react';
 import {
   AppBar, Button, IconButton, makeStyles, Toolbar, Typography,
 } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import {AccountCircle} from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -17,7 +17,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DuoIcon from "@material-ui/icons/Duo";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(() => ({
@@ -128,9 +128,9 @@ export default function NavBar({title, accountHook}) {
       <AppBar position="fixed" className={classes.root}>
         <Toolbar>
           <IconButton component={RouterLink} to="/" color="inherit" edge="start" aria-label="menu">
-            <HomeIcon />
+            <HomeIcon/>
           </IconButton>
-          <RouterLink to="/" style={{ textDecoration: 'none', flexGrow: 1 }}>
+          <RouterLink to="/" style={{textDecoration: 'none', flexGrow: 1}}>
             <Typography align="left" variant="h5" aria-label="title" className={classes.title}>
               {title}
             </Typography>
@@ -157,9 +157,9 @@ export default function NavBar({title, accountHook}) {
                 <IconButton onClick={handleClick} aria-label="account">
                   {
                     accountHook.account.avatar ?
-                      <Avatar alt={accountHook.account.username[0].toUpperCase()} src={accountHook.account.avatar} />
+                      <Avatar alt={accountHook.account.username[0].toUpperCase()} src={accountHook.account.avatar}/>
                       :
-                      <AccountCircle />
+                      <AccountCircle/>
                   }
                 </IconButton>
 
@@ -173,26 +173,29 @@ export default function NavBar({title, accountHook}) {
                 >
                   <StyledMenuItem component={RouterLink} to="/account" onClick={handleClose}>
                     <ListItemIcon>
-                      <AccountBoxIcon fontSize="small" />
+                      <AccountBoxIcon fontSize="small"/>
                     </ListItemIcon>
-                    <ListItemText primary="My Account" />
+                    <ListItemText primary="My Account"/>
                   </StyledMenuItem>
-                  <StyledMenuItem component={RouterLink} to="/" onClick={() => { handleClose(); accountHook.logout() }}>
+                  <StyledMenuItem component={RouterLink} to="/" onClick={() => {
+                    handleClose();
+                    accountHook.logout()
+                  }}>
                     <ListItemIcon>
-                      <ExitToAppIcon fontSize="small" />
+                      <ExitToAppIcon fontSize="small"/>
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Logout"/>
                   </StyledMenuItem>
                 </StyledMenu>
               </>
               :
               <>
-                <RouterLink to="/login?type=tutor" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/login?type=tutor" style={{textDecoration: 'none'}}>
                   <Button size="small" aria-label="login" className={classes.loginButton}>
                     Sign in
                   </Button>
                 </RouterLink>
-                <RouterLink to="/register?type=tutor" style={{ textDecoration: 'none' }}>
+                <RouterLink to="/register?type=tutor" style={{textDecoration: 'none'}}>
                   <Button variant="outlined" size="small" aria-label="register" className={classes.registerButton}>
                     Sign up
                   </Button>
@@ -202,18 +205,18 @@ export default function NavBar({title, accountHook}) {
 
         </Toolbar>
       </AppBar>
-      <br />
-      <br />
-      <br />
-      <br />
+      <br/>
+      <br/>
+      <br/>
+      <br/>
 
       {/*Online Tutoring Button*/}
       {location.pathname === "/onlineTutoring" ?
         <Link href="/">
-          <ExitToAppIcon className={matches ? classes.exitButtonButtonGE700 : classes.exitButtonLT700} />
+          <ExitToAppIcon className={matches ? classes.exitButtonButtonGE700 : classes.exitButtonLT700}/>
         </Link> :
         <Link href="/onlineTutoring">
-          <DuoIcon className={matches ? classes.onlineTutoringButtonGE700 : classes.onlineTutoringButtonLT700} />
+          <DuoIcon className={matches ? classes.onlineTutoringButtonGE700 : classes.onlineTutoringButtonLT700}/>
         </Link>
       }
 

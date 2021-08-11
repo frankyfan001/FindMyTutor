@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import {
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewPostPage({ accountHook, postsHook }) {
+export default function NewPostPage({accountHook, postsHook}) {
   const classes = useStyles();
 
   const alertHook = useAlert();
@@ -83,7 +83,7 @@ export default function NewPostPage({ accountHook, postsHook }) {
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
-  
+
   const history = useHistory();
 
   const handleSubmit = (e) => {
@@ -93,7 +93,7 @@ export default function NewPostPage({ accountHook, postsHook }) {
     const wage = parseInt(wageInStr, 10);
     const thumbUp = 0;
     const thumbDown = 0;
-    const account_ref = accountHook.account? accountHook.account._id : null;
+    const account_ref = accountHook.account ? accountHook.account._id : null;
 
     const newPost = {
       availableDays,
@@ -125,13 +125,13 @@ export default function NewPostPage({ accountHook, postsHook }) {
     <Paper variant="outlined">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <PostAddIcon />
+          <PostAddIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           New Post
         </Typography>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <FormGroup>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
@@ -141,13 +141,20 @@ export default function NewPostPage({ accountHook, postsHook }) {
                 <Typography>Available Days</Typography>
                 <div className={classes.dayButtonGroup}>
                   <ButtonGroup color="primary" aria-label="outlined primary button group">
-                    <Button size="small" className={mon ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setMon(!mon)}>Mon</Button>
-                    <Button size="small" className={tue ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setTue(!tue)}>Tue</Button>
-                    <Button size="small" className={wed ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setWed(!wed)}>Wed</Button>
-                    <Button size="small" className={thu ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setThu(!thu)}>Thu</Button>
-                    <Button size="small" className={fri ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setFri(!fri)}>Fri</Button>
-                    <Button size="small" className={sat ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setSat(!sat)}>Sat</Button>
-                    <Button size="small" className={sun ? classes.selectedDayButton : classes.unselectedDayButton} onClick={() => setSun(!sun)}>Sun</Button>
+                    <Button size="small" className={mon ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setMon(!mon)}>Mon</Button>
+                    <Button size="small" className={tue ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setTue(!tue)}>Tue</Button>
+                    <Button size="small" className={wed ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setWed(!wed)}>Wed</Button>
+                    <Button size="small" className={thu ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setThu(!thu)}>Thu</Button>
+                    <Button size="small" className={fri ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setFri(!fri)}>Fri</Button>
+                    <Button size="small" className={sat ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setSat(!sat)}>Sat</Button>
+                    <Button size="small" className={sun ? classes.selectedDayButton : classes.unselectedDayButton}
+                            onClick={() => setSun(!sun)}>Sun</Button>
                   </ButtonGroup>
                 </div>
               </Grid>
@@ -156,10 +163,10 @@ export default function NewPostPage({ accountHook, postsHook }) {
               <Grid item xs={12} md={12}>
                 <Grid container spacing={1}>
                   <Grid item xs={12} md={6}>
-                    <FormInput label="School" icon={<SchoolOutlined />} value={school} setValue={setSchool} />
+                    <FormInput label="School" icon={<SchoolOutlined/>} value={school} setValue={setSchool}/>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <FormInput label="Course" icon={<ImportContactsIcon value={course} />} setValue={setCourse} />
+                    <FormInput label="Course" icon={<ImportContactsIcon value={course}/>} setValue={setCourse}/>
                   </Grid>
                 </Grid>
               </Grid>
@@ -168,34 +175,36 @@ export default function NewPostPage({ accountHook, postsHook }) {
               <Grid item xs={12} md={12}>
                 <Grid container spacing={1}>
                   <Grid item xs={12} md={6}>
-                    <FormInput label="Wage ($ / h)" icon={<MonetizationOnIcon value={wageInStr} />} setValue={setWageInStr} />
+                    <FormInput label="Wage ($ / h)" icon={<MonetizationOnIcon value={wageInStr}/>}
+                               setValue={setWageInStr}/>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <FormInput label="Contact" icon={<ContactPhoneIcon value={contact} />} setValue={setContact} />
+                    <FormInput label="Contact" icon={<ContactPhoneIcon value={contact}/>} setValue={setContact}/>
                   </Grid>
                 </Grid>
               </Grid>
 
               {/*Address*/}
               <Grid item xs={12} md={12}>
-                <FormInput label="Address" icon={<BusinessIcon />} value={address} setValue={setAddress} />
+                <FormInput label="Address" icon={<BusinessIcon/>} value={address} setValue={setAddress}/>
               </Grid>
 
               {/*Description*/}
               <Grid item xs={12} md={12}>
-                <FormInput label="Description" icon={<DescriptionIcon />} isDescription={true} value={description} setValue={setDescription} />
+                <FormInput label="Description" icon={<DescriptionIcon/>} isDescription={true} value={description}
+                           setValue={setDescription}/>
               </Grid>
 
               {/*Show the alert message when adding a post failed.*/}
               <Grid item xs={12} md={12}>
-                <AlertMessage alertHook={alertHook} />
+                <AlertMessage alertHook={alertHook}/>
               </Grid>
 
               {/*Submit Button*/}
               <Grid item xs={12} md={12}>
                 <Button variant="contained" type="submit" className={classes.submitButton}>Submit</Button>
               </Grid>
-              <br />
+              <br/>
             </Grid>
           </form>
         </FormGroup>
@@ -204,7 +213,7 @@ export default function NewPostPage({ accountHook, postsHook }) {
   );
 }
 
-const FormInput = ({ label, icon, isDescription, value, setValue }) => {
+const FormInput = ({label, icon, isDescription, value, setValue}) => {
   const classes = useStyles();
 
   return (
@@ -212,36 +221,40 @@ const FormInput = ({ label, icon, isDescription, value, setValue }) => {
       <div className={classes.margin}>
         <Grid container spacing={1} direction="row" alignItems="stretch">
 
-            {isDescription ?
-              <>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    multiline
-                    rows={5}
-                    required
-                    fullWidth
-                    label={label}
-                    value={value}
-                    onChange={(e) => {setValue(e.target.value)}}
-                  />
-                </Grid>
-              </>
-              :
-              <>
-                <Grid item xs={12} md={2}>
-                  {icon}
-                </Grid>
-                <Grid item xs={12} md={10}>
-                  <TextField
-                    required
-                    fullWidth
-                    label={label}
-                    value={value}
-                    onChange={(e) => {setValue(e.target.value)}}
-                  />
-                </Grid>
-              </>
-            }
+          {isDescription ?
+            <>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  multiline
+                  rows={5}
+                  required
+                  fullWidth
+                  label={label}
+                  value={value}
+                  onChange={(e) => {
+                    setValue(e.target.value)
+                  }}
+                />
+              </Grid>
+            </>
+            :
+            <>
+              <Grid item xs={12} md={2}>
+                {icon}
+              </Grid>
+              <Grid item xs={12} md={10}>
+                <TextField
+                  required
+                  fullWidth
+                  label={label}
+                  value={value}
+                  onChange={(e) => {
+                    setValue(e.target.value)
+                  }}
+                />
+              </Grid>
+            </>
+          }
         </Grid>
       </div>
     </Paper>

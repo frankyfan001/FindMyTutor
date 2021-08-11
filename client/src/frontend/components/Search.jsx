@@ -1,9 +1,9 @@
 /* eslint-disable */
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
-import { IconButton, InputAdornment } from '@material-ui/core';
+import {IconButton, InputAdornment} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SearchInput = ({ value, handleSearch }) => {
+export const SearchInput = ({value, handleSearch}) => {
   const classes = useStyles();
 
   return (
@@ -29,7 +29,7 @@ export const SearchInput = ({ value, handleSearch }) => {
           endAdornment: (
             <InputAdornment>
               <IconButton>
-                <SearchIcon />
+                <SearchIcon/>
               </IconButton>
             </InputAdornment>
           ),
@@ -40,10 +40,10 @@ export const SearchInput = ({ value, handleSearch }) => {
 };
 
 export const useSearch = () => {
-    const [value, setValue] = useState('');
-    const handleSearchInputChange = (value) => {
-          setValue(value);
-    }
+  const [value, setValue] = useState('');
+  const handleSearchInputChange = (value) => {
+    setValue(value);
+  }
 
-    return {value, handleSearchInputChange}
+  return {value, handleSearchInputChange}
 }

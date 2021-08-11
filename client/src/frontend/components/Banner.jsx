@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -42,10 +42,10 @@ export default function Banner(props) {
             A completely free platform for students to find reliable tutors.
           </Typography>
           <Box mt={4}>
-            <RouterLink to="/register?type=tutor" style={{ textDecoration: 'none' }}>
+            <RouterLink to="/register?type=tutor" style={{textDecoration: 'none'}}>
               <Button variant="outlined" color="secondary" className={classes.primaryAction}>SIGN UP</Button>
             </RouterLink>
-            <RouterLink to="/about" style={{ textDecoration: 'none' }}>
+            <RouterLink to="/about" style={{textDecoration: 'none'}}>
               <Button color="secondary">ABOUT US</Button>
             </RouterLink>
           </Box>

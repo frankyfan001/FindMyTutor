@@ -9,9 +9,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import {useHistory, useLocation} from 'react-router';
 import {FormControl, Radio, RadioGroup} from "@material-ui/core";
 import useAlert from "../hooks/useAlert";
@@ -86,20 +86,20 @@ export default function RegisterPage({accountHook}) {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      <CssBaseline/>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlinedIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <FormControl component="fieldset">
           <RadioGroup aria-label="type" name="type" value={type} onChange={e => setType(e.target.value)}>
-            <FormControlLabel value="tutor" control={<Radio />} label="Become A Tutor" />
-            <FormControlLabel value="student" control={<Radio />} label="Become A Student" />
+            <FormControlLabel value="tutor" control={<Radio/>} label="Become A Tutor"/>
+            <FormControlLabel value="student" control={<Radio/>} label="Become A Student"/>
           </RadioGroup>
         </FormControl>
         <form className={classes.form} onSubmit={onSubmit}>
@@ -164,9 +164,9 @@ export default function RegisterPage({accountHook}) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox required value="allowExtraEmails" color="primary" />}
+                control={<Checkbox required value="allowExtraEmails" color="primary"/>}
                 label="I agree to the terms of use and privacy policy."
-                style={{ float: 'left' }}
+                style={{float: 'left'}}
               />
             </Grid>
           </Grid>
@@ -188,8 +188,8 @@ export default function RegisterPage({accountHook}) {
           </Grid>
         </form>
       </div>
-      <br />
-      <AlertMessage alertHook={alertHook} />
+      <br/>
+      <AlertMessage alertHook={alertHook}/>
     </Container>
   );
 }

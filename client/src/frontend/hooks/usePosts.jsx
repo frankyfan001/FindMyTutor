@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import api from "../APIs/api";
-import { useSearch } from "../components/Search";
+import {useSearch} from "../components/Search";
 
 export default function usePosts() {
   // State: posts
@@ -39,10 +39,11 @@ export default function usePosts() {
   };
 
   // Get filtered posts.
-  const { filter, handleSearch, handleFilterSelect, value } = useFilter();
+  const {filter, handleSearch, handleFilterSelect, value} = useFilter();
   const getFilteredPosts = async (filter) => {
     if (!filter.filterKey || !Object.keys(filter).includes("filterKey")) {
-      getPosts().then(r => {});
+      getPosts().then(r => {
+      });
     } else {
       if (filter.filterKey === "thumbup" && Number.isNaN(parseInt(filter.filterValue, 10))) {
         setPosts([]);
@@ -67,13 +68,15 @@ export default function usePosts() {
   // Effect: fetch posts.
   useEffect(() => {
     if (filter.filterKey && filter.filterValue) {
-      getFilteredPosts(filter).then(r => {});
+      getFilteredPosts(filter).then(r => {
+      });
     } else {
-      getPosts().then(r => {});
+      getPosts().then(r => {
+      });
     }
   }, [filter]);
 
-  return { posts, getPosts, addPost, handleSearch, handleFilterSelect, value };
+  return {posts, getPosts, addPost, handleSearch, handleFilterSelect, value};
 }
 
 function useFilter() {
@@ -81,7 +84,7 @@ function useFilter() {
     filterKey: null,
     filterValue: null,
   });
-  const { value, handleSearchInputChange } = useSearch();
+  const {value, handleSearchInputChange} = useSearch();
 
   const handleSearch = (event) => {
     const searchValue = event.target.value;
@@ -119,5 +122,5 @@ function useFilter() {
     }
   };
 
-  return { filter, setFilter, handleSearch, handleFilterSelect, value };
+  return {filter, setFilter, handleSearch, handleFilterSelect, value};
 }

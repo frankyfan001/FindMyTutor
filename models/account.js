@@ -36,7 +36,7 @@ const AccountSchema = new Schema({
       ref: 'Post',
     }
   ]
-}, { timestamps: true });
+}, {timestamps: true});
 
 // Create model from the schema
 const Account = mongoose.model('Account', AccountSchema);

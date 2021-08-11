@@ -1,8 +1,8 @@
 /* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-import React, { useContext } from 'react';
-import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
-import { SocketContext } from '../hooks/SocketContext';
+import React, {useContext} from 'react';
+import {Grid, Typography, Paper, makeStyles} from '@material-ui/core';
+import {SocketContext} from '../hooks/SocketContext';
 
 const useStyles = makeStyles((theme) => ({
   video: {
@@ -37,7 +37,7 @@ const VideoPlayer = () => {
         <Paper className={classes.paper}>
           <Grid item xs={12} md={12}>
             <Typography variant="h5">{name}</Typography>
-            <video playsInline muted ref={myVid} autoPlay className={classes.video} />
+            <video playsInline muted ref={myVid} autoPlay className={classes.video}/>
           </Grid>
         </Paper>
       )}
@@ -45,7 +45,7 @@ const VideoPlayer = () => {
         <Paper className={classes.paper}>
           <Grid item xs={12} md={12}>
             <Typography variant="h5">{call.recvCall ? call.name : "Callee"}</Typography>
-            <video playsInline ref={otherVid} autoPlay className={classes.video} />
+            <video playsInline ref={otherVid} autoPlay className={classes.video}/>
           </Grid>
         </Paper>
       )}

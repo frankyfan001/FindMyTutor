@@ -24,7 +24,7 @@ const CommentSchema = new Schema({
     ref: 'Post',
     required: true,
   }
-}, { timestamps: true });
+}, {timestamps: true});
 
 // Create model from the schema
 const Comment = mongoose.model('Comment', CommentSchema);

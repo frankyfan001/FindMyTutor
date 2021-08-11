@@ -3,16 +3,16 @@ var express = require('express');
 var router = express.Router();
 const Post = require('../models/post');
 const Account = require("../models/account");
-const { ObjectId } = require("bson");
+const {ObjectId} = require("bson");
 
 /* Get all posts with its account info. */
 router.get('/', function (req, res, next) {
   let tutorId = req.query.tutorId;
 
   if (tutorId) {
-    Post.find({ account_ref: new ObjectId(tutorId) })
+    Post.find({account_ref: new ObjectId(tutorId)})
       .populate('account_ref')
-      .sort({ createdAt: -1 })
+      .sort({createdAt: -1})
       .exec()
       .then((result) => {
         res.send({
@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
       });
   } else {
     Post.find({}).populate('account_ref')
-      .sort({ createdAt: -1 })
+      .sort({createdAt: -1})
       .exec()
       .then((result) => {
         res.send({
@@ -47,7 +47,7 @@ router.get('/', function (req, res, next) {
 
 /* Add a post. */
 router.post('/', function (req, res, next) {
-  const newPost = { ...req.body, thumbUp: 0, thumbDown: 0 };
+  const newPost = {...req.body, thumbUp: 0, thumbDown: 0};
 
   if (newPost.availableDays.filter(day => day === true).length === 0) {
     res.send({
@@ -178,7 +178,7 @@ router.post('/filter', function (req, res, next) {
   const filterValue = filter.filterValue;
 
   if (filterKey === "thumbup") {
-    Post.find({ thumbUp: { $gte: filterValue } }).populate('account_ref').exec().then((result) => {
+    Post.find({thumbUp: {$gte: filterValue}}).populate('account_ref').exec().then((result) => {
       if (result) {
         res.send({
           success: true,

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { makeStyles, Typography} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import React from 'react';
 import VideoPlayer from './VideoPlayer';
 import Controls from './Controls';
@@ -23,14 +23,14 @@ export default function OnlineTutoringPage() {
   return (
     <ContextProvider>
       <div className={classes.wrapper}>
-        <br />
-          <Typography variant="h3" align="center">Online Tutoring</Typography>
-        <br />
-        <VideoPlayer />
+        <br/>
+        <Typography variant="h3" align="center">Online Tutoring</Typography>
+        <br/>
+        <VideoPlayer/>
         <Controls>
-          <Notifs />
+          <Notifs/>
         </Controls>
-        <OnlineTutoringFAQ />
+        <OnlineTutoringFAQ/>
       </div>
     </ContextProvider>
   );

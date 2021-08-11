@@ -7,27 +7,28 @@ const Comment = require("./comment");
 // const url = "mongodb://localhost:27017/findMyTutor";
 const url = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.g6db0.mongodb.net/findMyTutor?retryWrites=true&w=majority";
 
-const setupDatabase = async function() {
+const setupDatabase = async function () {
   await connectDatabase();
   // await initializeDatabase();
 }
 
 // Connect MongoDB.findMyTutor.
-const connectDatabase = async function() {
-  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+const connectDatabase = async function () {
+  await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
   console.log('MongoDB.findMyTutor is connected.');
 }
 
 // Initialize MongoDB.findMyTutor.
-const initializeDatabase = async function() {
+const initializeDatabase = async function () {
   await initializeAccounts();
   await initializePosts();
   await initializeComments();
   console.log('MongoDB.findMyTutor is initialized.')
 }
 
-const initializeAccounts = async function() {
-  await Account.collection.drop().catch((err) => {});
+const initializeAccounts = async function () {
+  await Account.collection.drop().catch((err) => {
+  });
   await Account.insertMany([
     {
       type: "tutor",
@@ -64,8 +65,9 @@ const initializeAccounts = async function() {
   ])
 }
 
-const initializePosts = async function() {
-  await Post.collection.drop().catch((err) => {});
+const initializePosts = async function () {
+  await Post.collection.drop().catch((err) => {
+  });
   const tutors = await Account.find({type: "tutor"});
   await Post.insertMany([
     {
@@ -119,8 +121,9 @@ const initializePosts = async function() {
   ])
 }
 
-const initializeComments = async function() {
-  await Comment.collection.drop().catch((err) => {});
+const initializeComments = async function () {
+  await Comment.collection.drop().catch((err) => {
+  });
   const students = await Account.find({type: "student"});
   const posts = await Post.find({});
   await Comment.insertMany([

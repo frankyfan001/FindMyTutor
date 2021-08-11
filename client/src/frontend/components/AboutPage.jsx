@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -9,7 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -47,16 +47,18 @@ export default function AboutPage(props) {
               <Grid item xs={12} md={6}>
                 <Card>
                   <CardActionArea component={RouterLink} to="/register?type=tutor">
-                    <CardMedia className={classes.media} image={content['01_image']} />
-                    <CardHeader title={content['01_company']} subheader={content['01_description']} titleTypographyProps={{gutterBottom: true}}/>
+                    <CardMedia className={classes.media} image={content['01_image']}/>
+                    <CardHeader title={content['01_company']} subheader={content['01_description']}
+                                titleTypographyProps={{gutterBottom: true}}/>
                   </CardActionArea>
                 </Card>
               </Grid>
               <Grid item xs={12} md={6}>
                 <Card>
                   <CardActionArea component={RouterLink} to="/register?type=student">
-                    <CardMedia className={classes.media} image={content['02_image']} />
-                    <CardHeader title={content['02_company']} subheader={content['02_description']} titleTypographyProps={{gutterBottom: true}} />
+                    <CardMedia className={classes.media} image={content['02_image']}/>
+                    <CardHeader title={content['02_company']} subheader={content['02_description']}
+                                titleTypographyProps={{gutterBottom: true}}/>
                   </CardActionArea>
                 </Card>
               </Grid>

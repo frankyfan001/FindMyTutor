@@ -1,7 +1,7 @@
 /* eslint-disable */
 // derived from tutorial: https://www.youtube.com/watch?v=oxFr7we3LC8&t=1582s
-import React, { createContext, useState, useRef, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import React, {createContext, useState, useRef, useEffect} from 'react';
+import {io} from 'socket.io-client';
 import Peer from 'simple-peer';
 import api from '../APIs/api';
 
@@ -36,7 +36,7 @@ const ContextProvider = ({children}) => {
   const makeCall = function (id) {
     const peer = new Peer({initiator: true, trickle: false, stream});
     peer.on('signal', (data) => {
-      socket.emit('makeCall', {callee: id, signalData: data, caller: me, name });
+      socket.emit('makeCall', {callee: id, signalData: data, caller: me, name});
     });
     peer.on('stream', (curStream) => {
       otherVid.current.srcObject = curStream;
@@ -87,4 +87,4 @@ const ContextProvider = ({children}) => {
   );
 };
 
-export { ContextProvider, SocketContext };
+export {ContextProvider, SocketContext};

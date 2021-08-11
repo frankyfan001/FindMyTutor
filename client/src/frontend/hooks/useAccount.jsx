@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import api from '../APIs/api';
 
 export default function useAccount() {
@@ -100,7 +100,7 @@ export default function useAccount() {
     const output = await res.json();
 
     if (output.success) {
-      getFavoritePosts().then((res)=> setFavorites(res));
+      getFavoritePosts().then((res) => setFavorites(res));
       return output.result;
     } else {
       throw new Error(output.error);
@@ -115,7 +115,7 @@ export default function useAccount() {
     const output = await res.json();
 
     if (output.success) {
-      getFavoritePosts().then((res)=> setFavorites(res));
+      getFavoritePosts().then((res) => setFavorites(res));
       return output.result;
     } else {
       throw new Error(output.error);
@@ -135,7 +135,7 @@ export default function useAccount() {
 
   useEffect(() => {
     if (account) {
-      getFavoritePosts().then((res)=> setFavorites(res));
+      getFavoritePosts().then((res) => setFavorites(res));
     }
   }, [account]);
 

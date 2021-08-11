@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,7 @@ import Label from '@material-ui/icons/Label';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { LocalLibrary, School, ThumbUp } from '@material-ui/icons';
+import {LocalLibrary, School, ThumbUp} from '@material-ui/icons';
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +37,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
   },
   group: {
     marginLeft: 0,
-    '& $content': {
-    },
+    '& $content': {},
   },
   expanded: {},
   selected: {},
@@ -51,8 +50,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0.5, 0),
   },
-  labelIcon: {
-  },
+  labelIcon: {},
   labelText: {
     fontWeight: 'inherit',
     flexGrow: 1,
@@ -69,7 +67,7 @@ function StyledTreeItem(props) {
     <TreeItem
       label={(
         <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
+          <LabelIcon color="inherit" className={classes.labelIcon}/>
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
           </Typography>
@@ -110,16 +108,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function FilterTreeView({ onNodeSelect }) {
+export default function FilterTreeView({onNodeSelect}) {
   const classes = useStyles();
 
   return (
     <TreeView
       className={classes.root}
       defaultExpanded={['3']}
-      defaultCollapseIcon={<ArrowDropDownIcon />}
-      defaultExpandIcon={<ArrowRightIcon />}
-      defaultEndIcon={<div style={{ width: 24 }} />}
+      defaultCollapseIcon={<ArrowDropDownIcon/>}
+      defaultExpandIcon={<ArrowRightIcon/>}
+      defaultEndIcon={<div style={{width: 24}}/>}
       onNodeSelect={onNodeSelect}
     >
       {/* <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} /> */}
@@ -129,7 +127,7 @@ export default function FilterTreeView({ onNodeSelect }) {
           nodeId="5"
           labelText="Tutor"
           labelIcon={SupervisorAccountIcon}
-        //   labelInfo="90"
+          //   labelInfo="90"
           color="#1a73e8"
           bgColor="#e8f0fe"
         />
@@ -137,7 +135,7 @@ export default function FilterTreeView({ onNodeSelect }) {
           nodeId="6"
           labelText="School"
           labelIcon={School}
-        //   labelInfo="2,294"
+          //   labelInfo="2,294"
           color="#e3742f"
           bgColor="#fcefe3"
         />
@@ -145,7 +143,7 @@ export default function FilterTreeView({ onNodeSelect }) {
           nodeId="7"
           labelText="Course"
           labelIcon={LocalLibrary}
-        //   labelInfo="3,566"
+          //   labelInfo="3,566"
           color="#a250f5"
           bgColor="#f3e8fd"
         />
@@ -153,7 +151,7 @@ export default function FilterTreeView({ onNodeSelect }) {
           nodeId="8"
           labelText="ThumbUp"
           labelIcon={ThumbUp}
-        //   labelInfo="733"
+          //   labelInfo="733"
           color="#3c8039"
           bgColor="#e6f4ea"
         />
