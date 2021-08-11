@@ -85,6 +85,20 @@ Stretch Requirements:
     3. Backend implementation
     4. Post table design for database
 
+# Above and Beyond Features
+* Fully Responsive: 
+
+Find My Tutor is fully responsive and it will rescale to preserve the user experience and look across all devices.
+
+* Uses external APIS:
+
+Under each tutoring post on Find My Tutor, we provided a static map to show the tutor’s off-line tutoring address. This map is rendered using external google map API.
+
+* Online Tutoring Service:
+
+Find My Tutor provides an online tutoring service that allow users to make video calls. This feature is introduce to avoid firewall blocking for some app in some specific countries as well as provided an interface for student and tutor to communicate without needing to download any external software.  
+
+
 # Prototypes
 
 ![Image of prototypes](Project%20Requirements/prototypes.png)
@@ -95,6 +109,11 @@ Stretch Requirements:
 - Jerry Liu
 
 > Jerry is the frontend developer of the team, mainly in charge of building frontend component structure, dataflow, and implementing styling, responsive and session persistance.
+
+- Yi Xuan Qi
+
+> Yi Xuan is full stack developer in the team. Mainly worked on the user account page, including UI design, features and APIs corresponding to the account pages.
+
 
 ## Tech Stack 
 - Unit 1 – HTML, CSS, JS; UNIT 2 – React
