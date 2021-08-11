@@ -1,8 +1,15 @@
 # Find My Tutor
 
+![Logo of Find My Tutor](./client/public/logo192.png)
+
 ## https://find-my-tutor-ubc.herokuapp.com
 
-![Logo of Find My Tutor](./client/public/logo192.png)
+- [Description](#description)
+- [Goals](#goals)
+- [Tech Stack](#tech-stack)
+- [Above and Beyond Features](#above-and-beyond-features)
+- [Next Steps](#next-steps)
+- [Contributions](#contributions)
 
 ## Description
 
@@ -13,6 +20,7 @@
 ## Goals
 
 - ### Minimal Requirements
+  
     - [x] Tutors
         - [x] Can register and log in as a tutor
         - [x] Can create a tutor post of tutoring service
@@ -26,6 +34,7 @@
         - [x] Can save a post to their favorite collection
 
 - ### Standard Requirements
+  
     - [x] Tutors in account page
         - [x] Can view and edit their own personal information
         - [x] Can view all posts they have created previously
@@ -35,6 +44,7 @@
         - [x] Can view all posts saved to their favorite collection
 
 - ### Stretch Requirements
+  
     - [x] Tutors and students
         - [x] have session persistence so that refreshing the webpage does not log users out
         - [x] Can filter posts by various categories in the home page
