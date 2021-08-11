@@ -117,19 +117,19 @@
   
 ## Contributions
 
-- > ### Deyu (Jerry) Liu
+- ### Deyu (Jerry) Liu
   > Deyu is the frontend developer in the team.
   > He was mainly in charge of building frontend component structure, dataflow, and implementing styling, responsive and session persistence.
 
-- > ### Yi Xuan (CQ) Qi
+- ### Yi Xuan (CQ) Qi
   > Yi Xuan is the full stack developer in the team.
   > She mainly worked on the user account page, including UI design, features and RESTful APIs corresponding to the account page.
 
-- > ### Kehong (Kevin) Liu
+- ### Kehong (Kevin) Liu
   > Kehong is the full stack developer in the team.
   > He mainly worked on setting up Google map display for the post page, designing the database schema, setting up deployment and CI pipeline, and developing the online tutoring functionality.
 
-- > ### Chengzhi (Franky) Fan
+- ### Chengzhi (Franky) Fan
   > Chengzhi is the full stack developer and the project manager in the team.
   > He set up the scaffolding for the project including the frontend UI design, the backend RESTful API, and the database schemas.
   > He clearly set the requirements for the team and decided technologies used in the application.
