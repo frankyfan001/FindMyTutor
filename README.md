@@ -114,6 +114,9 @@ Find My Tutor provides an online tutoring service that allow users to make video
 
 > Yi Xuan is full stack developer in the team. Mainly worked on the user account page, including UI design, features and APIs corresponding to the account pages.
 
+- Kehong Liu
+> Kehong full stack developer in the team. Mainly worked on setting up maps display for the post page, designing the database schema, setting up deployment and CI pipeline, and developing the online tutoring functionality. 
+
 
 ## Tech Stack 
 - Unit 1 – HTML, CSS, JS; UNIT 2 – React
