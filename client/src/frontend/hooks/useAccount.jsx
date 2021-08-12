@@ -31,6 +31,8 @@ export default function useAccount() {
     // If register succeeded, login directly.
     if (output.success) {
       setAccount(output.result);
+      // store user in localStorage
+      sessionStorage.setItem('user', JSON.stringify(output.result));
       return output.result;
     } else {
       throw new Error(output.error);
